@@ -1,0 +1,64 @@
+.sign-up{
+    background-color: #12d16e;
+    color: white;
+    height: 500;
+    width: 400px;
+    float: right;
+    margin-right: 20px;
+    margin-top: 20px;
+    padding: 60px;
+    border: none;
+    border-radius: 150px 50px 150px 2px;
+    justify-content: center;
+}
+
+.sign  label{
+    text-decoration: none;
+    margin-top: 20px;
+    display: block;
+}
+.sign-up h1{
+    margin: 0 0 30px;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+}
+.sign .input-control{
+    border: none;
+    margin-left: 20px;
+    margin-top: 10px;
+    width: 250px;
+    border-radius: 2px;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+
+.btn-create-account{
+    height: 50px;
+    width: 150px;
+    border: none;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: 60px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, .5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    color: white;
+}
+
+.btn-create-account:hover{
+    background: #12d16e;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #fff,
+              0 0 25px #fff,
+              0 0 50px #fff,
+              0 0 100px #fff;
+}
