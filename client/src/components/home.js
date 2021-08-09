@@ -1,5 +1,7 @@
 import React from "react";
 
+import logo from "../images/logo.png";
+
 //import style
 import './styles/home.css'
 
@@ -11,9 +13,12 @@ function Home(){
     return(
         
       <div  className="home">
-      <div className="categories">
+        <div className="categories">
         <Categories/>
-    </div>
+        </div>
+        <div className="home-box"><img src={logo}/>
+        <h3>Home box</h3>
+        </div>
         
         
         </div>

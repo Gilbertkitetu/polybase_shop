@@ -10,6 +10,12 @@ import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 //import bootstrap stylesheet
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+//import icons
+//import { VscHeart } from 'react-icons/fa';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+
 
 //import components
 import NavbarComponent from "./components/Navbar";
@@ -30,21 +36,25 @@ function App() {
             to = "/" > <h1> < span className = 'poly' >Poly</span><span className='base'>base</span > </h1></NavLink >
 
           <div>
+           
             <div className ="search">
+            
             <input type = 'text' placeholder = 'Search for products' className = 'input-control' />
             <button className = 'search-btn' > Search </button>
+            
             </div>
 
             <div className="right_btns">
-            <NavLink id="nav-link" activeClassName = "active" to = "/signup"> New Account </NavLink>
-            <NavLink id="nav-link" activeClassName = "active" to = "/login"> Login </NavLink>
-            <NavLink id="nav-link" activeClassName = "active" to = "/cart"> <button>Cart<span >3.</span></button> </NavLink>
+             
+            <NavLink id="nav-link" activeClassName = "active" to = "/signup"> <FontAwesomeIcon icon={faHeart} /> </NavLink>
+            <NavLink id="nav-link" activeClassName = "active" to = "/login"> Sign In </NavLink>
+            <NavLink id="nav-link" activeClassName = "active" to = "/cart"> Cart<span >3.</span> </NavLink>
             </div>
           </div>
           </div>
           <div className = "content">
             <Switch>
-
+            
               <Route path = '/' component = { Home } exact />
               <Route path = '/signup' component = { Signup } exact />
               <Route path = '/login' component = { Login } exact />
@@ -53,7 +63,9 @@ function App() {
 
           </div>
         </BrowserRouter>
-
+        <div className="footer">
+          
+        </div>
       </div>
   );
 }
