@@ -6,7 +6,7 @@
 
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: 10% 20% 20% 20% 20%;
+  grid-template-columns: 10% 70% 10%;
 }
 
 
@@ -71,12 +71,28 @@
     box-sizing: border-box;
     
     color: rgb(0, 0, 0);
+   
 }
+
 .search-btn:hover{
     background: rgba(0, 0, 0, .5);
   color: #fff;
   border-radius: 5px;
   
+}
+
+.btn-create-shop{
+    height: 50px;
+    width: 150px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, .5);
+    box-sizing: border-box;
+    
+    color: rgb(0, 0, 0);
+
 }
 #nav-link{
     color: rgb(0, 0, 0);

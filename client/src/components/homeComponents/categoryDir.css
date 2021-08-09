@@ -1,0 +1,30 @@
+.category-dir{
+    list-style: none;
+    
+}
+.category-dir h5 {
+   
+    float: left;
+    padding-left: 10px;
+}
+
+.category-dir h4 {
+   
+    float: left;
+    padding-left: 10px;
+}
+
+.category-dir button { 
+    float: right;
+    
+    height: 50px;
+    width: 100px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, .5);
+    box-sizing: border-box;
+    
+    color: rgb(0, 0, 0);
+}

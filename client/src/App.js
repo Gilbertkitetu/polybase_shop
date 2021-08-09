@@ -38,13 +38,16 @@ function App() {
           <div>
            
             <div className ="search">
-            
+
             <input type = 'text' placeholder = 'Search for products' className = 'input-control' />
             <button className = 'search-btn' > Search </button>
+            
+            
             
             </div>
 
             <div className="right_btns">
+            <button className = 'btn-create-shop' > Create Shop </button>
              
             <NavLink id="nav-link" activeClassName = "active" to = "/signup"> <FontAwesomeIcon icon={faHeart} /> </NavLink>
             <NavLink id="nav-link" activeClassName = "active" to = "/login"> Sign In </NavLink>
