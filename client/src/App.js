@@ -22,6 +22,7 @@ import NavbarComponent from "./components/Navbar";
 import Home from "./components/home";
 import Login from "./components/login";
 import Signup from "./components/signup";
+import Footer from "./components/footer";
 
 
 
@@ -67,7 +68,7 @@ function App() {
           </div>
         </BrowserRouter>
         <div className="footer">
-          
+          <Footer />
         </div>
       </div>
   );

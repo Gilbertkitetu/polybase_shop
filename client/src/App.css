@@ -126,6 +126,8 @@
 
 
 .footer {
-    background-color: yellowgreen;
-    grid-column: 5 / span 4;
+    background-color: rgb(40,40,40);
+    color: white;
+    padding: 30px;
+    grid-column: 1 / span 6;
 }

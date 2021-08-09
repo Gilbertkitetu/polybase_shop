@@ -60,3 +60,24 @@
     margin: 5px;
 
 }
+
+.load-more{
+    grid-column: 2;
+    grid-row: 9;
+}
+.load-more button {
+    grid-column: 2;
+    grid-row: 9;
+
+
+    height: 50px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, .5);
+    box-sizing: border-box;
+    
+    color: rgb(0, 0, 0);
+}
