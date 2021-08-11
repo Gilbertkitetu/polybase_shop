@@ -1,7 +1,7 @@
 .sign-up{
-    background-color: #12d16e;
-    color: white;
-    height: 500;
+    
+    color: rgb(0, 0, 0);
+    height: 90%;
     width: 400px;
     float: right;
     margin-right: 20px;
@@ -10,51 +10,90 @@
     border: none;
     border-radius: 150px 50px 150px 2px;
     justify-content: center;
+
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
 }
 
-.sign  label{
-    text-decoration: none;
-    margin-top: 20px;
-    display: block;
-}
 .sign-up h1{
     margin: 0 0 30px;
   padding: 0;
-  color: #fff;
+  color: rgb(0, 0, 0);
   text-align: center;
 }
+.sign label{
+    /* text-decoration: none;
+    margin-top: 20px;
+    display: block; */
+    
+    padding: 0px ;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    pointer-events: none;
+    transition: .5s;
+}
+
 .sign .input-control{
     border: none;
-    margin-left: 20px;
-    margin-top: 10px;
-    width: 250px;
-    border-radius: 2px;
+   
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    
     padding: 10px 0;
     font-size: 16px;
-    color: #fff;
-    border-bottom: 1px solid #fff;
+   
+    border-bottom: 1px solid rgb(0, 0, 0);
     outline: none;
     background: transparent;
 }
 
-.btn-create-account{
+.sign .btn-create-account{
     height: 50px;
-    width: 150px;
+    width: 100%;
     border: none;
     cursor: pointer;
     display: block;
     text-align: center;
-    margin-top: 20px;
-    margin-left: 60px;
+    margin-top: 50px;
+    margin-left: 110px;
     border-radius: 5px;
+    transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, .5);
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0,0,0,.6);
     color: white;
 }
 
+
+/* .show {
+    display: block;
+    transition: 800ms;
+    opacity: 1;
+}
+
+.show .active {
+    transform: translateY(100px) scale(0) rotateY(180deg);
+    opacity: 0;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .btn-create-account:hover{
-    background: #12d16e;
+    background: #000000;
   color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 5px #fff,

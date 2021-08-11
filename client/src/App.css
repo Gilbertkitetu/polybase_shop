@@ -18,6 +18,8 @@
     display: grid;
     flex: right;
     box-sizing: border-box;
+
+    box-shadow: 0 15px 25px rgb(231, 189, 189);
     
 /* background-color:rgb(227, 247, 55); */
     grid-column: 1 / span 6;

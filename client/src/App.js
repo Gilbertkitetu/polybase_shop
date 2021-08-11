@@ -52,6 +52,7 @@ function App() {
              
             <NavLink id="nav-link" activeClassName = "active" to = "/signup"> <FontAwesomeIcon icon={faHeart} /> </NavLink>
             <NavLink id="nav-link" activeClassName = "active" to = "/login"> Sign In </NavLink>
+            <NavLink id="nav-link" activeClassName = "active" to = "/signup"> Create Account </NavLink>
             <NavLink id="nav-link" activeClassName = "active" to = "/cart"> Cart<span >3.</span> </NavLink>
             </div>
           </div>

@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 
 
+
+
 //import style
 import './styles/signup.css';
 
+//import components
 
-function Signup(){
-    
+
+
+function Signup( { isShowCreateAccount }){
+
+   
     //defining hooks for signing up a new user
     const[user_name, set_user_name] = useState('');
     const[user_email, set_user_email] = useState('');
