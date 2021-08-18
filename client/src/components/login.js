@@ -61,7 +61,7 @@ function Login(){
         </div>
         
         </div>
-        <div>
+        <div className="banner">
         <img src={banner}/>
         </div>
         </div>

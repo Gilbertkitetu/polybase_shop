@@ -23,6 +23,7 @@ import Home from "./components/home";
 import Login from "./components/login";
 import Signup from "./components/signup";
 import Footer from "./components/footer";
+import Liked from "./components/liked";
 
 
 
@@ -50,7 +51,7 @@ function App() {
             <div className="right_btns">
             <button className = 'btn-create-shop' > Create Shop </button>
              
-            <NavLink id="nav-link" activeClassName = "active" to = "/signup"> <FontAwesomeIcon icon={faHeart} /> </NavLink>
+            <NavLink id="nav-link" activeClassName = "active" to = "/liked-products"> <FontAwesomeIcon icon={faHeart} /> </NavLink>
             <NavLink id="nav-link" activeClassName = "active" to = "/login"> Sign In </NavLink>
             <NavLink id="nav-link" activeClassName = "active" to = "/signup"> Create Account </NavLink>
             <NavLink id="nav-link" activeClassName = "active" to = "/cart"> Cart<span >3.</span> </NavLink>
@@ -63,6 +64,7 @@ function App() {
               <Route path = '/' component = { Home } exact />
               <Route path = '/signup' component = { Signup } exact />
               <Route path = '/login' component = { Login } exact />
+              <Route path = '/liked-products' component = { Liked }/>
 
             </Switch>
 
