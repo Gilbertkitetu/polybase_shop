@@ -40,7 +40,7 @@ function App() {
            
             <div className ="search">
 
-            <input type = 'text' placeholder = 'Search for products' className = 'input-control' />
+            <input type = 'text' placeholder = 'Search for products or shops' className = 'input-control' />
             <button className = 'search-btn' > Search </button>
             
             
