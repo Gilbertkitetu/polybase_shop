@@ -109,10 +109,10 @@ html {
 }
 
 .banner{
-    background-color: rgb(251,195,170);
+    background-color: rgb(233, 214, 204);
     float: left;
     margin-left: 0;
     height: 100%;
     width: 50%;
-    object-fit: contain;
+    object-fit: contain ;
 }
