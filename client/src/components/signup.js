@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-
+import { Form, Button, Card } from 'react-bootstrap'
 
 
 //import style
@@ -10,7 +10,7 @@ import './styles/signup.css';
 
 
 
-function Signup( { isShowCreateAccount }){
+function Signup( ){
 
    
     //defining hooks for signing up a new user
@@ -25,37 +25,36 @@ function Signup( { isShowCreateAccount }){
 
 
     return(
-        <div className="sign-up">
-            <h1>Create Account</h1>
-            <div className="sign">
-                <div>
-
-                    <label>User name: </label>
-                    <input type="text" placeholder="Enter your username" className="input-control"
-                    value={user_name} onChange={(e) => {set_user_name(e.target.value)}}
-                    />
-
-                    <label>Email: </label>
-                    <input type="text" placeholder="Enter your email address" className="input-control"
-                    value={user_email} onChange={(e) => {set_user_email(e.target.value)}}
-                    />
-
-                    <label>Phone number: </label>
-                    <input type="text" placeholder="Enter your phone number" className="input-control"
-                    value={user_phone_number} onChange={(e) => {set_user_phone_number(e.target.value)}}
-                    />
-
-                    <label>Password: </label>
-                    <input type="password" placeholder="Enter your password" className="input-control"
-                    value={user_password} onChange={(e) => {set_user_password(e.target.value)}}
-                    />
-
-                    <button className="btn-create-account">Create Account</button>
-
-
-                </div>
+        <>
+        <Card>
+            <Card.Body>
+                <h2 className="text-center mb-4">Sign Up</h2>
+                <Form>
+                    <Form.Group id="usename">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control type="text" required value={user_name} onChange={(e) => {set_user_name(e.target.value)}}/>
+                    </Form.Group>
+                    <Form.Group id="email">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="email" required value={user_email} onChange={(e) => {set_user_email(e.target.value)}}/>
+                    </Form.Group>
+                    <Form.Group id="phone">
+                        <Form.Label>Phone number</Form.Label>
+                        <Form.Control type="text" required value={user_phone_number} onChange={(e) => {set_user_phone_number(e.target.value)}}/>
+                    </Form.Group>
+                    <Form.Group id="password">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" required  value={user_password} onChange={(e) => {set_user_password(e.target.value)}}/>
+                    </Form.Group>
+                    <Button className="w-100" type="submit">Sign Up</Button>
+                </Form>
+            </Card.Body>
+        </Card>
+        <div className="w-100 text-center mt-2" style={{color: "white"}}>
+                Don't have an Account? Sign Up
             </div>
-        </div>
+        </>
+       
     );
 }
 

@@ -24,12 +24,14 @@ import Login from "./components/login";
 import Signup from "./components/signup";
 import Footer from "./components/footer";
 import Liked from "./components/liked";
+import { Container } from "react-bootstrap";
 
 
 
 
 function App() {
   return (
+   
      <div className = "App">
         <BrowserRouter>
           <div className = "header">
@@ -59,6 +61,12 @@ function App() {
           </div>
           </div>
           <div className = "content">
+            
+          <Container className="d-flex align-items-center
+          justify-content-center"
+          style={{ minHeight: "100vh"}}
+          >
+            <div className="w-100" style={{ maxWidth: "400px"}}>
             <Switch>
             
               <Route path = '/' component = { Home } exact />
@@ -67,6 +75,8 @@ function App() {
               <Route path = '/liked-products' component = { Liked }/>
 
             </Switch>
+            </div>
+            </Container>
 
           </div>
         </BrowserRouter>
@@ -74,6 +84,7 @@ function App() {
           <Footer />
         </div>
       </div>
+      
   );
 }
 

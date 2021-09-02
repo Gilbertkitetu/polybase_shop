@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Form, Button, Card } from 'react-bootstrap'
 
 
-import banner from '../images/undraw_secure_login_pdn4.svg';
+
 
 //import style
 import './styles/login.css';
@@ -14,57 +15,39 @@ import Signup from './signup';
 function Login(){
 
 
-     //show create account form hook
-     const [isShowCreateAccount, setIsShowCreateAccount] = useState(false);
+     //login hooks
+        const[email, setEmail] = useState('');
+        const[password, setPassword] = useState('');
 
-     const handleCreateAccountClick = () => {
-         setIsShowCreateAccount((isShowCreateAccount) => !isShowCreateAccount)
-     }
-     
-
-    //login hooks
-    const[user_email, set_user_email] = useState('');
-    const[password, set_password] = useState('');
-
+   
     //post to server function
+    function handleSubmit (event) {
+        alert(`Email: ${email} password: ${password}`)
+    }
 
     return(
-        <div>
-        <div className="login-page">
-        <h1>Login</h1>
-        <div className="login">
-            <div>
-                {/* <Signup isShowCreateAccount= {isShowCreateAccount}/> */}
-                <div>
-                <label>Username or email address* </label>
-                <input type="text"  className='input-control'
-                value={user_email} onChange={(e) => {set_user_email(e.target.value)}}
-                />
-                </div>
-
-                <div>
-                <label>Password* </label>
-                <input type="password"  className='input-control'
-                value={password} onChange={(e) => {set_password(e.target.value)}}
-                />
-                </div>
-                <div className="checkbox">
-                <input type="checkbox"/><label>Remember me</label>
-                <p>Forgot password?</p>
-                </div>
-
-                <button className="btn-login">Login</button>
-
-                <div><p>Or</p></div>
-                <button className="btn-login" onClick={handleCreateAccountClick}>Create an Account</button>
+        <>
+            <Card>
+                <Card.Body>
+                    <h2 className="text-center mb-4">Sign In</h2>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group id="email">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control type="email"  required value={email} onChange={(e) => {setEmail(e.target.value)}}/>
+                        </Form.Group>
+                        
+                        <Form.Group id="password">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password"  required value={password} onChange={(e) => {setPassword(e.target.value)}}/>
+                        </Form.Group>
+                        <Button className="w-100" type="submit">Sign In</Button>
+                    </Form>
+                </Card.Body>
+            </Card>
+            <div className="w-100 text-center mt-2" style={{color: "white"}}>
+                Don't have an Account? Sign Up
             </div>
-        </div>
-        
-        </div>
-        <div className="banner">
-        <img src={banner}/>
-        </div>
-        </div>
+        </>
     );
 }
 
