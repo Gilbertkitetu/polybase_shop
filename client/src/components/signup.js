@@ -21,7 +21,9 @@ function Signup( ){
 
 
     //post to server function
-
+    function handleSubmit (event) {
+        alert(`Email: ${user_email} password: ${user_password} Username: ${user_name}  phone no: ${user_phone_number}`)
+    }
 
 
     return(
@@ -29,7 +31,7 @@ function Signup( ){
         <Card>
             <Card.Body>
                 <h2 className="text-center mb-4">Sign Up</h2>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <Form.Group id="usename">
                         <Form.Label>Username</Form.Label>
                         <Form.Control type="text" required value={user_name} onChange={(e) => {set_user_name(e.target.value)}}/>
@@ -51,7 +53,7 @@ function Signup( ){
             </Card.Body>
         </Card>
         <div className="w-100 text-center mt-2" style={{color: "white"}}>
-                Don't have an Account? Sign Up
+                Already have account? Sign In
             </div>
         </>
        

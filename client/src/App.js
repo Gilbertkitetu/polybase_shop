@@ -24,7 +24,7 @@ import Login from "./components/login";
 import Signup from "./components/signup";
 import Footer from "./components/footer";
 import Liked from "./components/liked";
-import { Container } from "react-bootstrap";
+import { Container, Nav, Navbar, Button, Form} from "react-bootstrap";
 
 
 
@@ -33,33 +33,26 @@ function App() {
   return (
    
      <div className = "App">
-        <BrowserRouter>
-          <div className = "header">
+       <BrowserRouter>
 
-            <NavLink exact activeClassName = "active"
-            to = "/" > <h1> < span className = 'poly' >Poly</span><span className='base'>base</span > </h1></NavLink >
-
-          <div>
-           
-            <div className ="search">
-
-            <input type = 'text' placeholder = 'Search for products or shops' className = 'input-control' />
-            <button className = 'search-btn' > Search </button>
-            
-            
-            
-            </div>
-
-            <div className="right_btns">
-            <button className = 'btn-create-shop' > Create Shop </button>
-             
-            <NavLink id="nav-link" activeClassName = "active" to = "/liked-products"> <FontAwesomeIcon icon={faHeart} /> </NavLink>
-            <NavLink id="nav-link" activeClassName = "active" to = "/login"> Sign In </NavLink>
-            <NavLink id="nav-link" activeClassName = "active" to = "/signup"> Create Account </NavLink>
-            <NavLink id="nav-link" activeClassName = "active" to = "/cart"> Cart<span >3.</span> </NavLink>
-            </div>
-          </div>
-          </div>
+       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+         <Navbar.Brand  exact href="/">Polybase</Navbar.Brand>
+         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+         <Navbar.Collapse id="responsive-navbar-nav">
+           <Nav className="mr-auto">
+           <Form.Control type="email" placeHolder="Search polybase" required></Form.Control>
+           <Button className="w-200" type="submit">Search</Button>
+           </Nav>
+           <Nav>
+             <Nav.Link href="#Create Shop">Create shop</Nav.Link>
+             <Nav.Link href="/liked-products">Favorite</Nav.Link>
+             <Nav.Link href="/cart">Cart</Nav.Link>
+             <Nav.Link href="/login">Login</Nav.Link>
+           </Nav>
+         </Navbar.Collapse>
+       </Navbar>
+      
+       
           <div className = "content">
             
           <Container className="d-flex align-items-center
@@ -79,10 +72,11 @@ function App() {
             </Container>
 
           </div>
-        </BrowserRouter>
+       
         <div className="footer">
           <Footer />
         </div>
+        </BrowserRouter>
       </div>
       
   );
