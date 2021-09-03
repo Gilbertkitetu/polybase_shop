@@ -55,11 +55,10 @@ function App() {
        
           <div className = "content">
             
-          <Container className="d-flex align-items-center
-          justify-content-center"
-          style={{ minHeight: "100vh"}}
+          <Container 
+         
           >
-            <div className="w-100" style={{ maxWidth: "400px"}}>
+          
             <Switch>
             
               <Route path = '/' component = { Home } exact />
@@ -68,7 +67,7 @@ function App() {
               <Route path = '/liked-products' component = { Liked }/>
 
             </Switch>
-            </div>
+            
             </Container>
 
           </div>

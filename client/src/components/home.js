@@ -1,6 +1,6 @@
 import React from "react";
 
-import logo from "../images/logo.png";
+import logo from "../images/pexels.jpg";
 
 //import style
 //import './styles/home.css'
@@ -8,7 +8,7 @@ import logo from "../images/logo.png";
 //import components
 import Categories from './categories';
 import CategoryDir from "./homeComponents/categoryDir";
-import { Carousel } from "react-bootstrap";
+import { Carousel , Col, Container, Row, Button, ListGroup} from "react-bootstrap";
 
 
 function Home(){
@@ -19,10 +19,49 @@ function Home(){
     // <li className="product-item">{number}</li>
     // );
 
+    function alertClicked() {
+        alert('You clicked the third ListGroupItem');
+      }
+
 
     return(
         
-      <div  className="home">
+     <>
+          
+           <Row>
+    <Col sm md={2}>
+        <div className="categories">
+    <ListGroup defaultActiveKey="#link1">
+    <ListGroup.Item action href="#link1">
+      Categories
+    </ListGroup.Item>
+    <ListGroup.Item action href="#link2" disabled>
+      Home & Office
+    </ListGroup.Item>
+    <ListGroup.Item action onClick={alertClicked}>
+      Health & Beauty
+    </ListGroup.Item>
+    <ListGroup.Item action onClick={alertClicked}>
+      Phones
+    </ListGroup.Item>
+    <ListGroup.Item action onClick={alertClicked}>
+      Electronics
+    </ListGroup.Item>
+    <ListGroup.Item action onClick={alertClicked}>
+      Fashion
+    </ListGroup.Item>
+    <ListGroup.Item action onClick={alertClicked}>
+      Sporting Goods
+    </ListGroup.Item>
+    <ListGroup.Item action onClick={alertClicked}>
+      Gaming
+    </ListGroup.Item>
+  </ListGroup>
+  </div>
+    </Col>
+ 
+    
+ <Col sm  md={8} className="w-400" >
           <Carousel >
               <Carousel.Item>
                   <img className="d-block w-100" src={logo}
@@ -49,31 +88,19 @@ function Home(){
                   </Carousel.Caption>
               </Carousel.Item>
           </Carousel>
-        {/* <div className="categories">
-        <Categories/>
-        </div>
-        <div className="home-box"><img src={logo}/>
+          </Col>
+
+          <Col sm md={2}>Right</Col>
+
+          </Row>
+    
         
+        <Button className="w-100" type="submit">Load More</Button>
       
-        </div>
-        <div className="help"><h3>Help</h3></div>
 
-
-        <div className="category-directory"><CategoryDir /></div>
-
-
-        <div className="products">
-
-                    <ul>{listItems}</ul>
-        </div>
-         */}
-        <div className="load-more">
-            <button>Load more</button>
-        </div>
-
+        </>
+    
         
-        
-        </div>
     );
 }
 
