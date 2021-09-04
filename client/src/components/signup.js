@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+//import uniqid from 'uniqid';
+import axios from 'axios';
 
 import { Form, Button, Card, Nav } from 'react-bootstrap'
 
@@ -20,9 +22,27 @@ function Signup( ){
     const[user_password, set_user_password] = useState('');
 
 
-    //post to server function
+    //post to server function create account
     function handleSubmit (event) {
+        event.preventDefault();
         alert(`Email: ${user_email} password: ${user_password} Username: ${user_name}  phone no: ${user_phone_number}`)
+        
+        var user_account = {
+            username : user_name,
+            email: user_email,
+            phone_number: user_phone_number,
+            password: user_password,
+            user_id: "1",
+            shop_name: "Rolling thunder",
+            location: "nyeri",
+            date_created: Date().now
+        }
+        axios.post(' http://localhost:8000/api/v1/add_new_user', user_account).then(res => {
+            alert(res.data)
+        }).then(err => {
+            console.log(err)
+        })
+
     }
 
 

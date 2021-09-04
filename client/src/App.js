@@ -24,6 +24,7 @@ import Login from "./components/login";
 import Signup from "./components/signup";
 import Footer from "./components/footer";
 import Liked from "./components/liked";
+import CreateShop from "./components/createShop";
 import { Container, Nav, Navbar, Button, Form} from "react-bootstrap";
 
 
@@ -44,10 +45,11 @@ function App() {
            <Button className="w-200" type="submit">Search</Button>
            </Nav>
            <Nav>
-             <Nav.Link href="#Create Shop">Create shop</Nav.Link>
+             <Nav.Link href="/create-shop">Create shop</Nav.Link>
              <Nav.Link href="/liked-products">Favorite</Nav.Link>
              <Nav.Link href="/cart">Cart</Nav.Link>
              <Nav.Link href="/login">Login</Nav.Link>
+             "
            </Nav>
          </Navbar.Collapse>
        </Navbar>
@@ -65,6 +67,7 @@ function App() {
               <Route path = '/signup' component = { Signup } exact />
               <Route path = '/login' component = { Login } exact />
               <Route path = '/liked-products' component = { Liked }/>
+              <Route path = '/create-shop' component = { CreateShop } />
 
             </Switch>
             

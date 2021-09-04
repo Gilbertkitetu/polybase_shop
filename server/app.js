@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 //settinh up config file
 dotenv.config({ path: 'server/config/config.env' });
 
-//const userRoute = require('./routes/user');
+
 
 
 
@@ -16,7 +16,7 @@ const app = express();
 
 
 //middleware
-//const errorMiddleware = require('./middlewares/errors');
+const errorMiddleware = require('./middlewares/errors');
 
 
 //database
@@ -24,7 +24,13 @@ const connectDatabase = require('./config/database');
 
 
 //middleware to handle errors
-//app.use(errorMiddleware);
+app.use(errorMiddleware);
+
+
+
+//import all routes
+const products = require('./routes/product');
+const userRoute = require('./routes/user');
 
 
 
@@ -41,10 +47,7 @@ process.on('uncaughtException', err => {
 
 
 
-//import all routes
-//const products = require('./routes/product');
 
-//app.use('/api/v1', products);
 
 
 //connecting config file
@@ -53,7 +56,11 @@ connectDatabase();
 
 const port = process.env.PORT || 8000;
 
-app.get('/', (req, res) => res.send('Hello there'))
+app.get('/api/v1', (req, res) => res.send('Hello there Polybase here'))
+
+app.use('/api/v1', userRoute);
+app.use('/api/v1', products);
+
 
 const sever = app.listen(port, () => console.log(`polybase server listening at http://localhost:${port}`));
 
