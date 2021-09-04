@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Form, Button, Card } from 'react-bootstrap'
+import { Form, Button, Card, Nav } from 'react-bootstrap'
 
 
 //import style
@@ -28,7 +28,7 @@ function Signup( ){
 
     return(
         <>
-        <Card>
+        <Card style={{ width: '30rem', padding: '20px' }}>
             <Card.Body>
                 <h2 className="text-center mb-4">Sign Up</h2>
                 <Form onSubmit={handleSubmit}>
@@ -50,11 +50,12 @@ function Signup( ){
                     </Form.Group>
                     <Button className="w-100" type="submit">Sign Up</Button>
                 </Form>
+                <div className="w-100 text-center mt-2" style={{color: "black"}}>
+                Already have account? <Nav.Link href="/login">Sign In</Nav.Link>
+            </div>
             </Card.Body>
         </Card>
-        <div className="w-100 text-center mt-2" style={{color: "white"}}>
-                Already have account? Sign In
-            </div>
+       
         </>
        
     );
