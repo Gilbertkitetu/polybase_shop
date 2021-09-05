@@ -1,5 +1,6 @@
 
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const dotenv = require('dotenv');
@@ -26,7 +27,7 @@ const connectDatabase = require('./config/database');
 //middleware to handle errors
 app.use(errorMiddleware);
 
-
+app.use(cors);
 
 //import all routes
 const products = require('./routes/product');
