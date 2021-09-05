@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card } from "react-bootstrap";
+import { Row, Col, Card, Table, Button } from "react-bootstrap";
 
 function Cart(){
     
@@ -15,7 +15,7 @@ function Cart(){
                     </Card.Title>
                     <Card.Body>
                         <div class="table-responsive">
-                            <table class="table shoping-cart-table">
+                            <Table className="shoping-cart-table">
                                 <tbody>
                                 <tr>
                                     <td>
@@ -58,13 +58,13 @@ function Cart(){
                                     </td>
                                 </tr>
                                 </tbody>
-                            </table>
+                            </Table>
                         </div>
     
                     </Card.Body>
                     <Card.Body>
                         <div class="table-responsive">
-                            <table class="table shoping-cart-table">
+                            <Table className="shoping-cart-table">
     
                                 <tbody>
                                 <tr>
@@ -108,13 +108,13 @@ function Cart(){
     
                                 </tr>
                                 </tbody>
-                            </table>
+                            </Table>
                         </div>
     
                     </Card.Body>
                     <Card.Body>
                         <div class="table-responsive">
-                            <table class="table shoping-cart-table">
+                            <Table className="shoping-cart-table">
     
                                 <tbody>
                                 <tr>
@@ -158,13 +158,13 @@ function Cart(){
     
                                 </tr>
                                 </tbody>
-                            </table>
+                            </Table>
                         </div>
     
                     </Card.Body>
                     <Card.Body>
                         <div class="table-responsive">
-                            <table class="table shoping-cart-table">
+                            <Table className="shoping-cart-table">
     
                                 <tbody>
                                 <tr>
@@ -207,13 +207,13 @@ function Cart(){
     
                                 </tr>
                                 </tbody>
-                            </table>
+                            </Table>
                         </div>
     
                     </Card.Body>
                     <Card.Body>
                         <div class="table-responsive">
-                            <table class="table shoping-cart-table">
+                            <Table className="shoping-cart-table">
     
                                 <tbody>
                                 <tr>
@@ -253,12 +253,12 @@ function Cart(){
                                     </td>
                                 </tr>
                                 </tbody>
-                            </table>
+                            </Table>
                         </div>
                     </Card.Body>
                     <Card.Body>
-                        <button class="btn btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
-                        <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>
+                        <Button class="btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Checkout</Button>
+                        <Button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</Button>
     
                     </Card.Body>
                 </Card>
@@ -266,10 +266,10 @@ function Cart(){
             </Col>
             <Col md-3>
                 <Card>
-                    <div class="ibox-title">
+                    <Card.Title>
                         <h5>Cart Summary</h5>
-                    </div>
-                    <div class="ibox-content">
+                    </Card.Title>
+                    <Card.Body>
                         <span>
                             Total
                         </span>
@@ -282,12 +282,12 @@ function Cart(){
                             *For United States, France and Germany applicable sales tax will be applied
                         </span>
                         <div class="m-t-sm">
-                            <div class="btn-group">
+                            <Button>
                             <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Checkout</a>
                             <a href="#" class="btn btn-white btn-sm"> Cancel</a>
-                            </div>
+                            </Button>
                         </div>
-                    </div>
+                    </Card.Body>
                 </Card>
     
                 <Card>
