@@ -31,17 +31,43 @@ function Signup( ){
             username : user_name,
             email: user_email,
             phone_number: user_phone_number,
-            password: user_password,
-            user_id: "1",
-            shop_name: "Rolling thunder",
-            location: "nyeri",
-            date_created: Date().now
+            password: user_password
+           
         }
-        axios.post(' http://localhost:8000/api/v1/add_new_user', user_account).then(res => {
-            alert(res.data)
-        }).then(err => {
-            console.log(err)
-        })
+        // axios.post(' http://localhost:8000/api/v1/add_new_user', user_account).then(res => {
+        //     alert(res.data)
+        // }).then(err => {
+        //     console.log(err)
+        // })
+
+        var data = JSON.stringify({
+  "username": "Gilbert",
+  "email": "gilbertkitetu1@gmail.com",
+  "phone_number": "0746362456",
+  "password": "12345678",
+  "user_id": "5476547654645",
+  "shop_name": "olling thunder",
+  "location": "nyeri",
+  "date_created": "2/2/2021"
+});
+
+var config = {
+  method: 'post',
+  url: ' http://localhost:8000/api/v1/add_new_user',
+  headers: { 
+    'Content-Type': 'application/json'
+  },
+  data : data
+};
+
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+
 
     }
 
