@@ -24,10 +24,14 @@ const errorMiddleware = require('./middlewares/errors');
 const connectDatabase = require('./config/database');
 
 
+
+
+
+
 //middleware to handle errors
 app.use(errorMiddleware);
 
-app.use(cors);
+app.use(cors());
 
 //import all routes
 const products = require('./routes/product');

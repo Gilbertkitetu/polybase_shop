@@ -25,6 +25,7 @@ import Signup from "./components/signup";
 import Footer from "./components/footer";
 import Liked from "./components/liked";
 import CreateShop from "./components/createShop";
+import Cart from "./components/cart";
 import { Container, Nav, Navbar, Button, Form} from "react-bootstrap";
 
 
@@ -36,7 +37,7 @@ function App() {
      <div className = "App">
        <BrowserRouter>
 
-       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
          <Navbar.Brand  exact href="/">Polybase</Navbar.Brand>
          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
          <Navbar.Collapse id="responsive-navbar-nav">
@@ -47,7 +48,11 @@ function App() {
            <Nav>
              <Nav.Link href="/create-shop">Create shop</Nav.Link>
              <Nav.Link href="/liked-products">Favorite</Nav.Link>
-             <Nav.Link href="/cart">Cart</Nav.Link>
+             <Nav.Link href="/cart">Cart
+             <span class="cart-basket d-flex align-items-center justify-content-center">
+            0
+          </span>
+             </Nav.Link>
              <Nav.Link href="/login">Login</Nav.Link>
              "
            </Nav>
@@ -57,9 +62,7 @@ function App() {
        
           <div className = "content">
             
-          <Container 
-         
-          >
+          <Container style={{ marginTop: "20px" }}>
           
             <Switch>
             
@@ -68,6 +71,7 @@ function App() {
               <Route path = '/login' component = { Login } exact />
               <Route path = '/liked-products' component = { Liked }/>
               <Route path = '/create-shop' component = { CreateShop } />
+              <Route path = '/cart' component = { Cart } />
 
             </Switch>
             

@@ -3,10 +3,10 @@ import React from "react";
 import logo from "../images/pexels.jpg";
 
 //import style
-//import './styles/home.css'
+import './styles/home.css'
 
 //import components
-import Categories from './categories';
+import Categories from './cart';
 import CategoryDir from "./homeComponents/categoryDir";
 import { Carousel , Col, Card, Row, Button, ListGroup} from "react-bootstrap";
 
@@ -61,7 +61,7 @@ function Home(){
     </Col>
  
     
- <Col sm  md={8} className="w-400" >
+ <Col sm  md={8} className="w-400" class = "rounded-1">
           <Carousel >
               <Carousel.Item>
                   <img className="d-block w-100" src={logo}
@@ -94,28 +94,20 @@ function Home(){
           <div className="categories">
     <ListGroup defaultActiveKey="#link1">
     <ListGroup.Item action href="#link1">
-      Categories
+      Help Center
     </ListGroup.Item>
-    <ListGroup.Item action href="#link2" disabled>
-      Home & Office
-    </ListGroup.Item>
+    
     <ListGroup.Item action onClick={alertClicked}>
-      Health & Beauty
+      Guide to customer care
     </ListGroup.Item>
+  
     <ListGroup.Item action onClick={alertClicked}>
-      Phones
+      Contacts
     </ListGroup.Item>
+    
+    
     <ListGroup.Item action onClick={alertClicked}>
-      Electronics
-    </ListGroup.Item>
-    <ListGroup.Item action onClick={alertClicked}>
-      Fashion
-    </ListGroup.Item>
-    <ListGroup.Item action onClick={alertClicked}>
-      Sporting Goods
-    </ListGroup.Item>
-    <ListGroup.Item action onClick={alertClicked}>
-      Gaming
+      FAQ's
     </ListGroup.Item>
   </ListGroup>
   </div>
@@ -132,54 +124,54 @@ function Home(){
             <Card style={{ width: '15rem' }}>
             <Card.Img variant="top" src={logo}  />
             <Card.Body>
-            <Card.Title>Card Title</Card.Title>
+            <Card.Title>Product name</Card.Title>
             <Card.Text>
-            Some quick example text to build on the card title and make up the bulk of
-            the card's content.
+            Product description
             </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
+            <Button variant="primary">Add to Cart</Button>
             </Card.Body>
             </Card>
             </Col>
+
 
             <Col sm md={3} >
             <Card style={{ width: '15rem' }}>
             <Card.Img variant="top" src={logo}  />
             <Card.Body>
-            <Card.Title>Card Title</Card.Title>
+            <Card.Title>Product name</Card.Title>
             <Card.Text>
-            Some quick example text to build on the card title and make up the bulk of
-            the card's content.
+            Product description
             </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
+            <Button variant="primary">Add to Cart</Button>
             </Card.Body>
             </Card>
             </Col>
+
 
             <Col sm md={3} >
             <Card style={{ width: '15rem' }}>
             <Card.Img variant="top" src={logo}  />
             <Card.Body>
-            <Card.Title>Card Title</Card.Title>
+            <Card.Title>Product name</Card.Title>
             <Card.Text>
-            Some quick example text to build on the card title and make up the bulk of
-            the card's content.
+            Product description
             </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
+            <Button variant="primary">Add to Cart</Button>
             </Card.Body>
             </Card>
             </Col>
+
+
 
             <Col sm md={3} >
             <Card style={{ width: '15rem' }}>
             <Card.Img variant="top" src={logo}  />
             <Card.Body>
-            <Card.Title>Card Title</Card.Title>
+            <Card.Title>Product name</Card.Title>
             <Card.Text>
-            Some quick example text to build on the card title and make up the bulk of
-            the card's content.
+            Product description
             </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
+            <Button variant="primary">Add to Cart</Button>
             </Card.Body>
             </Card>
             </Col>

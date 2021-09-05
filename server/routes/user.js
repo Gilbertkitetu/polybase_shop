@@ -14,7 +14,7 @@ router.get('/get_users', (req, res) => {
 
 
 router.post('/add_new_user', (req, res) => {
-    res.send("Add new user -route");
+    //res.send("Add new user -route");
 
     const new_user = new userModel({
         username : req.body.username,
