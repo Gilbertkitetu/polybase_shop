@@ -10,7 +10,7 @@ function Cart(){
             <Col md-9>
                 <Card>
                     <Card.Title>
-                        <span class="pull-right">(<strong>5</strong>) items</span>
+                        <span class="pull-right">(<strong>2</strong>) items</span>
                         <h5>Items in your cart</h5>
                     </Card.Title>
                     <Card.Body>
@@ -25,7 +25,7 @@ function Cart(){
                                     <td class="desc">
                                         <h3>
                                         <a href="#" class="text-navy">
-                                            Desktop publishing software
+                                           laptop
                                         </a>
                                         </h3>
                                         <p class="small">
@@ -38,8 +38,8 @@ function Cart(){
                                         </dl>
     
                                         <div class="m-t-sm">
-                                            <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
-                                            |
+                                           
+                                            
                                             <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
                                         </div>
                                     </td>
@@ -62,6 +62,7 @@ function Cart(){
                         </div>
     
                     </Card.Body>
+                    
                     <Card.Body>
                         <div class="table-responsive">
                             <Table className="shoping-cart-table">
@@ -75,57 +76,7 @@ function Cart(){
                                     <td class="desc">
                                         <h3>
                                             <a href="#" class="text-navy">
-                                                Text editor
-                                            </a>
-                                        </h3>
-                                        <p class="small">
-                                            There are many variations of passages of Lorem Ipsum available
-                                        </p>
-                                        <dl class="small m-b-none">
-                                            <dt>Description lists</dt>
-                                            <dd>List is perfect for defining terms.</dd>
-                                        </dl>
-    
-                                        <div class="m-t-sm">
-                                            <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
-                                            |
-                                            <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
-                                        </div>
-                                    </td>
-    
-                                    <td>
-                                        $50,00
-                                        <s class="small text-muted">$63,00</s>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="2"/>
-                                    </td>
-                                    <td>
-                                        <h4>
-                                            $100,00
-                                        </h4>
-                                    </td>
-    
-                                </tr>
-                                </tbody>
-                            </Table>
-                        </div>
-    
-                    </Card.Body>
-                    <Card.Body>
-                        <div class="table-responsive">
-                            <Table className="shoping-cart-table">
-    
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="cart-product-imitation">
-                                        </div>
-                                    </td>
-                                    <td class="desc">
-                                        <h3>
-                                            <a href="#" class="text-navy">
-                                                CRM software
+                                               Table.
                                             </a>
                                         </h3>
                                         <p class="small">
@@ -138,8 +89,8 @@ function Cart(){
                                         </dl>
     
                                         <div class="m-t-sm">
-                                            <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
-                                            |
+                                           
+                                            
                                             <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
                                         </div>
                                     </td>
@@ -162,100 +113,8 @@ function Cart(){
                         </div>
     
                     </Card.Body>
-                    <Card.Body>
-                        <div class="table-responsive">
-                            <Table className="shoping-cart-table">
-    
-                                <tbody>
-                                <tr>
-                                    <td width="90">
-                                        <div class="cart-product-imitation">
-                                        </div>
-                                    </td>
-                                    <td class="desc">
-                                        <h3>
-                                            <a href="#" class="text-navy">
-                                                PM software
-                                            </a>
-                                        </h3>
-                                        <p class="small">
-                                            Readable content of a page when looking at its layout. The point of using Lorem Ipsum is
-                                        </p>
-                                        <dl class="small m-b-none">
-                                            <dt>Description lists</dt>
-                                            <dd>A description list is perfect for defining terms.</dd>
-                                        </dl>
-    
-                                        <div class="m-t-sm">
-                                            <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
-                                            |
-                                            <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
-                                        </div>
-                                    </td>
-    
-                                    <td>
-                                        $130,00
-                                    </td>
-                                    <td width="65">
-                                        <input type="text" class="form-control" placeholder="1"/>
-                                    </td>
-                                    <td>
-                                        <h4>
-                                            $130,00
-                                        </h4>
-                                    </td>
-    
-                                </tr>
-                                </tbody>
-                            </Table>
-                        </div>
-    
-                    </Card.Body>
-                    <Card.Body>
-                        <div class="table-responsive">
-                            <Table className="shoping-cart-table">
-    
-                                <tbody>
-                                <tr>
-                                    <td width="90">
-                                        <div class="cart-product-imitation">
-                                        </div>
-                                    </td>
-                                    <td class="desc">
-                                        <h3>
-                                            <a href="#" class="text-navy">
-                                                Photo editor
-                                            </a>
-                                        </h3>
-                                        <p class="small">
-                                            Page when looking at its layout. The point of using Lorem Ipsum is
-                                        </p>
-                                        <dl class="small m-b-none">
-                                            <dt>Description lists</dt>
-                                            <dd>A description list is perfect for defining terms.</dd>
-                                        </dl>
-                                        <div class="m-t-sm">
-                                            <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
-                                            |
-                                            <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        $700,00
-                                    </td>
-                                    <td width="65">
-                                        <input type="text" class="form-control" placeholder="1"/>
-                                    </td>
-                                    <td>
-                                        <h4>
-                                            $70,00
-                                        </h4>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </Table>
-                        </div>
-                    </Card.Body>
+                    
+                    
                     <Card.Body>
                         <Button class="btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Checkout</Button>
                         <Button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</Button>
