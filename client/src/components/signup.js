@@ -31,7 +31,10 @@ function Signup( ){
             username : user_name,
             email: user_email,
             phone_number: user_phone_number,
-            password: user_password
+            password: user_password,
+            shop_name: "",
+            location: "",
+            date_created: Date.now()
            
         }
         axios.post(' http://localhost:8000/api/v1/add_new_user', user_account).then(res => {

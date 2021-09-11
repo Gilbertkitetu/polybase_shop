@@ -32,7 +32,7 @@ function Login(){
             password : password
         }
         axios.post('http://localhost:8000/api/v1/login', user_login).then(res => {
-            alert(res.data)
+            alert(res.data.token)
         }).then(err => {
             console.log(err)
         })
