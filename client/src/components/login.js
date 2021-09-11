@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Button, Card , Nav} from 'react-bootstrap'
+import ReactSession from 'react-client-session';
+import { Form, Button, Card , Nav} from 'react-bootstrap';
+import axios from "axios";                                       
 
 
 
@@ -22,7 +24,18 @@ function Login(){
    
     //post to server function
     function handleSubmit (event) {
-        alert(`Email: ${email} password: ${password}`)
+        event.preventDefault();
+        alert(`Email: ${email} password: ${password}`);
+
+        var user_login = {
+            email : email,
+            password : password
+        }
+        axios.post('http://localhost:8000/api/v1/login', user_login).then(res => {
+            alert(res.data)
+        }).then(err => {
+            console.log(err)
+        })
     }
 
     return(
