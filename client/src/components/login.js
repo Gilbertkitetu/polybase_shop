@@ -34,7 +34,7 @@ function Login(){
         axios.post('http://localhost:8000/api/v1/login', user_login).then(res => {
             alert(res.data.token)
         }).then(err => {
-            console.log(err)
+            console.log(err)    
         })
     }
 

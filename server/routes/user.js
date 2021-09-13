@@ -87,7 +87,7 @@ router.post('/add_new_user', async (req, res) => {
         return res.status(400).send({ error: "Data not formatted correctly"});
     }
 
-    //genrate salt to hash password
+    //generate salt to hash password
     const salt = await bcrypt.genSalt(10);
     //set password to hasahed password
     req.body.password = await bcrypt.hash(req.body.password, salt);
