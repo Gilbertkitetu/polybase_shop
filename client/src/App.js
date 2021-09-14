@@ -5,7 +5,7 @@ import './App.css';
 
 
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
-
+import { ReactSession } from "react-client-session";
 
 //import bootstrap stylesheet
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -53,7 +53,7 @@ function App() {
             0
           </span>
              </Nav.Link>
-             <Nav.Link href="/login">Login</Nav.Link>
+             <Nav.Link href="/login">{ReactSession.get("email")} ..Login</Nav.Link>
              "
            </Nav>
          </Navbar.Collapse>

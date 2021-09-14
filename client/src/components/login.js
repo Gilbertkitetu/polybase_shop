@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import ReactSession from 'react-client-session';
+import { useHistory } from "react-router-dom";
+import { ReactSession } from 'react-client-session';
 import { Form, Button, Card , Nav} from 'react-bootstrap';
 import axios from "axios";                                       
 
@@ -15,6 +16,9 @@ import Signup from './signup';
 
 
 function Login(){
+   
+    let history = useHistory();
+    
 
 
      //login hooks
@@ -33,6 +37,11 @@ function Login(){
         }
         axios.post('http://localhost:8000/api/v1/login', user_login).then(res => {
             alert(res.data.token)
+            ReactSession.setStoreType("localStorage"); 
+            ReactSession.set("usertoken", res.data.token);
+            ReactSession.set("email", user_login.email);
+            
+            history.push("/");
         }).then(err => {
             console.log(err)    
         })
