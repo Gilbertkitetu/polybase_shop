@@ -47,14 +47,14 @@ function App() {
            </Nav>
            <Nav>
              <Nav.Link href="/create-shop">Create shop</Nav.Link>
-             <Nav.Link href="/liked-products">Favorite</Nav.Link>
+             <Nav.Link href="/liked-products">Saved</Nav.Link>
              <Nav.Link href="/cart">Cart
              <span class="cart-basket d-flex align-items-center justify-content-center">
             0
           </span>
              </Nav.Link>
-             <Nav.Link href="/login">{ReactSession.get("email")} ..Login</Nav.Link>
-             "
+             <Nav.Link href="/login">{ReactSession.get("email") ? ReactSession.get("email") : "Login" }</Nav.Link>
+             
            </Nav>
          </Navbar.Collapse>
        </Navbar>

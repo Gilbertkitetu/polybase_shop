@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+
 import { Form, Button, Card, Nav } from 'react-bootstrap';
 
 
@@ -7,6 +8,10 @@ function CreateShop () {
     //create shop hooks
     const[shop_name, setShop_name] = useState('');
     const[location, setLocation] = useState('');
+    const[contry, setCountry] = useState('Kenya');
+    const[county, setCounty] = useState('');
+    const[town, setTown] = useState('');
+
 
     //send to server
     function handleSubmit (event) {
@@ -18,7 +23,7 @@ function CreateShop () {
         <>
         <Card style={{ width: '30rem', padding: '20px'}}>
             <Card.Body>
-                <h2 className="text-center mb-4">Create Shop</h2>
+                <h2 className="text-center mb-4">Create a Shop</h2>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group id="shop-name">
                         <Form.Label>Shop name</Form.Label>
@@ -28,6 +33,18 @@ function CreateShop () {
 
                     <Form.Group id="location">
                         <Form.Label>Shop Location</Form.Label>
+                        <Form.Control type="text" required value={location} onChange={(e) => {setLocation(e.target.value)}}/> 
+                    </Form.Group>
+                    <Form.Group id="location">
+                        <Form.Label>Country</Form.Label>
+                        <Form.Control type="text" required value={location} onChange={(e) => {setLocation(e.target.value)}}/> 
+                    </Form.Group>
+                    <Form.Group id="location">
+                        <Form.Label>County</Form.Label>
+                        <Form.Control type="text" required value={location} onChange={(e) => {setLocation(e.target.value)}}/> 
+                    </Form.Group>
+                    <Form.Group id="location">
+                        <Form.Label>Town</Form.Label>
                         <Form.Control type="text" required value={location} onChange={(e) => {setLocation(e.target.value)}}/> 
                     </Form.Group>
                     <Button className="w-100" type="submit">Create Shop</Button>

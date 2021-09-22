@@ -40,6 +40,7 @@ function Login(){
             ReactSession.setStoreType("localStorage"); 
             ReactSession.set("usertoken", res.data.token);
             ReactSession.set("email", user_login.email);
+            alert(ReactSession.get("email"))
             
             history.push("/");
         }).then(err => {
