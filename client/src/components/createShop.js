@@ -44,7 +44,7 @@ function CreateShop () {
                         <Form.Control type="text" required value={location} onChange={(e) => {setLocation(e.target.value)}}/> 
                     </Form.Group>
                     <Form.Group id="location">
-                        <Form.Label>Town</Form.Label>
+                        <Form.Label>City/Town</Form.Label>
                         <Form.Control type="text" required value={location} onChange={(e) => {setLocation(e.target.value)}}/> 
                     </Form.Group>
                     <Button className="w-100" type="submit">Create Shop</Button>

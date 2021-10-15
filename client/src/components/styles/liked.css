@@ -1,4 +1,10 @@
 .empty {
-    height: 300px;
+    height: 400px;
+    width: 100%;
+    background-color: #F1F0FF;
     background-image: url("../../images/empty.svg");
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden
 }
