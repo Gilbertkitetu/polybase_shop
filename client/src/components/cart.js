@@ -10,7 +10,7 @@ function Cart(){
             <Col md-9>
                 <Card>
                     <Card.Title>
-                        <span class="pull-right">(<strong>2</strong>) items</span>
+                        <span class="pull-right"><strong>2</strong>items</span>
                         <h5>Items in your cart</h5>
                     </Card.Title>
                     <Card.Body>
@@ -29,8 +29,7 @@ function Cart(){
                                         </a>
                                         </h3>
                                         <p class="small">
-                                            It is a long established fact that a reader will be distracted by the readable
-                                            content of a page when looking at its layout. The point of using Lorem Ipsum is
+                                            laptop description
                                         </p>
                                         <dl class="small m-b-none">
                                             <dt>Description lists</dt>
@@ -80,8 +79,7 @@ function Cart(){
                                             </a>
                                         </h3>
                                         <p class="small">
-                                            Distracted by the readable
-                                            content of a page when looking at its layout. The point of using Lorem Ipsum is
+                                            Table description
                                         </p>
                                         <dl class="small m-b-none">
                                             <dt>Description lists</dt>
@@ -154,9 +152,9 @@ function Cart(){
                         <h5>Support</h5>
                     </Card.Title>
                     <div class="ibox-content text-center">
-                        <h3><i class="fa fa-phone"></i> +43 100 783 001</h3>
+                        <h3><i class="fa fa-phone"></i> +254 746 362 456</h3>
                         <span class="small">
-                            Please contact with us if you have any questions. We are avalible 24h.
+                            Please contact with us if you have any questions. We are available 24 hours.
                         </span>
                     </div>
                 </Card>
@@ -165,13 +163,13 @@ function Cart(){
                     <Card.Body>
     
                         <p class="font-bold">
-                        Other products you may be interested
+                        Other related products
                         </p>
                         <hr></hr>
                         <div>
                             <a href="#" class="product-name"> Product 1</a>
                             <div class="small m-t-xs">
-                                Many desktop publishing packages and web page editors now.
+                                Product 1 description
                             </div>
                             <div class="m-t text-righ">
     
@@ -182,7 +180,7 @@ function Cart(){
                         <div>
                             <a href="#" class="product-name"> Product 2</a>
                             <div class="small m-t-xs">
-                                Many desktop publishing packages and web page editors now.
+                                Product 2 description
                             </div>
                             <div class="m-t text-righ">
     
