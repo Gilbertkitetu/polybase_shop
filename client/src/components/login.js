@@ -4,7 +4,7 @@ import { ReactSession } from 'react-client-session';
 import { Form, Button, Card , Nav} from 'react-bootstrap';
 import axios from "axios";                                       
 
-
+import GlobalVariables from '../GlobalVariables';
 
 
 //import style
@@ -18,24 +18,24 @@ import Signup from './signup';
 function Login(){
    
     let history = useHistory();
-    
 
 
      //login hooks
         const[email, setEmail] = useState('');
         const[password, setPassword] = useState('');
+    
 
    
     //post to server function
     function handleSubmit (event) {
         event.preventDefault();
-        alert(`Email: ${email} password: ${password}`);
+        //alert(`Email: ${email} password: ${password}`); 
 
         var user_login = {
             email : email,
             password : password
         }
-        axios.post('http://localhost:8000/api/v1/login', user_login).then(res => {
+        axios.post(` ${GlobalVariables.serverUrl}login`, user_login).then(res => {
             alert(res.data.token)
             ReactSession.setStoreType("localStorage"); 
             ReactSession.set("usertoken", res.data.token);

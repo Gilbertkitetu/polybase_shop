@@ -5,19 +5,25 @@ const mongoose = require('mongoose');
 
 const dotenv = require('dotenv'); //setting up config file
 
-dotenv.config({ path: './config.env' });
+dotenv.config(); //import config.env file
 
 
+
+const dbUrl = process.env.DB;
 
 const connectDatabase = () => {
-    mongoose.connect('mongodb://localhost:27017/polybase', {
-        useNewUrlParse: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true
-    }).then (con => {
-        console.log(`MongoDB database connected with HOST: ${con.connection.host}`);
-
-    })
+    const db = process.env.DB;    
+    
+    mongoose.connect("mongodb+srv://gilbertkitetu:Munywoki1@polybase.xpa8qil.mongodb.net/?retryWrites=true&w=majority", {
+          useNewUrlParser: true,
+          useUnifiedTopology:true,
+          useCreateIndex: true
+        }).then(()=>{
+          console.log("conected to mongodb");
+        }).catch(error => {
+          console.log("mongo error",error);
+        })
+    
 }
 
 

@@ -37,23 +37,23 @@ function App() {
      <div className = "App">
        <BrowserRouter>
 
-       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
+       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top" style={{backgroundColor: "#2C5F2D"}}>
          <Navbar.Brand  exact href="/">Polybase</Navbar.Brand>
          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
          <Navbar.Collapse id="responsive-navbar-nav">
            <Nav className="mr-auto">
            <Form.Control type="email" placeHolder="Search polybase" required></Form.Control>
-           <Button className="w-200" type="submit">Search</Button>
+           <button className="button-3" type="submit">Search</button>
            </Nav>
            <Nav>
-             <Nav.Link href="/create-shop">Create shop</Nav.Link>
+             <Nav.Link href="/create-shop" className="">Create shop</Nav.Link>
              <Nav.Link href="/liked-products">Saved</Nav.Link>
              <Nav.Link href="/cart">Cart
              <span class="cart-basket d-flex align-items-center justify-content-center">
             0
           </span>
              </Nav.Link>
-             <Nav.Link href="/login">{ReactSession.get("email") ? ReactSession.get("email") : "Login" }</Nav.Link>
+             <Nav.Link href="/login" >{ReactSession.get("email") ? ReactSession.get("email") : "Login" }</Nav.Link>
              
            </Nav>
          </Navbar.Collapse>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 //import uniqid from 'uniqid';
 import axios from 'axios';
-
+import GlobalVariables from '../GlobalVariables';
 import { Form, Button, Card, Nav } from 'react-bootstrap'
 
 
@@ -25,7 +25,7 @@ function Signup( ){
     //post to server function create account
     function handleSubmit (event) {
         event.preventDefault();
-        alert(`Email: ${user_email} password: ${user_password} Username: ${user_name}  phone no: ${user_phone_number}`)
+        //alert(`Email: ${user_email} password: ${user_password} Username: ${user_name}  phone no: ${user_phone_number}`)
         
         var user_account = {
             username : user_name,
@@ -37,7 +37,7 @@ function Signup( ){
             date_created: Date.now()
            
         }
-        axios.post(' http://localhost:8000/api/v1/add_new_user', user_account).then(res => {
+        axios.post(`${GlobalVariables.serverUrl}add_new_user`, user_account).then(res => {
             alert(res.data)
         }).then(err => {
             console.log(err)
