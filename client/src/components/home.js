@@ -131,7 +131,9 @@ function Home() {
           {
             Data.products.map((item) => {
               return (
+                <Col>
                 <ProductCard products = {item}/>
+                </Col>
               )
             })
 
@@ -141,7 +143,7 @@ function Home() {
 
       </div>
 
-      <Button className="w-100" type="submit">Load More</Button>
+      <button className="button-3" type="submit">Load More</button>
 
 
     </>

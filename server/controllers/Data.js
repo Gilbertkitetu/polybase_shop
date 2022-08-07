@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 const Data = {
 
@@ -136,4 +136,3 @@ const Data = {
     ]
 }
 
-export default Data

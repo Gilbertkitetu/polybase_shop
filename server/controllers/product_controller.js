@@ -3,6 +3,8 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsynErrors');
 const APIFeatures = require('../utils/apiFeatures');
 
+const Data = require('./Data.js');
+
 
 //create a new product => /api/v1/product/new
 exports.newProduct = catchAsyncErrors (async (req, res, next) => {
@@ -91,3 +93,15 @@ exports.deleteProduct = catchAsyncErrors (async (req, res, next) => {
     message: 'Product deleted succefully.'
     });
 })
+
+
+
+// exports.getProductUsingSlug = catchAsyncErrors (async (req, res, next) => {
+
+//     const product = await Data.products.find((x) => x.slug == req.params.slug);
+//     if(product) {
+//         res.send(product);
+//     } else {
+//         res.status(404).send({ message: 'Product Not Found' });
+//     }
+// });

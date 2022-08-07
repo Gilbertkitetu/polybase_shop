@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 const dotenv = require('dotenv');
 
-//settinh up config file
+//setting up config file
 dotenv.config({ path: 'server/config/config.env' });
 
 
@@ -24,10 +24,6 @@ const errorMiddleware = require('./middlewares/errors');
 const connectDatabase = require('./config/database');
 
 
-
-
-
-
 //middleware to handle errors
 app.use(errorMiddleware);
 
@@ -36,7 +32,6 @@ app.use(cors());
 //import all routes
 const products = require('./routes/product');
 const userRoute = require('./routes/user');
-
 
 
 app.use(bodyParser.json());
@@ -49,10 +44,6 @@ process.on('uncaughtException', err => {
     console.log(`Shutting down due to uncaught exception`);
     process.exit(1)
 })
-
-
-
-
 
 
 //connecting config file

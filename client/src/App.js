@@ -4,7 +4,7 @@ import logo from "./images/logo.png"
 import './App.css';
 
 
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, useParams } from 'react-router-dom';
 import { ReactSession } from "react-client-session";
 
 //import bootstrap stylesheet
@@ -27,6 +27,8 @@ import Liked from "./components/liked";
 import CreateShop from "./components/createShop";
 import Cart from "./components/cart";
 import { Container, Nav, Navbar, Button, Form} from "react-bootstrap";
+import ProductScreen from "./Screens/ProductScreen";
+
 
 
 
@@ -64,16 +66,19 @@ function App() {
             
           <Container style={{ marginTop: "20px" }}>
           
-            <Switch>
+            <Routes>
             
-              <Route path = '/' component = { Home } exact />
-              <Route path = '/signup' component = { Signup } exact />
-              <Route path = '/login' component = { Login } exact />
-              <Route path = '/liked-products' component = { Liked }/>
-              <Route path = '/create-shop' component = { CreateShop } />
-              <Route path = '/cart' component = { Cart } />
+              <Route path = '/' element = { <Home />}  />
+              <Route path = '/signup' element = { <Signup/> }  />
+              <Route path = '/login' element = { <Login/> }  />
+              <Route path = '/liked-products' element = { <Liked/> }/>
+              <Route path = '/create-shop' element = { <CreateShop/> } />
+              <Route path = '/cart' element = { <Cart/> } />
 
-            </Switch>
+
+              <Route path='/product/:slug' element={<ProductScreen />} />
+
+            </Routes>
             
             </Container>
 

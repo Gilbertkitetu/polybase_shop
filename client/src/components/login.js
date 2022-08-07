@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ReactSession } from 'react-client-session';
 import { Form, Button, Card , Nav} from 'react-bootstrap';
 import axios from "axios";                                       
@@ -17,7 +17,7 @@ import Signup from './signup';
 
 function Login(){
    
-    let history = useHistory();
+    let navigate = useNavigate();
 
 
      //login hooks
@@ -42,7 +42,7 @@ function Login(){
             ReactSession.set("email", user_login.email);
             alert(ReactSession.get("email"))
             
-            history.push("/");
+            navigate.push("/");
         }).then(err => {
             console.log(err)    
         })
