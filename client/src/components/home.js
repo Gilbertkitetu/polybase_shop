@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer} from "react";
 
-
+import axios from 'axios'
+import GlobalVariables from "../GlobalVariables";
+import { getError } from "../utils";
 
 import logo from "../images/pexels.jpg";
 
@@ -10,27 +12,62 @@ import './styles/home.css'
 //import components
 import Categories from './cart';
 import CategoryDir from "./homeComponents/categoryDir";
-import Data from "./Data";
+// import Data from "./Data";
 import { Carousel, Col, Card, Row, Button, ListGroup } from "react-bootstrap";
 import ProductCard from "./homeComponents/ProductCard";
 
 
 function Home() {
 
+   const [Products, setproducts] = useState()
 
-  // const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-  // const listItems = numbers.map((number) => 
-  // <li className="product-item">{number}</li>
-  // );
+  const reducer = (state, action) => {
+    switch (action.type) {
+        case 'FETCH_REQUEST':
+            return { ...state, loading: true };
+        case 'FETCH_SUCCESS':
+            return { ...state, product: action.payload, loading: false };
+        case 'FETCH_FAIL':
+            return { ...state, loading: false, error: action.payload };
+        default:
+            return state;
+    }
+};
+
+  const [{ loading, error, product }, dispatch] = useReducer(reducer, {
+    product: [],
+    loading: true,
+    error: '',
+});
+
+
+
+
+function alertClicked() {
+  alert('You clicked the third ListGroupItem');
+}
+
 
   useEffect(() => {
-    console.log(`Products: ${Data.products[0].productname}`)
+    console.log("Hello home")
+    const fetchProducts = async () => {
+      dispatch({ type: 'FETCH_REQUEST' });
+      try {
+          axios.get(`${GlobalVariables.serverUrl}get_products`).then(res => {
+            console.log(res.data)
+            setproducts(res.data)
+            dispatch({ type: 'FETCH_SUCCESS', payload: res.data });
+          });
+          
+           //result.data
+      } catch (err) {
+          dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
+      }
+  };
+
+    fetchProducts()
   }, [])
 
-
-  function alertClicked() {
-    alert('You clicked the third ListGroupItem');
-  }
 
 
   return (
@@ -129,7 +166,7 @@ function Home() {
         <Row className="w-100">
 
           {
-            Data.products.map((item) => {
+            Products.map((item) => {
               return (
                 <Col>
                 <ProductCard products = {item}/>

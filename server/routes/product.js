@@ -1,11 +1,11 @@
-const express = require('express')
-const router = express.Router();
+import express from 'express'
+const productsRoute = express.Router();
+
+import products from '../models/products.js';
 
 
-const Data = require('../controllers/Data.js');
 
-
-const { newProduct, getSingleProduct, updateProduct, deleteProduct, getProductUsingSlug } = require('../controllers/product_controller');
+//const { newProduct, getSingleProduct, updateProduct, deleteProduct, getProductUsingSlug } = require('../controllers/product_controller');
 
 // router.get('/get_users', (req, res) => {
 //     res.send("This is a get users route");
@@ -14,29 +14,44 @@ const { newProduct, getSingleProduct, updateProduct, deleteProduct, getProductUs
 
 
 
-router.route('./product/new').post(newProduct);
+// router.route('./product/new').post(newProduct);
 
-router.route('./product/:id').get(getSingleProduct);
+// router.route('./product/:id').get(getSingleProduct);
 
-router.route('./product/:id').put(updateProduct);
+// router.route('./product/:id').put(updateProduct);
 
-router.route('./product/:id').delete(deleteProduct);
+// router.route('./product/:id').delete(deleteProduct);
 
 //router.route('./products/slug/:slug').get(getProductUsingSlug);
+productsRoute.post('/products/add_n_product', (req, res) => {
+    const new_product = products.create(req.body);
+    console.log(req.body)
+    res.status(201).json({
+        success: true,
+        data: "Product Added Successfully"
+    })
+})
 
 
+productsRoute.get('/products/slug/:slug', (req, res) => {
 
-router.get('products/slug/:slug', (req, res) => {
-
-    const product = Data.products.find((x) => x.slug == req.params.slug);
-    if(product) {
-        res.send(product);
-    } else {
-        res.status(404).send({ message: 'Product Not Found' });
-    }
+    products.findOne({ slug : req.params.slug, function (err, product){
+        if(product) {
+            res.json(product);
+        } else {
+            res.status(404).send({ message: 'Product Not Found' });
+        }
+    }});
+  
 });
 
-router.get('./products', (req, res) => {
-    res.send(Data.products);
+productsRoute.get('/get_products', async(req, res) => { 
+   try{
+   const allproducts = await products.find();
+     return res.json(allproducts);  
+    } catch (error){
+        res.json({ message: error})
+}
 })
-module.exports = router;
+
+export default productsRoute;

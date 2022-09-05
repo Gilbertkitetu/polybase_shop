@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 
 
 
-const dotenv = require('dotenv'); //setting up config file
+import dotenv from 'dotenv'; //setting up config file
 
 dotenv.config(); //import config.env file
 
@@ -27,4 +27,4 @@ const connectDatabase = () => {
 }
 
 
-module.exports = connectDatabase;
+export default connectDatabase;

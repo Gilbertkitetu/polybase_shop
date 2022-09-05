@@ -1,12 +1,12 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-var jwt = require('jsonwebtoken')
-var bcrypt = require("bcrypt");
+import jwt from 'jsonwebtoken'
+import bcrypt from "bcrypt";
 
 
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const userModel = require('../models/user_model');
+import userModel from '../models/user_model.js'
 
 // Verify token
 function  verifyToken(req, res, next) {
@@ -116,4 +116,4 @@ router.post('/add_new_user', async (req, res) => {
 
 
 
-module.exports = router;
+export default router;

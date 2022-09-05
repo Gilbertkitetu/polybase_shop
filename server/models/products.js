@@ -1,11 +1,15 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
-    name: {
+    productname: {
         type: String,
         required: [true, 'Please enter product name'],
         trim: true,
-        maxLength: [100, 'Poduct name cannot exceed 100 characters']
+        maxLength: [100, 'Product name cannot exceed 100 characters']
+    },
+    slug : {
+        type: String,
+        required: [true, 'slug mising']
     },
     price: {
         type: Number,
@@ -17,11 +21,20 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter product description']
     },
+    product_details: {
+        type: String
+    },
+    brand: {
+        type: String
+    },
+    product_location: {
+        type: String
+    },
     ratings: {
         type: Number,
         default: 0
     },
-    images: {
+    imagesrc: {
 
     },
     category: {
@@ -50,13 +63,13 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter product seller']
     },
-    stock: {
+    countInStock: {
         type: Number,
         required: [true, 'Please enter product stock'],
         maxLength: [5, 'Product stock number cannot exceed 5 characters'],
         default: 0
     },
-    numOfReviews: {
+    numberReviews: {
         type: Number,
         default: 0
     },
@@ -64,24 +77,30 @@ const productSchema = new mongoose.Schema({
         {
             name: {
                 type: String,
-                required: true
+                
             },
             rating: {
                 type: Number,
-                required: true
+                
             },
             comment: {
                 type: String,
-                required: true
+                
             }
         }
     ],
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    updatedAt: {
+        type: Date
+        
     }
     
 })
 
+const products = mongoose.model('Product', productSchema);
 
-module.exports = mongoose.model('Product', productSchema);
+export default products;
+
