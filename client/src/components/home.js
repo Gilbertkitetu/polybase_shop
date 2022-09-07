@@ -19,7 +19,7 @@ import ProductCard from "./homeComponents/ProductCard";
 
 function Home() {
 
-   const [Products, setproducts] = useState()
+   const [Products, setproducts] = useState([])
 
   const reducer = (state, action) => {
     switch (action.type) {

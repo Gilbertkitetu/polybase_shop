@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect} from 'react';
 //import uniqid from 'uniqid';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import GlobalVariables from '../GlobalVariables';
 import { Form, Button, Card, Nav } from 'react-bootstrap'
-
+import { Helmet } from 'react-helmet-async';
+import { Store } from '../Store';
+import { toast } from 'react-toastify';
+import { getError } from '../utils';
 
 //import style
 import './styles/signup.css';
 
-//import components
+//import 
 
 
 
 function Signup( ){
-
+    const navigate = useNavigate();
+    
+    const { search } = useLocation();
+    const redirectInUrl = new URLSearchParams(search).get('redirect');
+    const redirect = redirectInUrl ? redirectInUrl : '/';
    
     //defining hooks for signing up a new user
     const[user_name, set_user_name] = useState('');
@@ -21,31 +29,44 @@ function Signup( ){
     const[user_phone_number, set_user_phone_number] = useState('');
     const[user_password, set_user_password] = useState('');
 
+    const { state, dispatch: ctxDispatch } = useContext(Store);
+    const { userInfo } = state;
 
     //post to server function create account
-    function handleSubmit (event) {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         //alert(`Email: ${user_email} password: ${user_password} Username: ${user_name}  phone no: ${user_phone_number}`)
         
         var user_account = {
-            username : user_name,
+            name : user_name,
             email: user_email,
             phone_number: user_phone_number,
             password: user_password,
-            shop_name: "",
+            
             location: "",
-            date_created: Date.now()
+            date_created: Date.now(),
+            data_updated: Date.now()
            
         }
-        axios.post(`${GlobalVariables.serverUrl}add_new_user`, user_account).then(res => {
-            alert(res.data)
-        }).then(err => {
-            console.log(err)
-        })
-
-
-
+        // axios.post(`${GlobalVariables.serverUrl}add_new_user`, user_account).then(res => {
+        //     alert(res.data)
+        // }).then(err => {
+        //     console.log(err)
+        // })
+        try {
+            const { data } = await axios.post(`${GlobalVariables.serverUrl}add_new_user`, user_account);
+            ctxDispatch({ type: 'USER_SIGNIN', payload: data })
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            navigate(redirect || '/');
+        } catch (err) {
+            toast.error(getError(err));
+        }
     }
+useEffect(() => {
+    if(userInfo) {
+        navigate(redirect);
+    }
+}, [navigate, redirect, userInfo]);
 
 
     return(
@@ -73,7 +94,7 @@ function Signup( ){
                     <Button className="w-100" type="submit">Sign Up</Button>
                 </Form>
                 <div className="w-100 text-center mt-2" style={{color: "black"}}>
-                Already have account? <Nav.Link href="/login">Sign In</Nav.Link>
+                Already have an account? <Link to={`/login?redirect=${redirect}`}>Sign In</Link>
             </div>
             </Card.Body>
         </Card>

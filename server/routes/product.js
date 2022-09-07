@@ -33,17 +33,25 @@ productsRoute.post('/products/add_n_product', (req, res) => {
 })
 
 
-productsRoute.get('/products/slug/:slug', (req, res) => {
+productsRoute.get('/products/slug/:slug', async (req, res) => {
 
-    products.findOne({ slug : req.params.slug, function (err, product){
-        if(product) {
-            res.json(product);
-        } else {
-            res.status(404).send({ message: 'Product Not Found' });
-        }
-    }});
+   const product = await products.findOne({ slug: req.params.slug });
+   if(product) {
+    res.send(product);
+   } else {
+ res.status(404).send({ message: 'Product Not Found'});
+   }
   
 });
+
+productsRoute.get('/products/:_id', async (req, res) => {
+    const product = await products.findOne({ _id: req.params._id });
+    if (product) {
+        res.send(product);
+    }else {
+        res.status(404).send({ message: 'Product Not Found' });
+    }
+})
 
 productsRoute.get('/get_products', async(req, res) => { 
    try{

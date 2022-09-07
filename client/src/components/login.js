@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { ReactSession } from 'react-client-session';
 import { Form, Button, Card , Nav} from 'react-bootstrap';
 import axios from "axios";                                       
 
 import GlobalVariables from '../GlobalVariables';
+import { Helmet } from 'react-helmet-async';
+
+import { Store } from '../Store';
+import { toast } from 'react-toastify';
+import { getError } from '../utils';
 
 
 //import style
@@ -19,41 +24,50 @@ function Login(){
    
     let navigate = useNavigate();
 
+    const { search } = useLocation();
+    const redirectInUrl = new URLSearchParams(search).get('redirect');
+    const redirect = redirectInUrl ? redirectInUrl : '/';
+   
 
      //login hooks
         const[email, setEmail] = useState('');
         const[password, setPassword] = useState('');
     
+        const { state, dispatch: ctxDispatch } = useContext(Store);
+        const { userInfo } = state;
 
+        const submitHandler = async (e) => {
+            e.preventDefault();
+            try {
+                const { data } = await axios.post(`${GlobalVariables.serverUrl}login`, {
+                    email,
+                    password,
+                });
+                ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+                localStorage.setItem('userInfo', JSON.stringify(data));
+                navigate(redirect || '/');
+            } catch (err) {
+                toast.error(getError(err));
+            }
+        };
+
+        useEffect(() => {
+            if (userInfo) {
+                navigate(redirect);
+            }
+
+        }, [navigate, redirect, userInfo]);
    
-    //post to server function
-    function handleSubmit (event) {
-        event.preventDefault();
-        //alert(`Email: ${email} password: ${password}`); 
-
-        var user_login = {
-            email : email,
-            password : password
-        }
-        axios.post(` ${GlobalVariables.serverUrl}login`, user_login).then(res => {
-            alert(res.data.token)
-            ReactSession.setStoreType("localStorage"); 
-            ReactSession.set("usertoken", res.data.token);
-            ReactSession.set("email", user_login.email);
-            alert(ReactSession.get("email"))
-            
-            navigate.push("/");
-        }).then(err => {
-            console.log(err)    
-        })
-    }
 
     return(
         <>
+        <Helmet>
+            <title>Sign In</title>
+        </Helmet>
             <Card style={{ width: '30rem', padding: '20px' }}>
                 <Card.Body>
                     <h2 className="text-center mb-4">Sign In</h2>
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={submitHandler}>
                         <Form.Group id="email">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email"  required value={email} onChange={(e) => {setEmail(e.target.value)}}/>
@@ -66,7 +80,7 @@ function Login(){
                         <Button className="w-100" type="submit">Sign In</Button>
                     </Form>
                     <div className="w-100 text-center mt-2" style={{color: "black"}}>
-                Don't have an Account?  <Nav.Link href="/signup">Sign Up</Nav.Link>
+                Don't have an Account?  <Link to={`/signup?redirect=${redirect}`}>Create Account</Link>
             </div>
                 </Card.Body>
             </Card>

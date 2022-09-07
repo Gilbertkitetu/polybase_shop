@@ -2,6 +2,8 @@ import express from 'express';
 const router = express.Router();
 import jwt from 'jsonwebtoken'
 import bcrypt from "bcrypt";
+import expressAsyncHandler from 'express-async-handler'
+
 
 
 import mongoose from 'mongoose';
@@ -28,7 +30,7 @@ function  verifyToken(req, res, next) {
     }
 }
 
-router.post('/login', async (req, res) => {
+router.post('/login', expressAsyncHandler( async (req, res) => {
 
     //mock user
     // const user = {
@@ -43,15 +45,19 @@ router.post('/login', async (req, res) => {
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if (validPassword) {
            // res.status(200).json({ message: "Valid password" })
-            jwt.sign({ user: user }, 'mysecretkey', { expiresIn: '1h'},(err, token) => {
+            jwt.sign({ user: user }, 'mysecretkey', { expiresIn: '30d'},(err, token) => {
                 console.log(token);
                 res.json({
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
                     token: token
                 });
+                return
             });
         
         }else{
-            res.status(400).json({ error: "Invalid Password" });
+            res.status(401).json({ message: "Invalid Email or Password" });
         }
     }else{
         res.status(401).json({ error: "User does not exist" });
@@ -59,7 +65,7 @@ router.post('/login', async (req, res) => {
 
     
     //res.send("This is the login route")
-});
+}));
 
 router.post('/create-shop', verifyToken, (req, res) => {
     jwt.verify(req.token, 'mysecretkey', (err, authData) => {
@@ -93,14 +99,14 @@ router.post('/add_new_user', async (req, res) => {
     req.body.password = await bcrypt.hash(req.body.password, salt);
 
     const new_user = new userModel({
-        username : req.body.username,
+        name : req.body.name,
         email : req.body.email,
         phone_number : req.body.phone_number,
         password: req.body.password,
-        user_id: req.body.user_id,
-        shop_name: req.body.shop_name,
+        
         location: req.body.location,
-        date_created: req.body.date_created
+        date_created: req.body.date_created,
+        date_updated: req.body.date_updated
     })
 
     new_user.save(function (err) {
