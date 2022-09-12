@@ -11,21 +11,20 @@ import Data from './Data';
 
 function CreateShop() {
 
-
-
-    const [value, setValue] = useState('')
     const options = useMemo(() => countryList().getData(), [])
     const countries = useMemo(() => Data.Counties, [])
     console.log(`Counties: ${Data.Counties}`)
 
-    const changeHandler = value => {
-        setValue(value)
-    }
+
+    const [value, setValue] = useState('')
+    // const [country, setcountry] = useState('');
+    // const [countystate, setcounty] = useState('')
+
 
     //create shop hooks
     const [shop_name, setShop_name] = useState('');
     const [location, setLocation] = useState('');
-    const [contry, setCountry] = useState('Kenya');
+    const [country, setCountry] = useState('Kenya');
     const [county, setCounty] = useState('');
     const [town, setTown] = useState('');
 
@@ -84,11 +83,11 @@ function CreateShop() {
                         </Form.Group>
                         <Form.Group id="location">
                             <Form.Label>Country</Form.Label>
-                            <Select options={options} value={value} onChange={changeHandler} />
+                            <Select options={options} value={country} onChange={(value) => setCountry(value) } />
                         </Form.Group>
                         <Form.Group id="location">
                             <Form.Label>County</Form.Label>
-                            <Select options={countries} value={value} onChange={changeHandler} />
+                            <Select options={countries} value={county} onChange={(value) => setCounty(value)} />
                         </Form.Group>
                         <Form.Group id="location">
                             <Form.Label>City/Town</Form.Label>

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import logo from "./images/logo.png"
 //importing styles
 import './App.css';
@@ -19,7 +19,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
-import { Container, Nav, Navbar, Badge, Form, NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar, Badge, Form, NavDropdown, Dropdown } from "react-bootstrap";
 import { LinkContainer } from 'react-router-bootstrap'
 import { Helmet } from "react-helmet-async";
 import { Store } from "./Store";
@@ -42,6 +42,10 @@ import ProductScreen from "./Screens/ProductScreen";
 import ShippingAddress from "./components/ShippingAddress";
 import PaymentMethod from "./components/PaymentMethod";
 import PlaceOrder from "./components/PlaceOrder";
+import OrderScreen from "./Screens/OrderScreen";
+import OrderHistory from "./Screens/OrderHistory";
+import ShopOrders from "./Screens/ShopOrders";
+import Sell from "./components/Sell";
 
 
 
@@ -50,6 +54,10 @@ import PlaceOrder from "./components/PlaceOrder";
 
 
 function App() {
+
+  const [showDropdown, setshowDropdown] = useState(false)
+
+
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
 
@@ -58,6 +66,7 @@ function App() {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
     localStorage.removeItem('paymentMethod');
+    window.location.href = '/login';
   }
 
   return (
@@ -80,6 +89,8 @@ function App() {
            <button className="button-3" type="submit">Search</button>
            </Nav>
            <Nav>
+           <Nav.Link href="/sell">Sell</Nav.Link>
+           <Nav.Link href="/yourcustomerorders">Orders</Nav.Link>
              <Nav.Link href="/create-shop" className="">Create shop</Nav.Link>
              <Nav.Link href="/liked-products">Saved</Nav.Link>
              <Nav.Link href="/cart">
@@ -92,19 +103,35 @@ function App() {
               )}
              </Nav.Link>
              {userInfo ? (
-              <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                <LinkContainer to="/profile">
-                  <NavDropdown.Item>User Profile</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to="/orderhistory">
-                  <LinkContainer.Item>Order History</LinkContainer.Item>
-                </LinkContainer>
-                <NavDropdown.Divider />
-                <Link className="dropdown-item" to="#signout" onClick={signoutHandler}>
-                  Sign Out
-                </Link>
+           
+              <Dropdown 
+              onMouseLeave={()=> setshowDropdown(false)}
+              onMouseOver={() => setshowDropdown(true)}
+              style={{ width: '166px'}}
+              >
+                <Dropdown.Toggle className="main-style"
+                id="dropdown-basic">
+                  {userInfo.name}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu show={showDropdown}>
+                  <Dropdown.Item href="/profile">
+                  User Profile
+                  </Dropdown.Item>
+                  <Dropdown.Item href="/orderhistory">
+                  Order History
+                  </Dropdown.Item>
                   
-              </NavDropdown>
+                  <Dropdown.Item href="#signout" onClick={signoutHandler}>
+                  Sign Out
+                  </Dropdown.Item>
+                  
+
+                  </Dropdown.Menu>
+
+              </Dropdown>
+                
+                  
              ) : (
               <Link className="nav-link" to="/login">Sign In</Link>
              )}
@@ -133,10 +160,11 @@ function App() {
               <Route path = '/shipping' element = { <ShippingAddress/> } />
               <Route path = '/payment' element = { <PaymentMethod/> } />
               <Route path = '/placeorder' element = { <PlaceOrder/> } />
-
-              
+              <Route path = '/order/:id' element = { <OrderScreen /> } />
+              <Route path = '/orderhistory' element = { <OrderHistory /> } />
+              <Route path = '/yourcustomerorders' element = { <ShopOrders /> } />
               <Route path='/product/:slug' element={<ProductScreen />} />
-
+              <Route path = '/sell' element = {<Sell /> } />
             </Routes>
             
             </Container>

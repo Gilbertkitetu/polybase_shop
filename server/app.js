@@ -23,6 +23,7 @@ app.use(cors());
 //import all routes
 import productsRoute from './routes/product.js';
 import userRoute from './routes/user.js';
+import orderRouter from './routes/Order.js';
 
 
 app.use(bodyParser.json());
@@ -47,6 +48,7 @@ app.get('/api/v1', (req, res) => res.send('Hello there Polybase here'))
 
 app.use('/api/v1', userRoute);
 app.use('/api/v1', productsRoute);
+app.use('/api/v1', orderRouter);
 
 
 const sever = app.listen(port, () => console.log(`polybase server listening at http://localhost:${port}`));

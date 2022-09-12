@@ -89,9 +89,9 @@ router.get('/get_users', (req, res) => {
 
 router.post('/add_new_user', async (req, res) => {
     //res.send("Add new user -route");
-    if(!(req.body.username && req.body.email && req.body.phone_number && req.body.password)){
-        return res.status(400).send({ error: "Data not formatted correctly"});
-    }
+    // if(!(req.body.username && req.body.email && req.body.phone_number && req.body.password)){
+    //     return res.status(400).send({ error: "Data not formatted correctly"});
+    // }
 
     //generate salt to hash password
     const salt = await bcrypt.genSalt(10);
