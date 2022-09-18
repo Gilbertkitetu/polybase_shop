@@ -9,7 +9,7 @@ import React from 'react';
 function NavbarComponent(){
     return(
         // <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        //     <Navbar.Brand href="#home" >Polybase</Navbar.Brand>
+        //     <Navbar.Brand href="#home" >EPSB</Navbar.Brand>
         //     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
         //     <Navbar.Collapse id="responsive-navbar-nav">
         //         <Nav className="mr-auto">

@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "html5-file-selector": "^2.1.0",
+    "react-dropzone-uploader": "^2.11.0"
+  }
+}

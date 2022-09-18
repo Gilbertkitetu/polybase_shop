@@ -93,14 +93,15 @@ export default function Cart() {
             <Card.Body>
               <ListGroup variant="flush">
                 <ListGroup.Item>
+                  
                   <h3>
                     Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
-                    items) : $ {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
+                    items) : KSHs {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
                   </h3>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <div className='d-grid'>
-                    <Button type="button" variant="primary"
+                    <Button type="button" variant="success"
                     onClick={checkoutHandler}
                     disabled={cartItems.length === 0}>
                       Proceed to Checkout</Button>

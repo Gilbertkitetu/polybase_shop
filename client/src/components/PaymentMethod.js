@@ -45,11 +45,12 @@ function PaymentMethod() {
             <Form onSubmit={submitHandler}>
                 <div className='mb-3'>
                     <Form.Check type='radio' id='Mpesa' label='Mpesa' value='Mpesa'
+                    variant='success'
                     checked={paymentMethodName === 'Mpesa'}
                     onChange={(e) => setPaymentMethod(e.target.value)}/>
                 </div>
                 <div className='mb-3'>
-                    <Button type='submit'>Continue</Button>
+                    <Button type='submit' variant='success'>Continue</Button>
                 </div>
             </Form>
         </div>

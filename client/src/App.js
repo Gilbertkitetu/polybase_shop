@@ -19,7 +19,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
-import { Container, Nav, Navbar, Badge, Form, NavDropdown, Dropdown } from "react-bootstrap";
+import { Container, Nav, Navbar, Badge, Form, NavDropdown,ButtonGroup,Button, Dropdown } from "react-bootstrap";
 import { LinkContainer } from 'react-router-bootstrap'
 import { Helmet } from "react-helmet-async";
 import { Store } from "./Store";
@@ -75,17 +75,17 @@ function App() {
        <BrowserRouter>
        <ToastContainer position="botton-center" limit={1} />
        <Helmet>
-       <title>Polybase</title>
+       <title>EPSB</title>
        </Helmet>
 
        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top" style={{backgroundColor: "#2C5F2D"}}>
          <Link to ="/">
-         <Navbar.Brand>Polybase</Navbar.Brand>
+         <Navbar.Brand>EPSB</Navbar.Brand>
          </Link>
          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
          <Navbar.Collapse id="responsive-navbar-nav">
            <Nav className="mr-auto">
-           <Form.Control type="email" placeholder="Search polybase" required></Form.Control>
+           <Form.Control type="email" placeholder="Search EPSB" required></Form.Control>
            <button className="button-3" type="submit">Search</button>
            </Nav>
            <Nav>
@@ -104,24 +104,33 @@ function App() {
              </Nav.Link>
              {userInfo ? (
            
-              <Dropdown 
+              <Dropdown className=""
+              variant="dark"
+              
               onMouseLeave={()=> setshowDropdown(false)}
               onMouseOver={() => setshowDropdown(true)}
-              style={{ width: '166px'}}
+              style={{ width: '150px', backckgroudColor: 'dark'}}
               >
-                <Dropdown.Toggle className="main-style"
-                id="dropdown-basic">
+                
+                <Dropdown.Toggle className="userinfo"
+                id="dropdown-basic"  variant="success">
                   {userInfo.name}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu show={showDropdown}>
-                  <Dropdown.Item href="/profile">
-                  User Profile
+                  <Dropdown.Item href="/myshop">
+                  Your Shop  
                   </Dropdown.Item>
+
+                  <Dropdown.Item href="/profile">
+                  Your Profile
+                  </Dropdown.Item>
+
                   <Dropdown.Item href="/orderhistory">
                   Order History
                   </Dropdown.Item>
-                  
+
+                  <Dropdown.Divider />
                   <Dropdown.Item href="#signout" onClick={signoutHandler}>
                   Sign Out
                   </Dropdown.Item>
@@ -148,7 +157,7 @@ function App() {
             <Routes>
                 
               <Route path = '/admin/dashboard' element = { <Dashboard /> } />
-              <Route path = '/shop/shopdashboard' element = { <ShopDashboard /> } />
+              <Route path = '/myshop' element = { <ShopDashboard /> } />
               
               
               <Route path = '/' element = { <Home />}  />

@@ -110,27 +110,27 @@ function alertClicked() {
         <Col sm md={8} className="w-400" class="rounded-1">
           <Carousel >
             <Carousel.Item>
-              <img className="d-block w-100" src="https://images.pexels.com/photos/2893540/pexels-photo-2893540.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              <img className="d-block w-100" src="https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=600"
                 alt="First slide" />
               <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>What is this photo about</p>
+                <h3>Laptop</h3>
+                <p>Get more products here</p>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item >
               <img className="d-block w-100" src="https://images.pexels.com/photos/3373731/pexels-photo-3373731.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="First slide" />
               <Carousel.Caption>
-                <h3>Second slide label</h3>
-                <p>What is this photo about</p>
+                <h3>Make up products</h3>
+                <p>Get more beauty products here</p>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item >
               <img className="d-block w-100" src="https://images.pexels.com/photos/2880732/pexels-photo-2880732.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="First slide" />
               <Carousel.Caption>
-                <h3>Third slide label</h3>
-                <p>What is this photo about</p>
+                <h3>Accessories</h3>
+                <p>Get more accessories here</p>
               </Carousel.Caption>
             </Carousel.Item>
           </Carousel>

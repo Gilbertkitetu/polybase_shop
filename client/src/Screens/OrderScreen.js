@@ -72,18 +72,25 @@ export default function OrderScreen() {
       <Helmet>
         <title>Order {orderId}</title>
       </Helmet>
-      <h1 className="my-3">Order: <h5>{orderId}</h5></h1> 
+      <h1 className="my-3">Order <h5>{orderId}</h5></h1> 
       <Row>
         <Col md={8}>
           <Card className="mb-3">
             <Card.Body>
-              <Card.Title>Shipping</Card.Title>
+              <Card.Title>Delivery Address</Card.Title>
               <Card.Text>
+               
                 <strong>Name:</strong> {order.shippingAddress.fullName} <br />
-                <strong>Address: </strong> {order.shippingAddress.address},
-                {order.shippingAddress.city}, {order.shippingAddress.county1}
-                ,{order.shippingAddress.country1}
+                <strong>  Address: </strong>
+                 {order.shippingAddress.address}
+                 <strong>  City/Town: </strong>
+                {order.shippingAddress.city}
+                <strong>  County: </strong>
+                 {order.shippingAddress.county1}
+                 <strong>  Country: </strong>
+                {order.shippingAddress.country1}
               </Card.Text>
+              <Card.Text><strong>Phone number: </strong>{userInfo.phone_number}</Card.Text>
               {order.isDelivered ? (
                 <MessageBox variant="success">
                   Delivered at {order.deliveredAt}
@@ -117,18 +124,18 @@ export default function OrderScreen() {
                   <ListGroup.Item key={item._id}>
                     <Row className="align-items-center">
                       <Col md={6}>
-                        <h6>{item.productname}</h6>
+                       
                         <img
                           src={item.imagesrc}
                           alt={item.productname}
                           className="img-fluid rounded img-thumbnail"
                         ></img>{' '}
-                        <Link to={`/product/${item.slug}`}>{item.name}</Link>
+                        <Link to={`/product/${item.slug}`}>{item.productname}</Link>
                       </Col>
                       <Col md={3}>
                         <span>{item.quantity}</span>
                       </Col>
-                      <Col md={3}>KSHs {item.price}</Col>
+                      <Col md={3}><strong>Each</strong> KSHs {item.price}</Col>
                     </Row>
                   </ListGroup.Item>
                 ))}
@@ -174,7 +181,8 @@ export default function OrderScreen() {
                 <ListGroup.Item>
                 <Row>
                   <Col>
-                        <Button>Pay</Button>
+                        <Button type="button"
+                      variant='success'>Pay</Button>
                     </Col>
                   </Row>
                 </ListGroup.Item>

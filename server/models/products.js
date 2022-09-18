@@ -27,6 +27,14 @@ const productSchema = new mongoose.Schema({
     brand: {
         type: String
     },
+    latitude: {
+        type: String,
+        require: true
+    },
+    longitude: {
+        type: String,
+        required: true
+    },
     product_location: {
         type: String
     },
@@ -35,30 +43,12 @@ const productSchema = new mongoose.Schema({
         default: 0
     },
     imagesrc: {
-
+        type: String
     },
     category: {
         type: String,
-        required: [true, 'Please select category'],
-        enum: {
-            values: [
-            'Electronics',
-            'Cameras',
-            'laptops',
-                'Accessories',
-                'Books',
-                'Clothes',
-                'Shoes',
-                'Beauty',
-                'Health',
-                'Sports',
-                'Outdoor',
-                'Home'
-        ],
-        message: 'Please select correct category for product'
-    }
+        required: true
     },
-
     seller: {
         type: String,
         required: [true, 'Please enter product seller']

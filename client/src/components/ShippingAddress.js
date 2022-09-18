@@ -8,6 +8,7 @@ import CheckoutSteps from '../Screens/CheckoutSteps'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import Data from './Data'
+import './styles/Styles.css'
 
 
 function ShippingAddress() {
@@ -68,15 +69,7 @@ function ShippingAddress() {
       
       axios.request(option).then(function (response) {
           console.log(response.data);
-        //   let nearlocationsArray = [];
-        //   let nearlocationsObj = response.data;
-        //   nearlocationsObj.forEach((Location) => {
-        //     console.log(Location)
-        //     nearlocationsArray.push(Location.City)
-        //     console.log(`Arra of city : ${Location.City}`)
-            
-
-        //   })
+     
 
           setnearAddresses(response.data)
 
@@ -100,7 +93,7 @@ function ShippingAddress() {
           console.log(response.data);
 
           setnearCity(response.data)
-        //   setCountry(response.data[0].Country)
+       
 
       }).catch(function (error) {
           console.error(error);
@@ -150,12 +143,12 @@ function ShippingAddress() {
   return (
     <div>
         <Helmet>
-            <title>Shipping Address</title>
+            <title>Delivery Address</title>
         </Helmet>
 
         <CheckoutSteps step1 step2></CheckoutSteps>
         <div className='container small-container'>
-            <h1 className='my-3'>Shipping Address</h1>
+            <h1 className='my-3'>Delivery Address</h1>
             <Form onSubmit={submitHandler}>
                 <Form.Group className='mb-3' controlId='fullName'>
                     <Form.Label>Full Name</Form.Label>
@@ -168,7 +161,8 @@ function ShippingAddress() {
                     <select onChange={(e) => setAddress(e.target.value)}
                     value={address}
                     required
-                    name='nearAddresses' id='address'>
+                    name='nearAddresses' id='address'  className='select'>
+                        <option>Select your nearest address</option>
                         {nearAddresses.map((option, index) => (
                             <option key={index} value={option.City}>
                                 {option.City}
@@ -184,7 +178,8 @@ function ShippingAddress() {
                      <select onChange={(e) => setCity(e.target.value)}
                     value={city}
                     required
-                    name='nearCity' id='city'>
+                    name='nearCity' id='city' className='select'>
+                        <option value=''>Select your nearest city or town</option>
                         {nearCity.map((option, index) => (
                             <option key={index} value={option.City}>
                                 {option.City}
@@ -205,7 +200,7 @@ function ShippingAddress() {
                 </Form.Group>
                 
                 <div className='mb-3'>
-                    <Button variant='primary' type='submit'>
+                    <Button variant='success' type='submit'>
                         Continue
                     </Button>
                 </div>

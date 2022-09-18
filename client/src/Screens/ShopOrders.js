@@ -69,10 +69,9 @@ function ShopOrders() {
           <thead>
             <tr>
               <th>Order Id</th>
-              <th>Product</th>
+              <th>Date Ordered</th>
+              {/* <th>Product</th> */}
               <th>Total Price</th>
-              <th>Date</th>
-              
               <th>Paid</th>
               <th>Delivered</th>
               <th>Actions</th>
@@ -83,6 +82,7 @@ function ShopOrders() {
               <tr key={order._id}>
                 <td>{order._id}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
+                {/* <td>{order.productname}</td> */}
                 <td>{order.totalPrice.toFixed(2)}</td>
                 <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
                 <td>

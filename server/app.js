@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import fileUpload from 'express-fileupload';
 
 //setting up config file
 dotenv.config({ path: 'server/config/config.env' });
@@ -17,13 +18,14 @@ import connectDatabase from './config/database.js';
 
 //middleware to handle errors
 app.use(errorMiddleware);
-
+app.use(fileUpload());
 app.use(cors());
 
 //import all routes
 import productsRoute from './routes/product.js';
 import userRoute from './routes/user.js';
-import orderRouter from './routes/Order.js';
+import orderRouter from './routes/Order.js'; 
+import shopsRoute from './routes/Shop.js';
 
 
 app.use(bodyParser.json());
@@ -44,14 +46,15 @@ connectDatabase();
 
 const port = process.env.PORT || 8000;
 
-app.get('/api/v1', (req, res) => res.send('Hello there Polybase here'))
+app.get('/api/v1', (req, res) => res.send('Hello there EPSB here'))
 
 app.use('/api/v1', userRoute);
 app.use('/api/v1', productsRoute);
 app.use('/api/v1', orderRouter);
+app.use('/api/v1', shopsRoute);
 
 
-const sever = app.listen(port, () => console.log(`polybase server listening at http://localhost:${port}`));
+const sever = app.listen(port, () => console.log(`EPSB server listening at http://localhost:${port}`));
 
 
 //handle unhandled promise rejections

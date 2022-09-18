@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { useContext, useEffect, useReducer } from 'react';
+import { useContext, useEffect, useReducer, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import '../components/styles/Styles.css'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
@@ -38,6 +39,11 @@ function ProductScreen() {
     // const [comment, setComment] = useState('');
     // const [selectedImage, setSelectedImage] = useState('');
   
+    
+  const [latitude, setlatitude] = useState('');
+  const [longitude, setlongitude] = useState('');
+
+
     const navigate = useNavigate();
     const params = useParams();
     const { slug } = params;
@@ -49,6 +55,19 @@ function ProductScreen() {
     });
     useEffect(() => {
         
+                //User Location
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position){
+    
+    console.log(`latitude: ${position.coords.latitude}`)
+    setlatitude(position.coords.latitude)
+    console.log(`longitude: ${position.coords.longitude}`)
+    setlongitude(position.coords.longitude)
+    
+    })
+  
+    }
+
         const fetchData = async () => {
             dispatch({ type: 'FETCH_REQUEST' });
             try {
@@ -60,6 +79,19 @@ function ProductScreen() {
         };
         fetchData();
     }, [slug]);
+
+    function distance(lat1, lon1, lat2, lon2) {
+        console.log(lat1, lon1, lat2, lon2)
+        var p = 0.017453292519943295;    // Math.PI / 180
+        var c = Math.cos;
+        var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+                c(lat1 * p) * c(lat2 * p) * 
+                (1 - c((lon2 - lon1) * p))/2;
+      
+        
+        const dis = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+        return parseFloat(dis).toFixed(2);
+      }
 
     const { state, dispatch: ctxDispatch } = useContext(Store);
 
@@ -94,10 +126,10 @@ function ProductScreen() {
             <Row>
                 <Col md={6}>
                     <img
-                        className="img-large"
+                        className="img"
                         src={product.imagesrc}
                         alt={product.productname}
-                    ></img>
+                    />
                 </Col>
                 <Col md={3}>
                     <ListGroup variant="flush">
@@ -105,7 +137,7 @@ function ProductScreen() {
                             <Helmet>
                 <title>{product.productname}</title>
               </Helmet>
-                            <h1>{product.productname}</h1>
+                            <h5>{product.productname}</h5>
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Ratings
@@ -113,9 +145,9 @@ function ProductScreen() {
                                 numReviews={product.numberReviews}
                             ></Ratings>
                         </ListGroup.Item>
-                        <ListGroup.Item>Pirce : KSh {product.price}</ListGroup.Item>
+                        <ListGroup.Item>Price : <strong>KSh {product.price}</strong></ListGroup.Item>
                         <ListGroup.Item>
-                            Description:
+                            <strong>Description:</strong>
                             <p>{product.description}</p>
                         </ListGroup.Item>
                     </ListGroup>
@@ -142,11 +174,14 @@ function ProductScreen() {
                                         </Col>
                                     </Row>
                                 </ListGroup.Item>
+                                <ListGroup.Item><strong>Brand: </strong> {product.brand}</ListGroup.Item>
+                                <ListGroup.Item><strong>Location: </strong>{product.product_location}</ListGroup.Item>
+                                <ListGroup.Item><strong>Distance: </strong>≈ <strong>{distance(product.latitude, product.longitude, latitude, longitude)}</strong> km away</ListGroup.Item>
 
                                 {product.countInStock > 0 && (
                                     <ListGroup.Item>
                                         <div className="d-grid">
-                                            <Button onClick={addToCartHandler} variant="primary">Add to Cart</Button>
+                                            <Button onClick={addToCartHandler} variant="success">Add to Cart</Button>
                                         </div>
                                     </ListGroup.Item>
                                 )}

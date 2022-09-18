@@ -101,13 +101,19 @@ function PlaceOrder() {
         <Col md={8}>
           <Card className="mb-3">
             <Card.Body>
-              <Card.Title>Shipping</Card.Title>
+              <Card.Title>Delivery Address</Card.Title>
               <Card.Text>
                 <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
-                <strong>Address: </strong> {cart.shippingAddress.address},
-                {cart.shippingAddress.city}, {cart.shippingAddress.county1},
+                <strong>  Address: </strong>
+                 {cart.shippingAddress.address}
+                 <strong>  City/Town: </strong>
+                {cart.shippingAddress.city}
+                <strong>  County: </strong>
+                 {cart.shippingAddress.county1}
+                 <strong>  Country: </strong>
                 {cart.shippingAddress.country1}
               </Card.Text>
+              <Card.Text><strong>Phone number: </strong>{userInfo.phone_number}</Card.Text>
               <Link to="/shipping">Edit</Link>
             </Card.Body>
           </Card>
@@ -132,15 +138,15 @@ function PlaceOrder() {
                       <Col md={6}>
                         <img
                           src={item.imagesrc}
-                          alt={item.name}
+                          alt={item.productname}
                           className="img-fluid rounded img-thumbnail"
                         ></img>{' '}
-                        <Link to={`/product/${item.slug}`}>{item.name}</Link>
+                        <Link to={`/product/${item.slug}`}>{item.productname}</Link>
                       </Col>
                       <Col md={3}>
                         <span>{item.quantity}</span>
                       </Col>
-                      <Col md={3}>KSHs {item.price}</Col>
+                      <Col md={3}><strong>Each</strong> KSHs {item.price}</Col>
                     </Row>
                   </ListGroup.Item>
                 ))}
@@ -186,6 +192,7 @@ function PlaceOrder() {
                   <div className="d-grid">
                     <Button
                       type="button"
+                      variant='success'
                       onClick={placeOrderHandler}
                       disabled={cart.cartItems.length === 0}
                     >

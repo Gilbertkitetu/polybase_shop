@@ -51,6 +51,7 @@ router.post('/login', expressAsyncHandler( async (req, res) => {
                     _id: user._id,
                     name: user.name,
                     email: user.email,
+                    phone_number: user.phone_number,
                     token: token
                 });
                 return
@@ -67,19 +68,19 @@ router.post('/login', expressAsyncHandler( async (req, res) => {
     //res.send("This is the login route")
 }));
 
-router.post('/create-shop', verifyToken, (req, res) => {
-    jwt.verify(req.token, 'mysecretkey', (err, authData) => {
-        if(err) {
-            res.sendStatus(403);
-        }else {
-            res.json({
-                message: 'Shop Created succesfully',
-                authData
-            });
-        }
-    });
+// router.post('/create-shop', (req, res) => {
+//     jwt.verify(req.token, 'mysecretkey', (err, authData) => {
+//         if(err) {
+//             res.sendStatus(403);
+//         }else {
+//             res.json({
+//                 message: 'Shop Created succesfully',
+//                 authData
+//             });
+//         }
+//     });
   
-});
+// });
 
 router.get('/get_users', (req, res) => {
     res.send("This is a get users route");

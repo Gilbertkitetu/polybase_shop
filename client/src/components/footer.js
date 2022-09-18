@@ -13,7 +13,7 @@ function Footer(){
                 <h6>Blog</h6>
                 <h6>FAQs</h6>
                 <h6>Contact</h6>
-                <h6>@Polybase</h6>
+                <h6>@EPSB</h6>
             </div>
             <div className="social-media">
             {/* <FontAwesomeIcon icon={fa-twitter} /> */}
