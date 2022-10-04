@@ -31,6 +31,8 @@ const onChange = e => {
 }
     const [nearAddresses, setnearAddresses] = useState([])
 
+    const [shop, setshop] = useState({})
+
 
     const [latitude, setlatitude] = useState('')
     const [longitude, setlongitude] = useState('')
@@ -63,6 +65,7 @@ const onChange = e => {
             imagesrc: "",
             category: productCategory,
             countInStock: productsInStock,
+            shop_name: shop.shop_name,
         
         }
         console.log(productData)
@@ -138,7 +141,20 @@ const onChange = e => {
   
     useEffect(() => {
 
+       //Get shop name and id
+       console.log(userInfo._id)
+       const shop1 =  axios.post(
+        `${GlobalVariables.serverUrl}/shops/getShopbyuserid`, userInfo
+        ).then(function (response) {
+            console.log(response.data);
+            setshop(response.data)
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
        
+        
+        
 
         //User Location
 if (navigator.geolocation) {

@@ -72,7 +72,8 @@ orderRouter.post(
     '/orders/myorders',
 
     expressAsyncHandler(async (req, res) => {
-        const orders = await Order.find({ user_id: req.body.user_id });
+        const orders = await Order.find({ user_id: req.body.user_id })
+        .sort({ createdAt: 'desc' }).exec();
         res.send(orders);
     })
 );

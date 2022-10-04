@@ -69,6 +69,7 @@ if (navigator.geolocation) {
           
           <ListGroup.Item><strong>KSh {products.price}</strong></ListGroup.Item>
           <ListGroup.Item><strong>Brand: </strong> {products.brand}</ListGroup.Item>
+          <ListGroup.Item><strong>Seller: </strong> {products.shop_name}</ListGroup.Item>
           <ListGroup.Item><strong>Location: </strong>{products.product_location}</ListGroup.Item>
           <ListGroup.Item><strong>Distance: </strong>≈ <strong>{distance(products.latitude, products.longitude, latitude, longitude)}</strong> km away</ListGroup.Item>
           <ListGroup.Item><strong>Units in stock: </strong>{products.countInStock}</ListGroup.Item>

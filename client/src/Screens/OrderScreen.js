@@ -70,9 +70,9 @@ export default function OrderScreen() {
   ) : (
     <div>
       <Helmet>
-        <title>Order {orderId}</title>
+        <title>Order: {orderId}</title>
       </Helmet>
-      <h1 className="my-3">Order <h5>{orderId}</h5></h1> 
+      <h3 className="my-3">Order <h6>{orderId}</h6></h3> 
       <Row>
         <Col md={8}>
           <Card className="mb-3">
@@ -182,7 +182,7 @@ export default function OrderScreen() {
                 <Row>
                   <Col>
                         <Button type="button"
-                      variant='success'>Pay</Button>
+                      variant='success'>Make Pay</Button>
                     </Col>
                   </Row>
                 </ListGroup.Item>

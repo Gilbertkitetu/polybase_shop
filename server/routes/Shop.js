@@ -15,7 +15,8 @@ shopsRoute.post('/shops/create-shop', (req, res) => {
 })
 
 shopsRoute.post('/shops/getShopbyuserid', async (req, res) => {
-    const shop = await Shops.findOne({ user_id: req.body.user_id });
+    console.log(req.body._id)
+    const shop = await Shops.findOne({ user_id : req.body._id });
     if(shop) {
         res.send(shop)
     } else {

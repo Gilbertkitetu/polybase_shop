@@ -89,10 +89,6 @@ router.get('/get_users', (req, res) => {
 
 
 router.post('/add_new_user', async (req, res) => {
-    //res.send("Add new user -route");
-    // if(!(req.body.username && req.body.email && req.body.phone_number && req.body.password)){
-    //     return res.status(400).send({ error: "Data not formatted correctly"});
-    // }
 
     //generate salt to hash password
     const salt = await bcrypt.genSalt(10);
@@ -119,6 +115,40 @@ router.post('/add_new_user', async (req, res) => {
         }
     })
 });
+
+router.put(
+    `/profile`,
+    expressAsyncHandler(async (req, res) => {
+        const user = await userModel.findById(req.body._id);
+        if(user) {
+            user.name = req.body.name || user.name;
+            user.email = req.body.email || user.email;
+
+            if (req.body.password) {
+                // user.password = bcrypt.hashSync(req.body.password, 10)
+                  //generate salt to hash password
+                const salt = await bcrypt.genSalt(10);
+                //set password to hasahed password
+                user.password = await bcrypt.hash(req.body.password, salt);
+            }
+
+            const updatedUser = await user.save();
+            jwt.sign({ user: user }, 'mysecretkey', { expiresIn: '30d'},(err, token) => {
+                console.log(token);
+                res.json({
+                _id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                token: token
+
+            })
+        })
+        
+        }else {
+            res.status(404).send({ message: "User not found" })
+        }
+    })
+)
 
 
 

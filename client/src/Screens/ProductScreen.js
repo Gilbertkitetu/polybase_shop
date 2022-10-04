@@ -175,6 +175,7 @@ if (navigator.geolocation) {
                                     </Row>
                                 </ListGroup.Item>
                                 <ListGroup.Item><strong>Brand: </strong> {product.brand}</ListGroup.Item>
+                                <ListGroup.Item><strong>Seller: </strong> {product.shop_name}</ListGroup.Item>
                                 <ListGroup.Item><strong>Location: </strong>{product.product_location}</ListGroup.Item>
                                 <ListGroup.Item><strong>Distance: </strong>≈ <strong>{distance(product.latitude, product.longitude, latitude, longitude)}</strong> km away</ListGroup.Item>
 

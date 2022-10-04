@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Ratings from './homeComponents/Ratings';
 import axios from 'axios';
 import { useContext } from 'react';
+
 import { Store } from '../Store';
 
 function Product(props) {
@@ -32,14 +33,14 @@ function Product(props) {
   return (
     <Card>
       <Link to={`/product/${product.slug}`}>
-        <img src={product.image} className="card-img-top" alt={product.name} />
+        <img src={product.imagesrc} className="card-img-top" alt={product.name} />
       </Link>
       <Card.Body>
         <Link to={`/product/${product.slug}`}>
-          <Card.Title>{product.name}</Card.Title>
+          <Card.Title>{product.productname}</Card.Title>
         </Link>
-        <Ratings rating={product.rating} numReviews={product.numReviews} />
-        <Card.Text>${product.price}</Card.Text>
+        <Ratings rating={product.ratings} numReviews={product.numberReviews} />
+        <Card.Text>Ksh {product.price}</Card.Text>
         {product.countInStock === 0 ? (
           <Button variant="light" disabled>
             Out of stock

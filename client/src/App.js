@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import logo from "./images/logo.png"
 //importing styles
 import './App.css';
@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
 
-import { BrowserRouter, Routes, Route, NavLink, useParams, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink,useNavigate, useParams, Link } from 'react-router-dom';
 import { ReactSession } from "react-client-session";
 
 //import bootstrap stylesheet
@@ -46,16 +46,20 @@ import OrderScreen from "./Screens/OrderScreen";
 import OrderHistory from "./Screens/OrderHistory";
 import ShopOrders from "./Screens/ShopOrders";
 import Sell from "./components/Sell";
+import ProfileScreen from "./Screens/ProfileScreen";
+import Search from "./Screens/Search";
+import ProductListScreen from "./Screens/ProductListScreen";
 
-
-
-
-
+import GlobalVariables from "./GlobalVariables";
+import axios from "axios";
 
 
 function App() {
 
+  const [query, setquery] = useState('')
+
   const [showDropdown, setshowDropdown] = useState(false)
+  const [shop, setshop] = useState({})
 
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -68,6 +72,27 @@ function App() {
     localStorage.removeItem('paymentMethod');
     window.location.href = '/login';
   }
+
+  const search = (e) => {
+    e.preventDefault();
+    window.location.href = `${query}` ? `/search/?query=${query}` : `/search`
+  }
+
+  useEffect(() => {
+         //Get shop name and id
+        //  console.log(userInfo._id)
+        //  const shop1 =  axios.post(
+        //   `${GlobalVariables.serverUrl}/shops/getShopbyuserid`, userInfo
+        //   ).then(function (response) {
+        //       console.log(response.data);
+        //       setshop(response.data)
+        //       localStorage.setItem('shop', JSON.stringify(response.data))
+        //     })
+        //     .catch(function (error) {
+        //       console.log(error);
+        //     });
+  }, [])
+  
 
   return (
    
@@ -85,14 +110,18 @@ function App() {
          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
          <Navbar.Collapse id="responsive-navbar-nav">
            <Nav className="mr-auto">
-           <Form.Control type="email" placeholder="Search EPSB" required></Form.Control>
-           <button className="button-3" type="submit">Search</button>
+           <Form.Control type="email" placeholder="Search EPSB"
+             onChange={(e) => setquery(e.target.value)}
+           required></Form.Control>
+           <button className="button-3" type="submit" onClick={search}
+           
+           >Search</button>
            </Nav>
            <Nav>
            <Nav.Link href="/sell">Sell</Nav.Link>
            <Nav.Link href="/yourcustomerorders">Orders</Nav.Link>
              <Nav.Link href="/create-shop" className="">Create shop</Nav.Link>
-             <Nav.Link href="/liked-products">Saved</Nav.Link>
+             {/* <Nav.Link href="/liked-products">Saved</Nav.Link> */}
              <Nav.Link href="/cart">
               Cart
               {cart.cartItems.length > 0 && (
@@ -118,8 +147,8 @@ function App() {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu show={showDropdown}>
-                  <Dropdown.Item href="/myshop">
-                  Your Shop  
+                  <Dropdown.Item href="/shop">
+                  Your Shop {shop.shop_name} 
                   </Dropdown.Item>
 
                   <Dropdown.Item href="/profile">
@@ -157,7 +186,7 @@ function App() {
             <Routes>
                 
               <Route path = '/admin/dashboard' element = { <Dashboard /> } />
-              <Route path = '/myshop' element = { <ShopDashboard /> } />
+              <Route path = '/shop' element = { <ShopDashboard /> } />
               
               
               <Route path = '/' element = { <Home />}  />
@@ -174,6 +203,10 @@ function App() {
               <Route path = '/yourcustomerorders' element = { <ShopOrders /> } />
               <Route path='/product/:slug' element={<ProductScreen />} />
               <Route path = '/sell' element = {<Sell /> } />
+              <Route path = '/profile' element = {<ProfileScreen /> } />
+              <Route path = '/search' element = {<Search />} />
+              <Route path = '/productsManager' element = { <ProductListScreen /> } />
+
             </Routes>
             
             </Container>

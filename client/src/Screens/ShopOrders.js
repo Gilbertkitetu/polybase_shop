@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Row, Col, Card, Button, ListGroup } from 'react-bootstrap'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { Store } from '../Store';
 import { getError } from '../utils';
-import { Button } from 'react-bootstrap';
 import GlobalVariables from '../GlobalVariables';
 
 
@@ -59,7 +59,12 @@ function ShopOrders() {
         <title>Customer Orders</title>
       </Helmet>
 
-      <h1>Your Customer Orders</h1>
+      <Row>
+      <Col md={12}>
+            <Card>
+            <Card.Header>Your Customer Orders</Card.Header>
+            <Card.Body>
+           
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -68,44 +73,56 @@ function ShopOrders() {
         <table className="table">
           <thead>
             <tr>
-              <th>Order Id</th>
-              <th>Date Ordered</th>
-              {/* <th>Product</th> */}
-              <th>Total Price</th>
-              <th>Paid</th>
-              <th>Delivered</th>
-              <th>Actions</th>
+            <th>Order Id</th>
+            <th>Customer Name</th>
+            <th>Date Ordered</th>
+            <th>Total Price (Ksh)</th>
+            <th>Paid</th>
+            <th>Items Ordered</th>
+            <th>Delivery Address</th>
+            <th>Delivered</th>
+            <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id}</td>
-                <td>{order.createdAt.substring(0, 10)}</td>
-                {/* <td>{order.productname}</td> */}
-                <td>{order.totalPrice.toFixed(2)}</td>
-                <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
-                <td>
-                  {order.isDelivered
-                    ? order.deliveredAt.substring(0, 10)
-                    : 'No'}
-                </td>
-                <td>
-                  <Button
-                    type="button"
-                    variant="light"
-                    onClick={() => {
-                      navigate(`/order/${order._id}`);
-                    }}
-                  >
-                    Details
-                  </Button>
-                </td>
-              </tr>
+            <tr key={order._id}>
+            <td>{order._id.slice(0, 10)}</td>
+            <td>{order.shippingAddress.fullName}</td>
+            <td>{`${order.createdAt.substring(0, 10)}`}
+            <Button variant='success' className="button-3">{order.createdAt.substring(11, 19)}</Button>
+            </td>
+            {/* <td>{order.productname}</td> */}
+            <td>{order.totalPrice.toFixed(2)}</td>
+            <td>{order.isPaid ? order.paidAt.substring(0, 10)
+             : <Button variant="danger">No</Button>}</td>
+            <td>{order.orderItems.length}</td>
+            <td>{order.shippingAddress.address}</td>
+            <td>
+              {order.isDelivered
+                ? order.deliveredAt.substring(0, 10)
+                : <Button variant="danger">No</Button>}
+            </td>
+            <td>
+              <Button
+                type="button"
+                variant="light"
+                onClick={() => {
+                  navigate(`/order/${order._id}`);
+                }}
+              >
+                Details
+              </Button>
+            </td>
+          </tr>
             ))}
           </tbody>
         </table>
       )}
+      </Card.Body>
+       </Card>
+      </Col>
+      </Row>
     </div>
 
   )

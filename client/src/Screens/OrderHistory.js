@@ -67,38 +67,48 @@ export default function OrderHistoryScreen() {
         <table className="table">
           <thead>
             <tr>
-              <th>Order Id</th>
-              <th>Date</th>
-              <th>Total</th>
-              <th>Paid</th>
-              <th>Delivered</th>
-              <th>Actions</th>
+            <th>Order Id</th>
+            <th>Customer Name</th>
+            <th>Date Ordered</th>
+            <th>Total Price (Ksh)</th>
+            <th>Paid</th>
+            <th>Items Ordered</th>
+            <th>Delivery Address</th>
+            <th>Delivered</th>
+            <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id}</td>
-                <td>{order.createdAt.substring(0, 10)}</td>
-                <td>{order.totalPrice.toFixed(2)}</td>
-                <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
-                <td>
-                  {order.isDelivered
-                    ? order.deliveredAt.substring(0, 10)
-                    : 'No'}
-                </td>
-                <td>
-                  <Button
-                    type="button"
-                    variant="light"
-                    onClick={() => {
-                      navigate(`/order/${order._id}`);
-                    }}
-                  >
-                    Details
-                  </Button>
-                </td>
-              </tr>
+           <tr key={order._id}>
+           <td>{order._id.slice(0, 10)}</td>
+           <td>{order.shippingAddress.fullName}</td>
+           <td>{`${order.createdAt.substring(0, 10)}`}
+           <Button variant='success' className="button-3">{order.createdAt.substring(11, 19)}</Button>
+           </td>
+           {/* <td>{order.productname}</td> */}
+           <td>{order.totalPrice.toFixed(2)}</td>
+           <td>{order.isPaid ? order.paidAt.substring(0, 10)
+            : <Button variant="danger">No</Button>}</td>
+           <td>{order.orderItems.length}</td>
+           <td>{order.shippingAddress.address}</td>
+           <td>
+             {order.isDelivered
+               ? order.deliveredAt.substring(0, 10)
+               : <Button variant="danger">No</Button>}
+           </td>
+           <td>
+             <Button
+               type="button"
+               variant="light"
+               onClick={() => {
+                 navigate(`/order/${order._id}`);
+               }}
+             >
+               Details
+             </Button>
+           </td>
+         </tr>
             ))}
           </tbody>
         </table>

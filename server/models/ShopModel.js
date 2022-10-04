@@ -62,8 +62,11 @@ const shopSchema = new mongoose.Schema({
         required: true
     },
     user_id: {
-        type: String,
-        required: true
+   
+        type : String, 
+         index : { unique : true,
+            dropDups : true }
+     
     },
     createdAt: {
         type: Date,
@@ -73,7 +76,8 @@ const shopSchema = new mongoose.Schema({
         type: Date
     }
 
-})
+}
+)
 
 const Shops = mongoose.model('Shops', shopSchema);
 

@@ -1,19 +1,13 @@
 import express from 'express'
+import expressAsyncHandler from 'express-async-handler';
 const productsRoute = express.Router();
 
+
 import path from 'path';
+import products from '../models/products.js';
 const __dirname = path.resolve();
 
-import products from '../models/products.js';
 
-
-
-//const { newProduct, getSingleProduct, updateProduct, deleteProduct, getProductUsingSlug } = require('../controllers/product_controller');
-
-// router.get('/get_users', (req, res) => {
-//     res.send("This is a get users route");
-//     console.log("This is a users route");
-// })
 
 
 
@@ -100,5 +94,105 @@ productsRoute.get('/get_products', async(req, res) => {
         res.json({ message: error})
 }
 })
+
+productsRoute.get('/categories', expressAsyncHandler(async (req, res) => {
+    const categories = await products.find().distinct('category');
+    res.send(categories);
+})
+);
+
+const PAGE_SIZE = 15;
+productsRoute.get(
+    '/search',
+    expressAsyncHandler(async (req, res) => {
+        const { query } = req;
+        const pageSize = query.pageSize || PAGE_SIZE;
+        const page = query.page || 1;
+        const category = query.category || '';
+        const price = query.price || '';
+        const rating = query.rating || '';
+        const order = query.order || '';
+        const searchQuery = query.query || '';
+
+        const queryFilter = searchQuery && searchQuery !== 'all' ? {
+            productname: {
+                $regex: searchQuery,
+                $options: 'i',
+            },
+        } : {};
+
+        const categoryFilter = category && category !== 'all' ? { category } : {};
+        const ratingFilter = rating && rating !== 'all' ? {
+            rating: {
+                $gte: Number(rating),
+            },
+        } : {};
+
+        const priceFilter = price && price !== 'all' ? {
+            price: {
+                $gte: Number(price.split('-')[0]),
+                $lte: Number(price.split('-')[1]),
+            },
+        } : {};
+
+        const sortOrder =
+        order === 'featured'
+          ? { featured: -1 }
+          : order === 'lowest'
+          ? { price: 1 }
+          : order === 'highest'
+          ? { price: -1 }
+          : order === 'toprated'
+          ? { rating: -1 }
+          : order === 'newest'
+          ? { createdAt: -1 }
+          : { _id: -1 };
+  
+      const Products = await products.find({
+        ...queryFilter,
+        ...categoryFilter,
+        ...priceFilter,
+        ...ratingFilter,
+      })
+        .sort(sortOrder)
+        .skip(pageSize * (page - 1))
+        .limit(pageSize);
+  
+      const countProducts = await products.countDocuments({
+        ...queryFilter,
+        ...categoryFilter,
+        ...priceFilter,
+        ...ratingFilter,
+      });
+      res.send({
+        Products,
+        countProducts,
+        page,
+        pages: Math.ceil(countProducts / pageSize),
+      });
+
+    })
+
+)
+
+productsRoute.get(
+    '/getShopProducts',
+    expressAsyncHandler(async (req, res) => {
+        const { query } = req;
+        const page = query.page || 1;
+        const pageSize = query.pageSize || PAGE_SIZE;
+
+        const Products = await products.find()
+            .skip(pageSize * (page - 1))
+            .limit(pageSize);
+        const countProducts = await products.countDocuments();
+        res.send({
+            Products,
+            countProducts,
+            page,
+            pages: Math.ceil(countProducts / pageSize),
+        });
+    })
+);
 
 export default productsRoute;

@@ -53,6 +53,9 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter product seller']
     },
+    shop_name: {
+        type: String,
+    },
     countInStock: {
         type: Number,
         required: [true, 'Please enter product stock'],
