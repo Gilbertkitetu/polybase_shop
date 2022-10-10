@@ -20,6 +20,7 @@ import ProductCard from "./homeComponents/ProductCard";
 function Home() {
 
    const [Products, setproducts] = useState([])
+  
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -41,6 +42,13 @@ function Home() {
 });
 
 
+
+const search = (category) => {
+
+  console.log(category)
+  
+  window.location.href = `${category}` ? `/search/?category=${category}` : `/search`
+}
 
 
 function alertClicked() {
@@ -81,26 +89,43 @@ function alertClicked() {
               <ListGroup.Item action href="#link1" style={{ backgroundColor: "#2ea44f", borderRadius: "none" }}>
                 Categories
               </ListGroup.Item>
-              <ListGroup.Item action onClick={alertClicked} >
+           
+              <ListGroup.Item action onClick={
+                (event) => {search('Home&Office')}} >
                 Home & Office
               </ListGroup.Item>
-              <ListGroup.Item action onClick={alertClicked}>
-                Health & Beauty
+              <ListGroup.Item action onClick={(event) => {search('Health')}}>
+                Health
               </ListGroup.Item>
-              <ListGroup.Item action onClick={alertClicked}>
+              <ListGroup.Item action  onClick={(event) => {search('Phones')}}>
                 Phones
               </ListGroup.Item>
-              <ListGroup.Item action onClick={alertClicked}>
+              <ListGroup.Item action  onClick={(event) => {search('Electronics')}}>
                 Electronics
               </ListGroup.Item>
-              <ListGroup.Item action onClick={alertClicked}>
-                Fashion
+              <ListGroup.Item action  onClick={(event) => {search('Clothes')}}>
+                Clothes
               </ListGroup.Item>
-              <ListGroup.Item action onClick={alertClicked}>
-                Sporting Goods
+              <ListGroup.Item action  onClick={(event) => {search('Shoes')}}>
+                Shoes
               </ListGroup.Item>
-              <ListGroup.Item action onClick={alertClicked}>
+              <ListGroup.Item action  onClick={(event) => {search('Gaming')}}>
                 Gaming
+              </ListGroup.Item>
+              <ListGroup.Item action  onClick={(event) => {search('Laptops')}}>
+                Laptops
+              </ListGroup.Item>
+              <ListGroup.Item action  onClick={(event) => {search('Desktop')}}>
+                Desktop
+              </ListGroup.Item>
+              <ListGroup.Item action  onClick={(event) => {search('Accessories')}}>
+                Accessories
+              </ListGroup.Item>
+              <ListGroup.Item action  onClick={(event) => {search('Beauty')}}>
+                Beauty
+              </ListGroup.Item>
+              <ListGroup.Item action  onClick={(event) => {search('Sports')}}>
+                Sports
               </ListGroup.Item>
             </ListGroup>
           </div>

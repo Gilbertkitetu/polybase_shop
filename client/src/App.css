@@ -75,4 +75,10 @@
 .userinfo {
   background-color: dark;
 }
-
+.danger {
+  background-color: rgb(235, 54, 54);
+  color: white;
+  justify-content: center;
+  margin: 5px;
+  font-size: 20px;
+}

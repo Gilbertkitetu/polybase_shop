@@ -30,6 +30,7 @@ const reducer = (state, action) => {
 function ShopDashboard() {
   const { state } = useContext(Store);
   const { userInfo } = state;
+  const [shopOrdersCount, setshopOrdersCount] = useState(0)
   const navigate = useNavigate();
 
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
@@ -50,6 +51,7 @@ function ShopDashboard() {
         );
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
         console.log(data)
+        setshopOrdersCount(data.length)
       } catch (error) {
         dispatch({
           type: 'FETCH_FAIL',
@@ -102,7 +104,7 @@ function ShopDashboard() {
           <Card className="text-center bg-dark text-white">
             <Card.Header>Total Orders</Card.Header>
             <Card.Body>
-              <Card.Title>200</Card.Title>
+              <Card.Title>{shopOrdersCount}</Card.Title>
             </Card.Body>
           </Card>
           </Col>

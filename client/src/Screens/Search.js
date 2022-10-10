@@ -79,6 +79,11 @@ export const ratings = [
 export default function Search() {
   const navigate = useNavigate();
   const { search } = useLocation();
+
+  const [latitude, setlatitude] = useState('')
+  const [longitude, setlongitude] = useState('')
+
+
   const sp = new URLSearchParams(search); // /search?category=Shirts
   const category = sp.get('category') || 'all';
   const query = sp.get('query') || 'all';
@@ -93,13 +98,42 @@ export default function Search() {
       error: '',
     });
 
+    
+
+    function distance(lat1, lon1, lat2, lon2) {
+      console.log(lat1, lon1, lat2, lon2)
+      var p = 0.017453292519943295;    // Math.PI / 180
+      var c = Math.cos;
+      var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+              c(lat1 * p) * c(lat2 * p) * 
+              (1 - c((lon2 - lon1) * p))/2;
+    
+      
+      const dis = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+      return parseFloat(dis).toFixed(2);
+    }
+
+    
+    
+
+
   useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position){
+        console.log(position);
+        console.log(`latitude: ${position.coords.latitude}`)
+        setlatitude(position.coords.latitude)
+        console.log(`longotude: ${position.coords.longitude}`)
+        setlongitude(position.coords.longitude)
+      })
+      }
     const fetchData = async () => {
       try {
         const { data } = await axios.get(
           `${GlobalVariables.serverUrl}search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
         );
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
+
       } catch (err) {
         dispatch({
           type: 'FETCH_FAIL',
@@ -125,6 +159,20 @@ export default function Search() {
     };
     fetchCategories();
   }, [dispatch]);
+
+  // var p = handleDistanceSort(products)
+  //   var productsMap = p
+  
+    function handleDistanceSort(products) {
+      console.log(products)
+      let productsMapped = products.map((element) => ({
+        ...element,
+        distance: distance(latitude, longitude, element.latitude, element.longitude)
+      }))
+      return productsMapped.sort((a, b) => Number(a.distance) -  Number(b.distance))
+    
+    }
+   
 
   const getFilterUrl = (filter) => {
     const filterPage = filter.page || page;
@@ -260,11 +308,15 @@ export default function Search() {
               )}
 
               <Row>
-                {products.map((product) => (
+                {
+                  
+
+                  handleDistanceSort(products).map((product) => (
                   <Col sm={6} lg={4} className="mb-3" key={product._id}>
                     <ProductCard products={product}></ProductCard>
                   </Col>
-                ))}
+                ))
+                }
               </Row>
 
               <div>

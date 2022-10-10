@@ -264,7 +264,6 @@ if (navigator.geolocation) {
                     <option value='Beauty'>Beauty</option>
                     <option value='Health'>Health</option>
                     <option value='Sports'>Sports</option>
-                    <option value='Cameras'>Cameras</option>
                     <option value='Phones'>Phones</option>
                     <option value='Desktop'>Desktop</option>
                     <option value='Home&Office'>Home & Office</option>

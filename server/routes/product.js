@@ -114,6 +114,8 @@ productsRoute.get(
         const order = query.order || '';
         const searchQuery = query.query || '';
 
+
+
         const queryFilter = searchQuery && searchQuery !== 'all' ? {
             productname: {
                 $regex: searchQuery,
@@ -148,6 +150,8 @@ productsRoute.get(
           ? { createdAt: -1 }
           : { _id: -1 };
   
+          
+
       const Products = await products.find({
         ...queryFilter,
         ...categoryFilter,
@@ -164,6 +168,12 @@ productsRoute.get(
         ...priceFilter,
         ...ratingFilter,
       });
+    //   const Products = ProductsBeforeSort.sort((a, b) =>
+    //    Number(distance(query.latitude, query.longitude, a.latitude, a.longitude)) -
+    //     Number(distance(query.latitude, query.longitude, a.latitude, a.longitude))
+    //    );
+
+      
       res.send({
         Products,
         countProducts,
@@ -194,5 +204,40 @@ productsRoute.get(
         });
     })
 );
+
+productsRoute.put(
+    '/editproducts/:id',
+    expressAsyncHandler(async (req, res) => {
+        const productId = req.params.id;
+        const product = await products.findById(productId);
+        if(product) {
+            product.productname = req.body.productname,
+            product.slug = req.body.slug,
+            product.price = req.body.price,
+            product.imagesrc = req.body.imagesrc;
+            product.category = req.body.category;
+            product.brand = req.body.brand;
+            product.countInStock = req.body.countInStock;
+            product.description = req.body.description;
+            await product.save();
+            res.send({ message: 'Product Updated' });
+        } else {
+            res.status(404).send({ message: 'Product Not Found' })
+        }
+    })
+)
+
+productsRoute.delete (
+    '/deleteProduct/:id',
+    expressAsyncHandler(async (req, res) => {
+        const product = await products.findById(req.params.id);
+        if (product) {
+            await product.remove();
+            res.send({ message: 'Product Deleted Successfully' })
+        } else {
+            res.status(404).send({ message: 'Product Not Found' })
+        }
+    })
+)
 
 export default productsRoute;

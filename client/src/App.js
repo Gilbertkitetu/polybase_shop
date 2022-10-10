@@ -49,6 +49,9 @@ import Sell from "./components/Sell";
 import ProfileScreen from "./Screens/ProfileScreen";
 import Search from "./Screens/Search";
 import ProductListScreen from "./Screens/ProductListScreen";
+import ProductEditScreen from "./Screens/ProductEditScreen";
+
+import MapScreen from "./Screens/MapScreen";
 
 import GlobalVariables from "./GlobalVariables";
 import axios from "axios";
@@ -125,9 +128,9 @@ function App() {
              <Nav.Link href="/cart">
               Cart
               {cart.cartItems.length > 0 && (
-                <Badge pill bg="danger">
+                <Badge pill className="danger">
                   {cart.cartItems.length}
-                  {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                  {/* {cart.cartItems.reduce((a, c) => a + c.quantity, 0)} */}
                   </Badge>
               )}
              </Nav.Link>
@@ -206,6 +209,9 @@ function App() {
               <Route path = '/profile' element = {<ProfileScreen /> } />
               <Route path = '/search' element = {<Search />} />
               <Route path = '/productsManager' element = { <ProductListScreen /> } />
+              <Route path = '/editProduct/:id' element = { <ProductEditScreen /> } />
+
+              <Route path = '/MapScreen' element = { <MapScreen /> } />
 
             </Routes>
             

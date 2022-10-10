@@ -40,7 +40,7 @@ export default function Cart() {
       <Helmet>
         <title>Shopping Cart</title>
       </Helmet>
-      <hi>Shopping Cart</hi>
+      <h4>Shopping Cart</h4>
       <Row>
         <Col md={8}>
           {cartItems.length === 0 ? (
