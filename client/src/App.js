@@ -50,6 +50,7 @@ import ProfileScreen from "./Screens/ProfileScreen";
 import Search from "./Screens/Search";
 import ProductListScreen from "./Screens/ProductListScreen";
 import ProductEditScreen from "./Screens/ProductEditScreen";
+import ShopPublicView from "./components/ShopPublicView";
 
 import MapScreen from "./Screens/MapScreen";
 
@@ -210,6 +211,7 @@ function App() {
               <Route path = '/search' element = {<Search />} />
               <Route path = '/productsManager' element = { <ProductListScreen /> } />
               <Route path = '/editProduct/:id' element = { <ProductEditScreen /> } />
+              <Route path = '/shop/:id' element = { <ShopPublicView /> } />
 
               <Route path = '/MapScreen' element = { <MapScreen /> } />
 

@@ -31,7 +31,7 @@ function ShippingAddress() {
     const [address, setAddress] = useState(shippingAddress.address || '');
     const [city, setCity] = useState(shippingAddress.city || '');
     // const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || '');
-    const [country, setCountry] = useState(shippingAddress.country || '');
+    const [country, setCountry] = useState(shippingAddress.country || 'Kenya');
     const [county, setCounty] = useState(shippingAddress.county || '')
 
     const [latitude, setlatitude] = useState('');
@@ -110,8 +110,9 @@ function ShippingAddress() {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        let country1 = country.label;
+        let country1 = 'Kenya';
         let county1 = county.label;
+        console.log(country1)
         ctxDispatch({
             type: 'SAVE_SHIPPING_ADDRESS',
             payload: {
@@ -155,6 +156,16 @@ function ShippingAddress() {
                     <Form.Control value={fullName} 
                     onChange={(e) => setFullName(e.target.value)} required/>
                 </Form.Group>
+                <Form.Group id="location">
+                            <Form.Label>Country</Form.Label>
+                            <Select options={options} value={country} placeholder="Kenya"
+                            onChange={(value) => setCountry(value)} isDisabled={true}  />
+                </Form.Group>
+                <Form.Group id="location">
+                            <Form.Label>County</Form.Label>
+                            <Select options={countries} value={county}
+                            onChange={(value) => setCounty(value)} required/>
+                </Form.Group>
                 <Form.Group className='mb-3' controlId='address'>
                     <Form.Label>Your Address</Form.Label>
                     
@@ -188,17 +199,6 @@ function ShippingAddress() {
                     </select>
                 </Form.Group>
 
-                <Form.Group id="location">
-                            <Form.Label>Country</Form.Label>
-                            <Select options={options} value={country} 
-                            onChange={(value) => setCountry(value)} required />
-                </Form.Group>
-                <Form.Group id="location">
-                            <Form.Label>County</Form.Label>
-                            <Select options={countries} value={county}
-                            onChange={(value) => setCounty(value)} required />
-                </Form.Group>
-                
                 <div className='mb-3'>
                     <Button variant='success' type='submit'>
                         Continue

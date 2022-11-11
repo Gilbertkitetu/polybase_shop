@@ -19,6 +19,24 @@ import ProductCard from "./homeComponents/ProductCard";
 
 function Home() {
 
+  const [latitude, setlatitude] = useState('')
+  const [longitude, setlongitude] = useState('')
+
+  
+  function distance(lat1, lon1, lat2, lon2) {
+    // console.log(lat1, lon1, lat2, lon2)
+     var p = 0.017453292519943295;    // Math.PI / 180
+     var c = Math.cos;
+     var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+             c(lat1 * p) * c(lat2 * p) * 
+             (1 - c((lon2 - lon1) * p))/2;
+   
+     
+     const dis = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+     return parseFloat(dis).toFixed(2);
+   }
+
+
    const [Products, setproducts] = useState([])
   
 
@@ -56,8 +74,19 @@ function alertClicked() {
 }
 
 
+
   useEffect(() => {
     console.log("Hello home")
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position){
+        console.log(position);
+        console.log(`latitude: ${position.coords.latitude}`)
+        setlatitude(position.coords.latitude)
+        console.log(`longotude: ${position.coords.longitude}`)
+        setlongitude(position.coords.longitude)
+      })
+      }
+
     const fetchProducts = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
@@ -76,7 +105,16 @@ function alertClicked() {
     fetchProducts()
   }, [])
 
-
+  function handleDistanceSort(products) {
+    console.log(products)
+    let productsMapped = products.map((element) => ({
+      ...element,
+      distance: distance(latitude, longitude, element.latitude, element.longitude)
+    }))
+    console.log(productsMapped)
+    return productsMapped.sort((a, b) => Number(a.distance) -  Number(b.distance))
+  
+  }
 
   return (
 
@@ -115,18 +153,18 @@ function alertClicked() {
               <ListGroup.Item action  onClick={(event) => {search('Laptops')}}>
                 Laptops
               </ListGroup.Item>
-              <ListGroup.Item action  onClick={(event) => {search('Desktop')}}>
+              {/* <ListGroup.Item action  onClick={(event) => {search('Desktop')}}>
                 Desktop
-              </ListGroup.Item>
-              <ListGroup.Item action  onClick={(event) => {search('Accessories')}}>
+              </ListGroup.Item> */}
+              {/* <ListGroup.Item action  onClick={(event) => {search('Accessories')}}>
                 Accessories
-              </ListGroup.Item>
+              </ListGroup.Item> */}
               <ListGroup.Item action  onClick={(event) => {search('Beauty')}}>
                 Beauty
               </ListGroup.Item>
-              <ListGroup.Item action  onClick={(event) => {search('Sports')}}>
+              {/* <ListGroup.Item action  onClick={(event) => {search('Sports')}}>
                 Sports
-              </ListGroup.Item>
+              </ListGroup.Item> */}
             </ListGroup>
           </div>
         </Col>
@@ -138,7 +176,7 @@ function alertClicked() {
               <img className="d-block w-100" src="https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=600"
                 alt="First slide" />
               <Carousel.Caption>
-                <h3>Laptop</h3>
+                <h3>HP Pavilion Gaming 15-dk10000 Laptop PC (8VD49AV) 8GB Ram 256SSD 4GB Nvidia Graphics</h3>
                 <p>Get more products here</p>
               </Carousel.Caption>
             </Carousel.Item>
@@ -146,7 +184,7 @@ function alertClicked() {
               <img className="d-block w-100" src="https://images.pexels.com/photos/3373731/pexels-photo-3373731.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="First slide" />
               <Carousel.Caption>
-                <h3>Make up products</h3>
+                <h3>Qwen Magnetic Eyeliner & Eyelashes False Eye Lashes Reusable</h3>
                 <p>Get more beauty products here</p>
               </Carousel.Caption>
             </Carousel.Item>
@@ -154,7 +192,7 @@ function alertClicked() {
               <img className="d-block w-100" src="https://images.pexels.com/photos/2880732/pexels-photo-2880732.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="First slide" />
               <Carousel.Caption>
-                <h3>Accessories</h3>
+                <h3>Qwen Mini Wireless Mouse & Keyboard Combo - white</h3>
                 <p>Get more accessories here</p>
               </Carousel.Caption>
             </Carousel.Item>
@@ -191,7 +229,7 @@ function alertClicked() {
         <Row className="w-100">
 
           {
-            Products.map((item) => {
+            handleDistanceSort(Products).map((item) => {
               return (
                 <Col>
                 <ProductCard products = {item}/>

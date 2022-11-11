@@ -41,37 +41,45 @@ const reducer = (state, action) => {
 
 const prices = [
   {
-    name: 'Ksh 1 to Ksh 50,000',
-    value: '1-50000',
+    name: '1 to 5,000',
+    value: '1-5000',
   },
   {
-    name: 'Ksh 50,000 to Ksh 100000',
-    value: '50000-100000',
+    name: '5,000 to 10,000',
+    value: '5000-10000',
   },
   {
-    name: 'Ksh 100,000 to Ksh 500,000',
-    value: '100000-500000',
+    name: '10,000 to 50,000',
+    value: '10000-50000',
+  }, 
+  {
+    name: '50,000 to 150,000',
+    value: '50000-150000',
   },
 ];
 
 export const ratings = [
   {
-    name: '4stars & up',
+    name: '5stars',
+    rating: 5,
+  },
+  {
+    name: '4stars',
     rating: 4,
   },
 
   {
-    name: '3stars & up',
+    name: '3stars',
     rating: 3,
   },
 
   {
-    name: '2stars & up',
+    name: '2stars',
     rating: 2,
   },
 
   {
-    name: '1stars & up',
+    name: '1stars',
     rating: 1,
   },
 ];
@@ -101,7 +109,7 @@ export default function Search() {
     
 
     function distance(lat1, lon1, lat2, lon2) {
-      console.log(lat1, lon1, lat2, lon2)
+     // console.log(lat1, lon1, lat2, lon2)
       var p = 0.017453292519943295;    // Math.PI / 180
       var c = Math.cos;
       var a = 0.5 - c((lat2 - lat1) * p)/2 + 
@@ -169,6 +177,7 @@ export default function Search() {
         ...element,
         distance: distance(latitude, longitude, element.latitude, element.longitude)
       }))
+      console.log(productsMapped)
       return productsMapped.sort((a, b) => Number(a.distance) -  Number(b.distance))
     
     }
@@ -191,11 +200,11 @@ export default function Search() {
       <Row>
         <Col md={3} >
           <h5>Category</h5>
-          <div>
+          <div className='category'>
             <ul>
               <li>
-                <Link
-                  className={'all' === category ? 'text-bold text-dark' : ''}
+                <Link 
+                  className={'all text-link' === category ? 'text-bold text-dark text-link' : ''}
                   to={getFilterUrl({ category: 'all' })}
                 >
                   Any
@@ -204,7 +213,7 @@ export default function Search() {
               {categories.map((c, index) => (
                 <li key={index} className="text-dark ">
                   <Link
-                    className={c === category ? 'text-bold text-dark' : ''}
+                    className={c === category ? 'text-bold text-dark text-link' : ''}
                     to={getFilterUrl({ category: c })}
                   >
                     {c}
@@ -213,12 +222,12 @@ export default function Search() {
               ))}
             </ul>
           </div>
-          <div>
-            <h5>Price</h5>
+          <div className='price'>
+            <h5>Price in KSHs</h5>
             <ul>
               <li>
                 <Link
-                  className={'all' === price ? 'text-bold text-dark' : ''}
+                  className={'all' === price ? 'text-bold text-dark text-link' : ''}
                   to={getFilterUrl({ price: 'all' })}
                 >
                   Any
@@ -228,7 +237,7 @@ export default function Search() {
                 <li key={p.value}>
                   <Link
                     to={getFilterUrl({ price: p.value })}
-                    className={p.value === price ? 'text-bold text-dark' : ''}
+                    className={p.value === price ? 'text-bold text-dark text-link' : ''}
                   >
                     {p.name}
                   </Link>
@@ -245,16 +254,16 @@ export default function Search() {
                     to={getFilterUrl({ rating: r.rating })}
                     className={`${r.rating}` === `${rating}` ? 'text-bold text-dark' : ''}
                   >
-                    <Ratings caption={' & above'} rating={r.rating}></Ratings>
+                    <Ratings caption={' '} rating={r.rating}></Ratings>
                   </Link>
                 </li>
               ))}
               <li>
                 <Link
-                  to={getFilterUrl({ rating: 'all' })}
-                  className={rating === 'all' ? 'text-bold text-dark' : ''}
+                  to={getFilterUrl({ rating: '0' })}
+                  className={rating === 'all' ? 'text-bold text-dark text-link' : ''}
                 >
-                  <Ratings caption={' & above'} rating={0}></Ratings>
+                  <Ratings caption={' '} rating={0}></Ratings>
                 </Link>
               </li>
             </ul>

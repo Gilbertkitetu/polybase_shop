@@ -11,6 +11,10 @@ import GlobalVariables from '../GlobalVariables';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import OrderScreen from '../Screens/OrderScreen';
+import Charts from './Charts';
+
+import { Bar } from 'react-chartjs-2'
+import BarChart from './BarChart';
 
 
 const reducer = (state, action) => {
@@ -31,6 +35,10 @@ function ShopDashboard() {
   const { state } = useContext(Store);
   const { userInfo } = state;
   const [shopOrdersCount, setshopOrdersCount] = useState(0)
+  const [shopName, setshopName] = useState('')
+  const [seller, setseller] = useState('')
+  const [visits, setvisits] = useState(0)
+  const [totalSales, settotalSales ] = useState(0);
   const navigate = useNavigate();
 
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
@@ -38,20 +46,50 @@ function ShopDashboard() {
     error: '',
   });
 
+
   useEffect(() => {
+
+    const getShopName = async () => {
+     
+      await axios.post(
+        `${GlobalVariables.serverUrl}shops/getShopbyuserid`,
+        {_id: userInfo._id},
+        { headers: { Authorization: `Bearer ${userInfo.token}` } }
+
+      ).then(function (response) {
+        console.log(response.data)
+        setshopName(response.data.shop_name)
+        setseller(response.data.user_id)
+        setvisits(response.data.visits);
+
+        fetchData();
+      });
+    
+  }
+
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
         const { data } = await axios.post(
   
-          `${GlobalVariables.serverUrl}orders/myorders`,
-          {user_id: userInfo._id},
+          `${GlobalVariables.serverUrl}orders/shopOrders`,
+          {seller: seller},
   
           { headers: { Authorization: `Bearer ${userInfo.token}` } }
         );
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
-        console.log(data)
+       
         setshopOrdersCount(data.length)
+        let total = 0;
+        for( let item of data) {
+          if(item.isPaid === true) {
+            total = total + item.totalPrice
+            
+          }
+          settotalSales(total.toFixed(2))
+
+        } 
+        
       } catch (error) {
         dispatch({
           type: 'FETCH_FAIL',
@@ -59,8 +97,10 @@ function ShopDashboard() {
         });
       }
     };
-    fetchData();
-  }, [userInfo]);
+  
+    
+    getShopName();
+  }, [userInfo, seller]);
 
 
   return (
@@ -80,23 +120,23 @@ function ShopDashboard() {
                 <Button onClick={(e) => {navigate('/sell')}} className="button-3" >Add Products</Button>
             </Col>
         </Row>
-        <h5>Welcome back, Ninja</h5>
-        <p>Here is what is happpening in your shop today.</p>
+        <h5>Welcome back, {shopName}</h5>
+        <p>Here is what is happpening in your shop.</p>
         <Row>
 
           <Col md={4}>
           <Card className="text-center bg-dark text-white">
             <Card.Header>Total Sales</Card.Header>
             <Card.Body>
-              <Card.Title>Ksh. 3,434,000</Card.Title>
+              <Card.Title>Ksh. {totalSales}</Card.Title>
             </Card.Body>
           </Card>
           </Col>
           <Col md={4}>
           <Card className="text-center bg-dark text-white">
-            <Card.Header>Visitors</Card.Header>
+            <Card.Header>Visits</Card.Header>
             <Card.Body>
-              <Card.Title>1000</Card.Title>
+              <Card.Title>{visits}</Card.Title>
             </Card.Body>
           </Card>
           </Col>
@@ -115,22 +155,22 @@ function ShopDashboard() {
             <Card>
               <Card.Header>Sales vs Orders</Card.Header>
               <Card.Body>
-
+                  <BarChart sales = {[]} orders = {shopOrdersCount} />
               </Card.Body>
             </Card>
           </Col>
         </Row>
         
-        <Row className="mt-4">
+        {/* <Row className="mt-4">
           <Col>
             <Card>
-              <Card.Header>Top Products</Card.Header>
+              <Card.Header>Visits vs Orders</Card.Header>
               <Card.Body>
-
+                <BarChart />
               </Card.Body>
             </Card>
           </Col>
-        </Row>
+        </Row> */}
 
         <Row  className="mt-4">
             <Col md={12}>
@@ -157,7 +197,7 @@ function ShopDashboard() {
           </tr>
         </thead>
         <tbody>
-          {orders.map((order) => (
+          {orders.length > 0 ? (orders.map((order) => (
             <tr key={order._id}>
               <td>{order._id.slice(0, 10)}</td>
               <td>{order.shippingAddress.fullName}</td>
@@ -187,7 +227,7 @@ function ShopDashboard() {
                 </Button>
               </td>
             </tr>
-          ))}
+          ))) : (<h5>No Orders yet</h5>)}
         </tbody>
       </table>
       )}

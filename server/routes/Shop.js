@@ -23,7 +23,23 @@ shopsRoute.post('/shops/getShopbyuserid', async (req, res) => {
         res.status(404).send({ message: 'Shop Not Found Create One' })
     }
 })
+shopsRoute.put('/shops/visit', async (req, res) => {
+    const shop = await Shops.findOne({ user_id : req.body.id });
+    if(shop) {
+        if(!shop.visits){
+        shop.visits =  1;
+        }else {
+            shop.visits = shop.visits + 1;
+        }
 
+
+        const updateshop = await shop.save()
+    res.send({ message: 'Visit added', shop: updateshop })
+    } else {
+        res.status(404).send({ message: 'Shop Not Found' })
+    }
+    
+})
 
 
 export default shopsRoute;

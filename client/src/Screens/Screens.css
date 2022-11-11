@@ -2,10 +2,10 @@
     width: 70px;
     border-radius: 10px;
 }
-.danger {
+.danger1 {
     width: 10px;
 }
-.danger svg {
+.danger1 svg {
     color: red;
     cursor: pointer;
     

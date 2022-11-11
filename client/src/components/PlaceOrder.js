@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useReducer} from 'react'
+import React, {useContext, useState, useEffect, useReducer} from 'react'
 import { Helmet } from 'react-helmet-async'
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'
@@ -33,19 +33,92 @@ function PlaceOrder() {
       loading: false,
     });
 
+    const alreadyShownShops = []
+    
+
     const { state, dispatch: ctxDispatch } = useContext(Store);
     const { cart, userInfo } = state;
 
+    const [shopObjects, setshopObjects] = useState()
+
+    
+    const [itemsprice, setitemsprice] = useState(0)
+    const [shippingprice, setshippingprice] = useState(0)
+    const [taxprice, settaxprice] = useState(0)
+    const [totalprice, settotalprice] = useState(0)
+
+   // const [alreadyShownShops, setalreadyShownShops] = useState([])
+
+    //var newcart = groupBy(cart.cartItems, 'seller')
+    //console.log(newcart)
+    
+    ///AddplaceOrderDetails(newcart)
+    var ShopObjects
+    function AddplaceOrderDetails (newcart) {
+      //key is seller id
+     // let keys = Object.keys();
+      for(let key in newcart) {
+         console.log(key , newcart[key])
+         ShopObjects = newcart[key]
+         console.log(shopObjects)
+
+       // console.log(key , addShippingDetails(newcart[key]))
+
+      }
+      
+    }
+
+
+    var cartItemsObject = groupBy(cart.cartItems, "seller")
+    //console.log(cartItemsObject)
+    AddplaceOrderDetails(cartItemsObject)
+
+
+    function addShippingDetails (newcart) {
+     
+      //console.log(newcart)
+
+    cart.shopcartItems = newcart
     const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
     cart.itemsPrice = round2(
-        cart.cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
+      cart.shopcartItems.reduce((a, c) => a + c.quantity * c.price, 0)
     );
+    
+    console.log(cart.itemsPrice)
     cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10);
-    cart.taxPrice = round2(0.15 * cart.itemsPrice);
+    // cart.taxPrice = round2(0.15 * cart.itemsPrice);
+    cart.taxPrice = 0;
     cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+    console.log(cart)
+    return cart;
 
-    const placeOrderHandler = async () => {
-      console.log(`user Id: ${userInfo._id}`)
+    }
+    
+
+    
+    //console.log(cart)
+
+
+
+    function groupBy(xs, prop) {
+      var grouped = {};
+      for (var i=0; i<xs.length; i++) {
+        var p = xs[i][prop];
+        if (!grouped[p]) { grouped[p] = []; }
+        grouped[p].push(xs[i]);
+      }
+      return grouped;
+    }
+
+    const placeOrderHandler = async (shopItems) => {
+      //console.log(shopItems)
+      addShippingDetails(shopItems)
+
+      //Set Totals
+      setitemsprice(cart.itemsPrice)
+      setshippingprice(cart.shippingPrice)
+      settaxprice(cart.taxPrice)
+      settotalprice(cart.totalPrice)
       try {
         dispatch({ type: 'CREATE_REQUEST' });
 
@@ -53,7 +126,7 @@ function PlaceOrder() {
           `${GlobalVariables.serverUrl}placeOrder`,
           {
             
-            orderItems: cart.cartItems,
+            orderItems: cart.shopcartItems,
             shippingAddress: cart.shippingAddress,
             paymentMethod: cart.paymentMethod,
             itemsPrice: cart.itemsPrice,
@@ -61,6 +134,7 @@ function PlaceOrder() {
             taxPrice: cart.taxPrice,
             totalPrice: cart.totalPrice,
             user_id: userInfo._id,
+            seller: cart.shopcartItems[0].seller,
 
           },
           {
@@ -72,8 +146,30 @@ function PlaceOrder() {
 
         ctxDispatch({ type: 'CART_CLEAR' });
         dispatch({ type: 'CREATE_SUCCESS' });
-        localStorage.removeItem('cartItems');
+
+
+        
+        // localStorage.removeItem('cartItems');
+        var localStorageCart = JSON.parse(localStorage.getItem('cartItems')|| [])
+
+          console.log(localStorageCart)
+          console.log(cart.shopcartItems[0].seller)
+          
+          
+            // localStorageCart.filter(i,1);
+            // localStorage.setItem('cartItems', JSON.stringify(localStorageCart));
+
+            
+            let x = localStorageCart.filter((a)=>{if(a.seller!=cart.shopcartItems[0].seller){return a}});
+            console.log(x)
+            localStorage.setItem('cartItems', JSON.stringify(x));
+          
+     
+      
         navigate(`/order/${data.order._id}`);
+
+    
+ 
 
       } catch (err) {
 
@@ -82,6 +178,7 @@ function PlaceOrder() {
 
       }
     };
+    
 
     useEffect(() => {
         if(!cart.paymentMethod){
@@ -114,7 +211,7 @@ function PlaceOrder() {
                 {cart.shippingAddress.country1}
               </Card.Text>
               <Card.Text><strong>Phone number: </strong>{userInfo.phone_number}</Card.Text>
-              <Link to="/shipping">Edit</Link>
+              <Link className='btn btn-success text-dark' to="/shipping">Edit</Link>
             </Card.Body>
           </Card>
 
@@ -124,7 +221,7 @@ function PlaceOrder() {
               <Card.Text>
                 <strong>Method:</strong> {cart.paymentMethod}
               </Card.Text>
-              <Link to="/payment">Edit</Link>
+              <Link className='btn btn-success text-dark' to="/payment">Edit</Link>
             </Card.Body>
           </Card>
 
@@ -134,24 +231,36 @@ function PlaceOrder() {
               <ListGroup variant="flush">
                 {cart.cartItems.map((item) => (
                   <ListGroup.Item key={item._id}>
+                    <Row>
+                    <Col>
+                    <h5>{`Shop: ${item.shop_name}`}</h5>
+                      </Col>
+                    </Row>
                     <Row className="align-items-center">
-                      <Col md={6}>
+                    
+                      <Col md={3}>
+                      
                         <img
                           src={item.imagesrc}
                           alt={item.productname}
                           className="img-fluid rounded img-thumbnail"
                         ></img>{' '}
-                        <Link to={`/product/${item.slug}`}>{item.productname}</Link>
+                        
+                        <Link className='text-dark' to={`/product/${item.slug}`}>{item.productname}</Link>
                       </Col>
+                   
                       <Col md={3}>
                         <span>{item.quantity}</span>
+
+                        
                       </Col>
                       <Col md={3}><strong>Each</strong> KSHs {item.price}</Col>
+                      
                     </Row>
                   </ListGroup.Item>
                 ))}
               </ListGroup>
-              <Link to="/cart">Edit</Link>
+              <Link className='btn btn-success text-dark' to="/cart">Edit</Link>
             </Card.Body>
           </Card>
         </Col>
@@ -159,23 +268,82 @@ function PlaceOrder() {
           <Card>
             <Card.Body>
               <Card.Title>Order Summary</Card.Title>
+              {
+                Object.keys(cartItemsObject).map((key, index) => {
+                  console.log(cartItemsObject[key])
+                  
+                  return (
+                    
+                  cartItemsObject[key].map((shopItem) => {
+                    console.log(shopItem.productname)
+                    if(!alreadyShownShops.includes(shopItem.shop_name)){
+                    alreadyShownShops.push(shopItem.shop_name)
+                    console.log(alreadyShownShops)
+                    } else {
+                      console.log("Shop name exists already")
+                    }
+
+                  return (
+                    <ListGroup.Item key={shopItem._id}>
+                        <h6>{alreadyShownShops.includes(shopItem.shop_name) ? shopItem.shop_name : "hi"}</h6>
+                         <Row>
+                           <Col>
+                           <img src={shopItem.imagesrc} alt={shopItem.productname} width='120px'/>
+                           </Col>
+                           <Col><p>{shopItem.productname}</p></Col>
+
+                         </Row>
+                         <Row>
+                          <Col>
+                          {alreadyShownShops.includes(shopItem.shop_name) ? 
+                          <Button type="button"
+                            variant='success'
+                            onClick={() => placeOrderHandler(cartItemsObject[key])}
+                            disabled={cart.cartItems.length === 0}>Place Order to {shopItem.shop_name}</Button>
+                             : "hi"}
+                          </Col>
+                         </Row>
+
+                       </ListGroup.Item>
+                       
+                  )
+                  }
+                  )
+                  )
+                })
+                // ShopObjects.map((shop) => {
+                //   return (
+                //     <ListGroup.Item>
+                //       <h5>{shop.shop_name}</h5>
+                //     <Row>
+                //       <Col>
+                //       <img src={shop.imagesrc} width='120px'/>
+                //       </Col>
+                //       <Col>{shop.productname}</Col>
+                //     </Row>
+                //   </ListGroup.Item>
+                //   )
+                //})
+              
+              }
+              
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <Row>
                     <Col>Items</Col>
-                    <Col>KSHs {cart.itemsPrice.toFixed(2)}</Col>
+                    <Col>KSHs {itemsprice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
-                    <Col>Shipping</Col>
-                    <Col>KSHs {cart.shippingPrice.toFixed(2)}</Col>
+                    <Col>Delivery Cost</Col>
+                    <Col>KSHs {shippingprice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
                     <Col>Tax</Col>
-                    <Col>KSHs {cart.taxPrice.toFixed(2)}</Col>
+                    <Col>KSHs {taxprice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
@@ -184,20 +352,20 @@ function PlaceOrder() {
                       <strong> Order Total</strong>
                     </Col>
                     <Col>
-                      <strong>KSHs {cart.totalPrice.toFixed(2)}</strong>
+                      <strong>KSHs {totalprice.toFixed(2)}</strong>
                     </Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <div className="d-grid">
-                    <Button
+                    {/* <Button
                       type="button"
                       variant='success'
                       onClick={placeOrderHandler}
                       disabled={cart.cartItems.length === 0}
                     >
                       Place Order
-                    </Button>
+                    </Button> */}
                   </div>
                   {loading && <LoadingBox></LoadingBox>}
                 </ListGroup.Item>

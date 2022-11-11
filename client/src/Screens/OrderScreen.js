@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useState, useReducer } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
@@ -13,6 +13,7 @@ import { Store } from '../Store';
 import { getError } from '../utils';
 import GlobalVariables from '../GlobalVariables';
 import { Button } from 'react-bootstrap';
+import PayModal from './PayModal';
 
 
 
@@ -36,6 +37,8 @@ export default function OrderScreen() {
   const params = useParams();
   const { id: orderId } = params;
   const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const [{ loading, error, order }, dispatch] = useReducer(reducer, {
     loading: true,
@@ -182,7 +185,8 @@ export default function OrderScreen() {
                 <Row>
                   <Col>
                         <Button type="button"
-                      variant='success'>Make Pay</Button>
+                      variant='success' onClick={() => setIsOpen(true)}>Make Payment</Button>
+                      {isOpen && <PayModal setIsOpen={setIsOpen} orderid={orderId} totalPrice = {order.totalPrice.toFixed(0)} />}
                     </Col>
                   </Row>
                 </ListGroup.Item>

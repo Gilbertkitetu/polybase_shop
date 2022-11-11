@@ -68,6 +68,9 @@ const shopSchema = new mongoose.Schema({
             dropDups : true }
      
     },
+    visits : {
+        type : Number
+    },
     createdAt: {
         type: Date,
         default: Date.now

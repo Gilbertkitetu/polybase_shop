@@ -5,3 +5,14 @@
 .img {
     width: 400px;
 }
+.category ul li{
+    text-decoration: none;
+}
+
+.price {
+
+}
+.text-link {
+    color: dark;
+    text-decoration: inherit;
+}

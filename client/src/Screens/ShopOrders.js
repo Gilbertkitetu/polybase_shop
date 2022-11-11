@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useState, useReducer } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Row, Col, Card, Button, ListGroup } from 'react-bootstrap'
 import axios from 'axios';
@@ -26,6 +26,9 @@ const reducer = (state, action) => {
 function ShopOrders() {
     const { state } = useContext(Store);
   const { userInfo } = state;
+
+  const [checkSeller, setcheckSeller] = useState(false)
+  const [seller, setseller] = useState('')
   const navigate = useNavigate();
 
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
@@ -33,13 +36,35 @@ function ShopOrders() {
     error: '',
   });
   useEffect(() => {
+    
+    const getShopName = async () => {
+     
+      await axios.post(
+        `${GlobalVariables.serverUrl}shops/getShopbyuserid`,
+        {_id: userInfo._id},
+        { headers: { Authorization: `Bearer ${userInfo.token}` } }
+
+      ).then(function (response) {
+        console.log(response.data.user_id)
+        setcheckSeller(true)
+        setseller(response.data.user_id)
+
+        fetchData();
+    
+      });
+     
+  }
+
+  
     const fetchData = async () => {
+      
+      
       dispatch({ type: 'FETCH_REQUEST' });
       try {
         const { data } = await axios.post(
 
-          `${GlobalVariables.serverUrl}orders/myorders`,
-          {user_id: userInfo._id},
+          `${GlobalVariables.serverUrl}orders/shopOrders`,
+          {seller: seller},
 
           { headers: { Authorization: `Bearer ${userInfo.token}` } }
         );
@@ -50,9 +75,12 @@ function ShopOrders() {
           payload: getError(error),
         });
       }
+    
     };
-    fetchData();
-  }, [userInfo]);
+
+    getShopName()
+
+  }, [userInfo, seller]);
   return (
     <div>
       <Helmet>

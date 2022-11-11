@@ -27,16 +27,11 @@ const orderSchema = new mongoose.Schema(
             county1: { type: String, required: true },
         },
         paymentMethod: { type: String, required: true },
-        paymentResult: {
-            id: String,
-            status: String,
-            update_time: String,
-            email_address: String,
-            phone_number: String,
-            paybill: String,
-            account_number: String,
-            till_number: String,
-            
+        paymentDetails: {
+            phone_number: { type: String},
+            transactions_id: { type: String},
+            amount: { type: String},
+            time: { type: String}
         },
         itemsPrice: { type: Number, required: true },
         shippingPrice: { type: Number, required: true },
@@ -46,6 +41,7 @@ const orderSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        seller: { type: String, required: true },
         isPaid: { type: Boolean, default: false },
         paidAt: { type: Date },
         isDelivered: { type: Boolean, default: false },

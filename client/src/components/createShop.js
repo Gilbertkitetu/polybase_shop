@@ -264,7 +264,7 @@ function CreateShop() {
                                             {option.City}
                                         </option>
                                     ))
-                                }
+                                } 
                             </select>
                         </Form.Group>
 
