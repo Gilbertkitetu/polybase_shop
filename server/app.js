@@ -26,6 +26,7 @@ import productsRoute from './routes/product.js';
 import userRoute from './routes/user.js';
 import orderRouter from './routes/Order.js'; 
 import shopsRoute from './routes/Shop.js';
+import whatsappRouter from './routes/Whatsapp.js';
 
 
 app.use(bodyParser.json());
@@ -44,7 +45,7 @@ process.on('uncaughtException', err => {
 connectDatabase();
 
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT;
 
 app.get('/api/v1', (req, res) => res.send('Hello there EPSB here'))
 
@@ -52,6 +53,7 @@ app.use('/api/v1', userRoute);
 app.use('/api/v1', productsRoute);
 app.use('/api/v1', orderRouter);
 app.use('/api/v1', shopsRoute);
+app.use('/api/v1', whatsappRouter);
 
 
 const sever = app.listen(port, () => console.log(`EPSB server listening at http://localhost:${port}`));

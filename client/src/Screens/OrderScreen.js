@@ -111,7 +111,10 @@ export default function OrderScreen() {
               </Card.Text>
               {order.isPaid ? (
                 <MessageBox variant="success">
-                  Paid at {order.paidAt}
+                  Paid at {order.paidAt},
+                  Amount Paid: Ksh.{order.amountPaid},
+                  Paid By: {order.paidby}, 
+                  Transaction Id: {order.transaction_id}
                 </MessageBox>
               ) : (
                 <MessageBox variant="danger">Not Paid</MessageBox>
@@ -160,13 +163,13 @@ export default function OrderScreen() {
                 <ListGroup.Item>
                   <Row>
                     <Col>Shipping</Col>
-                    <Col>KSHs {order.shippingPrice.toFixed(2)}</Col>
+                    <Col>Ksh. {order.shippingPrice}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
                     <Col>Tax</Col>
-                    <Col>KSHs {order.taxPrice.toFixed(2)}</Col>
+                    <Col>Ksh. {order.taxPrice}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>

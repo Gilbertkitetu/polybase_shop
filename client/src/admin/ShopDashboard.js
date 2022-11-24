@@ -102,6 +102,60 @@ function ShopDashboard() {
     getShopName();
   }, [userInfo, seller]);
 
+  const fetchData1 = async () => {
+    dispatch({ type: 'FETCH_REQUEST' });
+    try {
+      const { data } = await axios.post(
+
+        `${GlobalVariables.serverUrl}orders/shopOrders`,
+        {seller: seller},
+
+        { headers: { Authorization: `Bearer ${userInfo.token}` } }
+      );
+      dispatch({ type: 'FETCH_SUCCESS', payload: data });
+     
+      setshopOrdersCount(data.length)
+      let total = 0;
+      for( let item of data) {
+        if(item.isPaid === true) {
+          total = total + item.totalPrice
+          
+        }
+        settotalSales(total.toFixed(2))
+
+      } 
+      
+    } catch (error) {
+      dispatch({
+        type: 'FETCH_FAIL',
+        payload: getError(error),
+      });
+    }
+  };
+  const deliver = async (order_id) => {
+    dispatch({ type: 'FETCH_REQUEST' });
+
+    try {
+      const { data } = await axios.post(
+
+        `${GlobalVariables.serverUrl}orders/deliver`,
+        {id: order_id},
+
+        { headers: { Authorization: `Bearer ${userInfo.token}` } }
+      ).then(response => {
+        console.log(response.data.message)
+        // fetchData1()
+        
+      })
+      
+      
+    } catch (error) {
+      dispatch({
+        type: 'FETCH_FAIL',
+        payload: getError(error),
+      });
+    }
+  }
 
   return (
     <div>
@@ -109,7 +163,7 @@ function ShopDashboard() {
         <title>Shop Name</title>
       </Helmet>
         <Row>
-            <Col md={6}></Col>
+            <Col md={4}></Col>
             <Col md={2}>
                 <Button onClick={(e) => {navigate('/productsManager')}} className="button-3" >Manage Products</Button>
             </Col>
@@ -118,6 +172,9 @@ function ShopDashboard() {
             </Col>
             <Col md={2}>
                 <Button onClick={(e) => {navigate('/sell')}} className="button-3" >Add Products</Button>
+            </Col>
+            <Col md={2}>
+                <Button onClick={(e) => {navigate('/reports')}} className="button-3" >Reports</Button>
             </Col>
         </Row>
         <h5>Welcome back, {shopName}</h5>
@@ -206,16 +263,19 @@ function ShopDashboard() {
               </td>
               {/* <td>{order.productname}</td> */}
               <td>{order.totalPrice.toFixed(2)}</td>
-              <td>{order.isPaid ? order.paidAt.substring(0, 10)
+              <td>{order.isPaid ? <Button variant="success">Paid</Button>
                : <Button variant="danger">No</Button>}</td>
               <td>{order.orderItems.length}</td>
               <td>{order.shippingAddress.address}</td>
               <td>
                 {order.isDelivered
-                  ? order.deliveredAt.substring(0, 10)
-                  : <Button variant="danger">No</Button>}
+                  ? 'Delivered'
+                  : <Button type="button" variant="danger" onClick={() => {
+                    deliver(order._id);
+                  }}>Mark as delivered</Button>}
               </td>
               <td>
+             
                 <Button
                   type="button"
                   variant="light"

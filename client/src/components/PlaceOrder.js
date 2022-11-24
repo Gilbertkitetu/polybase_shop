@@ -41,11 +41,30 @@ function PlaceOrder() {
 
     const [shopObjects, setshopObjects] = useState()
 
+    const [ shopname, setshopname ] = useState("");
     
     const [itemsprice, setitemsprice] = useState(0)
     const [shippingprice, setshippingprice] = useState(0)
     const [taxprice, settaxprice] = useState(0)
     const [totalprice, settotalprice] = useState(0)
+
+    const [latitude, setlatitude] = useState('')
+    const [longitude, setlongitude] = useState('')
+
+
+    function distance(lat1, lon1, lat2, lon2) {
+      // console.log(lat1, lon1, lat2, lon2)
+       var p = 0.017453292519943295;    // Math.PI / 180
+       var c = Math.cos;
+       var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+               c(lat1 * p) * c(lat2 * p) * 
+               (1 - c((lon2 - lon1) * p))/2;
+     
+       
+       const dis = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+       return parseFloat(dis).toFixed(2);
+     }
+
 
    // const [alreadyShownShops, setalreadyShownShops] = useState([])
 
@@ -53,6 +72,27 @@ function PlaceOrder() {
     //console.log(newcart)
     
     ///AddplaceOrderDetails(newcart)
+
+    //Calculate delivery cost based on zones
+    function calculateDeliveryCost (distance) {
+      var deliveryCost = 0;
+      if (distance < 1){
+        deliveryCost = 0
+      } else if (distance < 3){
+        deliveryCost = 50
+      } else if (distance < 6) {
+        deliveryCost = 100
+      } else if(distance < 10) {
+        deliveryCost = 150
+      } else if (distance < 15) {
+        deliveryCost = 200
+      } else {
+        deliveryCost = 500
+      }
+      return deliveryCost
+    }
+
+
     var ShopObjects
     function AddplaceOrderDetails (newcart) {
       //key is seller id
@@ -79,17 +119,25 @@ function PlaceOrder() {
       //console.log(newcart)
 
     cart.shopcartItems = newcart
+    console.log(cart.shopcartItems[0].latitude)
+    console.log(cart.shopcartItems[0].longitude)
+    cart.distance = distance(latitude, longitude, cart.shopcartItems[0].latitude, cart.shopcartItems[0].longitude);
+    console.log(cart.distance)
+    cart.shippingPrice = calculateDeliveryCost(cart.distance)
+    console.log(cart.shippingPrice)
     const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
     cart.itemsPrice = round2(
       cart.shopcartItems.reduce((a, c) => a + c.quantity * c.price, 0)
     );
     
     console.log(cart.itemsPrice)
-    cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10);
-    // cart.taxPrice = round2(0.15 * cart.itemsPrice);
-    cart.taxPrice = 0;
-    cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+    // cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10);
+    cart.taxPrice = round2(0.16 * cart.itemsPrice);
+    //cart.taxPrice = 0;
+    cart.totalPrice = Math.ceil(cart.itemsPrice + cart.shippingPrice + cart.taxPrice);
     console.log(cart)
+
+     
     return cart;
 
     }
@@ -110,6 +158,27 @@ function PlaceOrder() {
       return grouped;
     }
 
+    const getShopName =  (sellerId) => {
+     
+       axios.post(
+        `${GlobalVariables.serverUrl}shops/getShopbyuserid`,
+        {_id: sellerId},
+        { headers: { Authorization: `Bearer ${userInfo.token}` } }
+
+      ).then(function (response) {
+        console.log(response.data.shop_name)
+       
+        setshopname(response.data.shop_name)
+        console.log(shopname)
+        
+       
+        
+      });
+    
+  }
+
+    
+
     const placeOrderHandler = async (shopItems) => {
       //console.log(shopItems)
       addShippingDetails(shopItems)
@@ -119,6 +188,7 @@ function PlaceOrder() {
       setshippingprice(cart.shippingPrice)
       settaxprice(cart.taxPrice)
       settotalprice(cart.totalPrice)
+      
       try {
         dispatch({ type: 'CREATE_REQUEST' });
 
@@ -142,7 +212,36 @@ function PlaceOrder() {
               authorization: `Bearer ${userInfo.token}`,
             },
           }
-        );
+        ).then((response)=> {
+          console.log("response")
+          console.log(response.data.order)
+          var navigateotoId = response.data.order._id;
+          getShopName(cart.shopcartItems[0].seller)
+
+          const whatsApp = async () => {
+             
+            var orderToWhatsApp = {
+              order : response.data.order,
+              shopname : shopname
+            }
+            console.log(shopname)
+            console.log(orderToWhatsApp)
+            axios.post(
+           
+            `${GlobalVariables.serverUrl}orderNotification`,
+              orderToWhatsApp,
+            {
+              headers: {
+                authorization: `Bearer ${userInfo.token}`,
+              },
+            }
+            ).then((response) => {
+              console.log(response.data)
+            })
+          }
+          whatsApp()
+        
+        
 
         ctxDispatch({ type: 'CART_CLEAR' });
         dispatch({ type: 'CREATE_SUCCESS' });
@@ -166,15 +265,15 @@ function PlaceOrder() {
           
      
       
-        navigate(`/order/${data.order._id}`);
-
+        navigate(`/order/${navigateotoId}`);
+      });
     
  
 
       } catch (err) {
 
         dispatch({ type: 'CREATE_FAIL' });
-        toast.error(getError(err));
+        //toast.error(getError(err));
 
       }
     };
@@ -184,6 +283,17 @@ function PlaceOrder() {
         if(!cart.paymentMethod){
             navigate('/payment');
         }
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position){
+            console.log(position);
+            console.log(`latitude: ${position.coords.latitude}`)
+            setlatitude(position.coords.latitude)
+            console.log(`longitude: ${position.coords.longitude}`)
+            setlongitude(position.coords.longitude)
+          })
+          }
+
     }, [cart, navigate]);
 
 

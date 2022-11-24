@@ -9,9 +9,7 @@ import { Store } from '../Store'
 import Select from 'react-select'
 import './styles/Styles.css'
 
-import 'react-dropzone-uploader/dist/styles.css'
-
-
+// import 'react-dropzone-uploader/dist/styles.css'
 
 function Sell() {
 

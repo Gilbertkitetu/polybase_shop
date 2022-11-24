@@ -50,6 +50,7 @@ orderRouter.get(
     })
 )
 
+
 orderRouter.put(
     '/orders/:id/pay',
 
@@ -93,6 +94,24 @@ orderRouter.post(
         res.send(shopOrders)
     })
 )
+orderRouter.post(
+    '/orders/shopOrders/filterByPaid',
+
+    expressAsyncHandler(async (req, res) => {
+        const shopOrders = await Order.find({ seller: req.body.seller, isPaid: req.body.isPaid })
+        .sort({ createdAt: 'desc' }).exec();
+        res.send(shopOrders)
+    })
+)
+orderRouter.post(
+    '/orders/shopOrders/filterByDelivery',
+
+    expressAsyncHandler(async (req, res) => {
+        const shopOrders = await Order.find({ seller: req.body.seller, isDelivered: req.body.isDelivered })
+        .sort({ createdAt: 'desc' }).exec();
+        res.send(shopOrders)
+    })
+)
 
 orderRouter.get("/token", (req, res) => {
     generateToken();
@@ -121,12 +140,15 @@ const generateToken = async (req, res, next) => {
         })
 }
 
+var OrderId = "";
 orderRouter.post(
     '/stk', generateToken,
     expressAsyncHandler(async (req, res) => {
         const phone_number = req.body.phone;
-        const amount = parseInt(req.body.totalPrice);
-        const orderId = req.body.orderid
+        // const amount = parseInt(req.body.totalPrice);
+        const amount = 1;
+        OrderId = req.body.orderid
+
         
         
         const date = new Date();
@@ -158,7 +180,7 @@ orderRouter.post(
                     PartyB: 174379,
                     //PartyB: "600000",
                     PhoneNumber: `254${phone_number}`,    
-                    CallBackURL: "https://341b-217-21-116-238.ngrok.io/api/v1/callback",    
+                    CallBackURL: "https://c3b0-217-21-116-238.ngrok.io/api/v1/callback",    
                     AccountReference:"Test",    
                     TransactionDesc:"Test"  
                 },
@@ -170,6 +192,7 @@ orderRouter.post(
             ).then((response) => {
                 console.log(response.data)
                 res.status(200).json(response.data)
+                // updateOrderPayment(orderId)
             }).catch((err)=>{
                 console.log(err)
                 res.status(400).json(err.message)
@@ -177,7 +200,17 @@ orderRouter.post(
            
     })
 )
-
+// function updateOrderPayment (orderId) {
+//     const order = Order.findById(orderId);
+//     if(order) {
+//         order.isPaid = true;
+//         order.paidAt = Date.now();
+//         order.save();
+//         res.send({ message: "Order is Paid" });
+//     } else {
+//         res.status(404).send({ message: 'Order Not Found' })
+//     }
+// }
 orderRouter.post(
     '/callback', async (req, res) => {
         const callbackData = req.body;
@@ -190,22 +223,41 @@ orderRouter.post(
 
         console.log(callbackData.Body.stkCallback.CallbackMetadata)
 
-        const phone = callbackData.Body.stkCallback.CallbackMetadata.Item[4].value;
-        const amount = callbackData.Body.stkCallback.CallbackMetadata.Item[0].value;
-        const transaction_id = callbackData.Body.stkCallback.CallbackMetadata.Item[1].value;
+        const phone = callbackData.Body.stkCallback.CallbackMetadata.Item[4].Value;
+        const amount = callbackData.Body.stkCallback.CallbackMetadata.Item[0].Value;
+        const transaction_id = callbackData.Body.stkCallback.CallbackMetadata.Item[1].Value;
+        const TransactionDate = callbackData.Body.stkCallback.CallbackMetadata.Item[3].Value;
 
-        console.log({ phone, amount, transaction_id });
+        console.log({ phone, amount, transaction_id, TransactionDate });
 
         //const orderId = req.body.orderid
-        const order = await Order.findById(orderId);
+        const order = await Order.findById(OrderId);
         if(order) {
             order.isPaid = true;
-            order.paidAt = Date.Now();
+            order.paidAt = TransactionDate;
+            order.paidby = phone;
+            order.amountPaid = amount;
+            order.transaction_id = transaction_id;
+            await order.save();
+            res.send({ message: "Order is Paid" });
             
         } else {
-            res.status(404).send({ message: 'Product Not Found' })
+            res.status(404).send({ message: 'Order Not Found' })
         }
     }
+)
+
+orderRouter.post(
+    '/orders/deliver',
+    expressAsyncHandler(async(req, res) => {
+        const order = await Order.findById(req.body.id);
+        if(order) {
+            order.isDelivered = true;
+            order.deliveredAt = Date.now();
+            await order.save();
+            res.send({ message: "Delivery Updated" })
+        }
+    })
 )
 
 

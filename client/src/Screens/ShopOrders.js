@@ -122,7 +122,7 @@ function ShopOrders() {
             </td>
             {/* <td>{order.productname}</td> */}
             <td>{order.totalPrice.toFixed(2)}</td>
-            <td>{order.isPaid ? order.paidAt.substring(0, 10)
+            <td>{order.isPaid ? <Button variant="success">Paid</Button>
              : <Button variant="danger">No</Button>}</td>
             <td>{order.orderItems.length}</td>
             <td>{order.shippingAddress.address}</td>

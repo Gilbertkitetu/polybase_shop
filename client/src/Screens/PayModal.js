@@ -62,7 +62,7 @@ function PayModal({ setIsOpen, orderid,  totalPrice}) {
     <div className={styles.centered}>
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
-          <h5 className={styles.heading}>Dialog</h5>
+          <h5 className={styles.heading}>Pay with Mpesa</h5>
         </div>
         <button className={styles.closeBtn} onClick={() => setIsOpen(false)}>
           <RiCloseLine style={{ marginBottom: "-3px" }} />

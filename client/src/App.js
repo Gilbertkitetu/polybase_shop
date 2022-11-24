@@ -56,6 +56,7 @@ import MapScreen from "./Screens/MapScreen";
 
 import GlobalVariables from "./GlobalVariables";
 import axios from "axios";
+import Reports from "./admin/Reports";
 
 
 function App() {
@@ -212,6 +213,8 @@ function App() {
               <Route path = '/productsManager' element = { <ProductListScreen /> } />
               <Route path = '/editProduct/:id' element = { <ProductEditScreen /> } />
               <Route path = '/shop/:id' element = { <ShopPublicView /> } />
+              <Route path = '/reports' element = { <Reports /> } />
+              
 
               <Route path = '/MapScreen' element = { <MapScreen /> } />
 

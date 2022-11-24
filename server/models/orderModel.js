@@ -43,9 +43,12 @@ const orderSchema = new mongoose.Schema(
         },
         seller: { type: String, required: true },
         isPaid: { type: Boolean, default: false },
-        paidAt: { type: Date },
+        paidAt: { type: String },
         isDelivered: { type: Boolean, default: false },
         deliveredAt: { type: Date },
+        paidby: { type: String },
+        amountPaid: { type: String },
+        transaction_id: { type: String },
         
     },
     {
