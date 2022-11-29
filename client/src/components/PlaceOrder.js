@@ -440,7 +440,7 @@ function PlaceOrder() {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <Row>
-                    <Col>Items</Col>
+                    <Col>Items Cost</Col>
                     <Col>KSHs {itemsprice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>
@@ -452,7 +452,7 @@ function PlaceOrder() {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
-                    <Col>Tax</Col>
+                    <Col>VAT(16%)</Col>
                     <Col>KSHs {taxprice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>

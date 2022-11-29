@@ -22,7 +22,7 @@ const reducer = (state, action) => {
     }
   };
 
-function PayModal({ setIsOpen, orderid,  totalPrice}) {
+function PayModal({ setIsOpen, orderid,  totalPrice, tillNumber}) {
 
     const { state } = useContext(Store);
     const { userInfo } = state;
@@ -43,7 +43,8 @@ function PayModal({ setIsOpen, orderid,  totalPrice}) {
             const { data } = await axios.post(`${GlobalVariables.serverUrl}stk`, {
                 phone,
                 orderid,
-                totalPrice
+                totalPrice,
+                tillNumber
 
             }, { headers: { Authorization: `Bearer ${userInfo.token}` } }
             );
@@ -62,7 +63,7 @@ function PayModal({ setIsOpen, orderid,  totalPrice}) {
     <div className={styles.centered}>
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
-          <h5 className={styles.heading}>Pay with Mpesa</h5>
+          <h5 className={styles.heading}>Pay with Mpesa to this Till Number: {tillNumber}</h5>
         </div>
         <button className={styles.closeBtn} onClick={() => setIsOpen(false)}>
           <RiCloseLine style={{ marginBottom: "-3px" }} />

@@ -24,7 +24,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Helmet } from "react-helmet-async";
 import { Store } from "./Store";
 
-import Dashboard from "./admin/Dashboard";
+//import Dashboard from "./admin/Dashboard";
 
 //Shop Admin Components
 import ShopDashboard from "./admin/ShopDashboard";
@@ -52,11 +52,15 @@ import ProductListScreen from "./Screens/ProductListScreen";
 import ProductEditScreen from "./Screens/ProductEditScreen";
 import ShopPublicView from "./components/ShopPublicView";
 
+
 import MapScreen from "./Screens/MapScreen";
 
 import GlobalVariables from "./GlobalVariables";
 import axios from "axios";
 import Reports from "./admin/Reports";
+import Dashboard from "./admin/epsbadmin/Dashboard";
+import AllProducts from "./admin/epsbadmin/AllProducts"
+import AllUsers from "./"
 
 
 function App() {
@@ -190,7 +194,7 @@ function App() {
           
             <Routes>
                 
-              <Route path = '/admin/dashboard' element = { <Dashboard /> } />
+              {/* <Route path = '/admin/dashboard' element = { <Dashboard /> } /> */}
               <Route path = '/shop' element = { <ShopDashboard /> } />
               
               
@@ -206,7 +210,7 @@ function App() {
               <Route path = '/order/:id' element = { <OrderScreen /> } />
               <Route path = '/orderhistory' element = { <OrderHistory /> } />
               <Route path = '/yourcustomerorders' element = { <ShopOrders /> } />
-              <Route path='/product/:slug' element={<ProductScreen />} />
+              <Route path = '/product/:slug' element={<ProductScreen />} />
               <Route path = '/sell' element = {<Sell /> } />
               <Route path = '/profile' element = {<ProfileScreen /> } />
               <Route path = '/search' element = {<Search />} />
@@ -214,8 +218,8 @@ function App() {
               <Route path = '/editProduct/:id' element = { <ProductEditScreen /> } />
               <Route path = '/shop/:id' element = { <ShopPublicView /> } />
               <Route path = '/reports' element = { <Reports /> } />
-              
-
+              <Route path = '/admindashboard' element = { <Dashboard /> } />              
+              <Route path = '/allProducts' element = { <AllProducts /> } />
               <Route path = '/MapScreen' element = { <MapScreen /> } />
 
             </Routes>

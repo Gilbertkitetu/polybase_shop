@@ -39,6 +39,7 @@ export default function OrderScreen() {
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [tillNumber, settillNumber] = useState('');
 
   const [{ loading, error, order }, dispatch] = useReducer(reducer, {
     loading: true,
@@ -59,6 +60,26 @@ export default function OrderScreen() {
       }
     };
 
+    const getShopName = async () => {
+     
+      await axios.post(
+        `${GlobalVariables.serverUrl}shops/getShopbyuserid`,
+        {_id: userInfo._id},
+        { headers: { Authorization: `Bearer ${userInfo.token}` } }
+
+      ).then(function (response) {
+        console.log(response.data)
+        // setshopName(response.data.shop_name)
+        // setseller(response.data.user_id)
+        // setvisits(response.data.visits);
+        settillNumber(response.data.tillNumber)
+        
+      });
+    
+  }
+
+  getShopName()
+
     if (!userInfo) {
       return navigate('/login');
     }
@@ -66,6 +87,8 @@ export default function OrderScreen() {
       fetchOrder();
     }
   }, [order, userInfo, orderId, navigate]);
+
+
   return loading ? (
     <LoadingBox></LoadingBox>
   ) : error ? (
@@ -156,19 +179,19 @@ export default function OrderScreen() {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <Row>
-                    <Col>Items</Col>
+                    <Col>Items Cost</Col>
                     <Col>KSHs {order.itemsPrice.toFixed(2)}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
-                    <Col>Shipping</Col>
+                    <Col>Delivery Cost</Col>
                     <Col>Ksh. {order.shippingPrice}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
-                    <Col>Tax</Col>
+                    <Col>VAT(16%)</Col>
                     <Col>Ksh. {order.taxPrice}</Col>
                   </Row>
                 </ListGroup.Item>
@@ -189,7 +212,7 @@ export default function OrderScreen() {
                   <Col>
                         <Button type="button"
                       variant='success' onClick={() => setIsOpen(true)}>Make Payment</Button>
-                      {isOpen && <PayModal setIsOpen={setIsOpen} orderid={orderId} totalPrice = {order.totalPrice.toFixed(0)} />}
+                      {isOpen && <PayModal setIsOpen={setIsOpen} orderid={orderId} tillNumber={tillNumber} totalPrice = {order.totalPrice.toFixed(0)} />}
                     </Col>
                   </Row>
                 </ListGroup.Item>

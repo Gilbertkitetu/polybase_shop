@@ -86,7 +86,7 @@ whatsappRouter.post('/orderNotification', function(req, res, next) {
              *Seller:* ${shopname},
              *For more order details visit:
               
-              https://59c2-217-21-116-238.ngrok.io/order/${order._id}
+             https://bcab-217-21-116-238.ngrok.io/api/v1/orders/${order._id}
                 `
         }
       });

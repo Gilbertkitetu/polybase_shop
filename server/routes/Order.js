@@ -147,6 +147,7 @@ orderRouter.post(
         const phone_number = req.body.phone;
         // const amount = parseInt(req.body.totalPrice);
         const amount = 1;
+        const tillNumber = req.body.tillNumber
         OrderId = req.body.orderid
 
         
@@ -180,7 +181,7 @@ orderRouter.post(
                     PartyB: 174379,
                     //PartyB: "600000",
                     PhoneNumber: `254${phone_number}`,    
-                    CallBackURL: "https://c3b0-217-21-116-238.ngrok.io/api/v1/callback",    
+                    CallBackURL: "https://bcab-217-21-116-238.ngrok.io/api/v1/callback",    
                     AccountReference:"Test",    
                     TransactionDesc:"Test"  
                 },

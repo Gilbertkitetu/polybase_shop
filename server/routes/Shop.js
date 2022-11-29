@@ -41,6 +41,20 @@ shopsRoute.put('/shops/visit', async (req, res) => {
     
 })
 
+shopsRoute.get('/shops/getAll', async (req, res) => {
+    const shops = await Shops.find({});
+    res.send(shops)
+})
+
+shopsRoute.delete('/shops/deleteShop/:id', async (req, res) => {
+    const shop = await Shops.findById(req.params.id);
+    if(shop) {
+        const deleteShop = await shop.remove();
+        res.send({ message: 'Shop Deleted', shop: deleteShop })
+    } else {
+        res.status(404).send({ message: 'Shop Not Found' })
+    }
+})
 
 export default shopsRoute;
 
