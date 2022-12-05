@@ -27,6 +27,7 @@ import userRoute from './routes/user.js';
 import orderRouter from './routes/Order.js'; 
 import shopsRoute from './routes/Shop.js';
 import whatsappRouter from './routes/Whatsapp.js';
+import webHookRouter from './routes/incomingWebhooks.js';
 
 
 app.use(bodyParser.json());
@@ -54,6 +55,7 @@ app.use('/api/v1', productsRoute);
 app.use('/api/v1', orderRouter);
 app.use('/api/v1', shopsRoute);
 app.use('/api/v1', whatsappRouter);
+app.use('/api/v1', webHookRouter);
 
 
 const sever = app.listen(port, () => console.log(`EPSB server listening at http://localhost:${port}`));

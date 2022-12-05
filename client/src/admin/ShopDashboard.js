@@ -163,7 +163,19 @@ function ShopDashboard() {
         <title>Shop Name</title>
       </Helmet>
         <Row>
-            <Col md={4}></Col>
+            <Col md={2}></Col>
+            <Col md={2}>
+            {
+            userInfo.name === 'admin'
+            ?
+            
+                <Button onClick={(e) => {navigate('/adminDashboard')}} className="button-3" >Admin Dashboard</Button>
+            
+            : null
+            }
+            </Col>
+
+            
             <Col md={2}>
                 <Button onClick={(e) => {navigate('/productsManager')}} className="button-3" >Manage Products</Button>
             </Col>

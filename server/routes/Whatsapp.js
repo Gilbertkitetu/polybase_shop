@@ -36,42 +36,7 @@ whatsappRouter.post('/orderNotification', function(req, res, next) {
     var order = req.body.order;
     var shopname = req.body.shopname;
     console.log("Hi whatsappp")
-    // var order = {
-    //     shippingAddress: {
-    //         latitude: "-0.3974645",
-    //         longitude: "36.9648429",
-    //         fullName: "gilbert kitetu",
-    //         address: "Nyeri",
-    //         city: "Nyeri",
-    //         country1: "Kenya",
-    //         county1: "Mombasa"
-    //     },
-    //     isPaid: false,
-    //     isDelivered: false,
-    //     _id: "636dbf08500ecb38bc55e811",
-    //     orderItems: [
-    //         {
-    //             _id: "63261bd6c4716629688a29d6",
-    //             price: 156999,
-    //             productname: "Lenovo IdeaPad Gaming 3 15IHU6, Core I7 11th Gen, 16GB Ram, 1TB HDD + 256GB SSD,DOS -Shadow Black",
-    //             slug: "Lenovo_IdeaPad_Gaming_3_15IHU6,_Core_I7_11th_Gen,_16GB_Ram,_1TB_HDD_+_256GB_SSD,DOS_-Shadow_Black",
-    //             imagesrc: "/uploads/products/1663441878197.gaminglaptop.jpg",
-    //             quantity: 1,
-    //             product: "63261bd6c4716629688a29d6"
-    //         }
-    //     ],
-    //     paymentMethod: "Mpesa",
-    //     itemsPrice: 156999,
-    //     shippingPrice: 0,
-    //     taxPrice: 23549.85,
-    //     totalPrice: 180548.85,
-    //     user_id: "6319ceb7d1e6180a243a5237",
-    //     seller: "6319ceb7d1e6180a243a5237",
-    //     createdAt: "2022-11-11T03:18:32.865Z",
-    //     updatedAt: "2022-11-11T03:18:32.865Z",
-    //     __v: 0
-    // }
-    //var data = getTextMessageInput(process.env.RECIPIENT_PHONE_NUMBER, "Welcome to EPSB")
+   
     var data = JSON.stringify({
         "messaging_product": "whatsapp",
         "to": process.env.RECIPIENT_PHONE_NUMBER,
@@ -99,13 +64,18 @@ whatsappRouter.post('/orderNotification', function(req, res, next) {
     })
 })
 
-whatsappRouter.post('/sendProduct', function(req, res, next) {
+whatsappRouter.post('/sendOrderNotification', function(req, res, next) {
+
+  var order = req.body.order;
+  var shopname = req.body.shopname;
+  var phone = req.body.userPhone;
+  var allowedphone = process.env.RECIPIENT_PHONE_NUMBER;
     var data = JSON.stringify({
         "messaging_product": "whatsapp",
-        "to": process.env.RECIPIENT_PHONE_NUMBER,
+        "to": allowedphone,
         "type": "template",
         "template": {
-          "name": "sample_movie_ticket_confirmation",
+          "name": "order_notification ",
           "language": {
             "code": "en_US"
           },
@@ -116,7 +86,7 @@ whatsappRouter.post('/sendProduct', function(req, res, next) {
                 {
                   "type": "image",
                   "image": {
-                    "link": "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/90/643837/1.jpg"
+                    "link": `${process.env.FRONTENDURL}/uploads/products/1663525335495.asus.jpg`
                   }
                 }
               ]
@@ -126,21 +96,23 @@ whatsappRouter.post('/sendProduct', function(req, res, next) {
               "parameters": [
                 {
                   "type": "text",
-                  "text": "Adidas TENSAUR SPORT TRAINING HOOK AND LOOP SHOES KIDS"
-                },
-                {
-                  "type": "date_time",
-                  "date_time": {
-                    "fallback_value": "Adidas TENSAUR SPORT TRAINING HOOK AND LOOP SHOES KIDS"
-                  }
+                  "text": shopname
                 },
                 {
                   "type": "text",
-                  "text": "Adidas TENSAUR SPORT TRAINING HOOK AND LOOP SHOES KIDS"
+                  "text": order._id
                 },
                 {
                   "type": "text",
-                  "text": "4,454"
+                  "text": order.totalPrice
+                },
+                {
+                  "type": "text",
+                  "text": order.orderItems[0].productname
+                },
+                {
+                  "type": "text",
+                  "text": `${process.env.CALLBACK_URL}/api/v1/orders/${order._id}`
                 }
               ]
             }
@@ -148,6 +120,7 @@ whatsappRouter.post('/sendProduct', function(req, res, next) {
         }
       }
       );
+    console.log(data)
 
     sendWhatsAppMessage(data).then(function (response) {
         return;

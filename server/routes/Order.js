@@ -79,11 +79,22 @@ orderRouter.post(
     '/orders/myorders',
 
     expressAsyncHandler(async (req, res) => {
-        const orders = await Order.find({ user_id: req.body.user_id })
+        const orders = await Orders.find({ user_id: req.body.user_id })
         .sort({ createdAt: 'desc' }).exec();
         res.send(orders);
     })
 );
+
+
+orderRouter.post('/orders/allorders', async(req, res) => { 
+    try{
+        const orders = await Order.find({})
+      return res.json(orders);  
+     } catch (error){
+         res.json({ message: error})
+ }
+ })
+
 
 orderRouter.post(
     '/orders/shopOrders',
@@ -94,6 +105,7 @@ orderRouter.post(
         res.send(shopOrders)
     })
 )
+
 orderRouter.post(
     '/orders/shopOrders/filterByPaid',
 
@@ -116,8 +128,10 @@ orderRouter.post(
 orderRouter.get("/token", (req, res) => {
     generateToken();
 })
+
 //Middleware
 let token
+
 const generateToken = async (req, res, next) => {
 
     const secret = "GKHSSSG2NmiKv5wU";
@@ -181,7 +195,7 @@ orderRouter.post(
                     PartyB: 174379,
                     //PartyB: "600000",
                     PhoneNumber: `254${phone_number}`,    
-                    CallBackURL: "https://bcab-217-21-116-238.ngrok.io/api/v1/callback",    
+                    CallBackURL: `${process.env.CALLBACK_URL}/api/v1/callback`,    
                     AccountReference:"Test",    
                     TransactionDesc:"Test"  
                 },

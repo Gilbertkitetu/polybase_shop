@@ -77,7 +77,7 @@ function Login(){
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password"  required value={password} onChange={(e) => {setPassword(e.target.value)}}/>
                         </Form.Group>
-                        <Button className="w-100" type="submit">Sign In</Button>
+                        <Button className="w-100" variant='success' type="submit">Sign In</Button>
                     </Form>
                     <div className="w-100 text-center mt-2" style={{color: "black"}}>
                 Don't have an Account?  <Link to={`/signup?redirect=${redirect}`}>Create Account</Link>

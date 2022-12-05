@@ -24,12 +24,12 @@ const reducer = (state, action) => {
   }
 };
 
-function Dashboard() {
+function AllOrders() {
 
   const { state } = useContext(Store);
   const { userInfo } = state;
   const navigate = useNavigate();
-  const [ shops, setShops ] = useState([])
+  const [ products, setproducts ] = useState([])
 
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
     loading: true,
@@ -37,15 +37,15 @@ function Dashboard() {
   });
 
   useEffect(() => {
-    const fetchShops = async () => {
+    const fetchOrders = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        await axios.get(
-          `${GlobalVariables.serverUrl}shops/getAll`,
+        await axios.post(
+          `${GlobalVariables.serverUrl}orders/allorders`,
           { headers: { Authorization: `Bearer ${userInfo.token}` } }
         ).then(function (response) {
           console.log(response.data)
-          setShops(response.data)
+          setproducts(response.data)
           dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
         })
         
@@ -53,7 +53,7 @@ function Dashboard() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
-    fetchShops();
+    fetchOrders();
 
   }, [userInfo]);
 
@@ -87,7 +87,6 @@ const  deleteHandler = async (shop) => {
       </Row>
      <Row>
             <Col md={6}></Col>
-            
             <Col md={2}>
                 <Button onClick={(e) => {navigate('/allProducts')}} className="button-3" >All Products</Button>
             </Col>
@@ -101,7 +100,7 @@ const  deleteHandler = async (shop) => {
         </Row>
         <Row>
       <Col>
-          <h3>Shops</h3>
+          <h3>All Orders</h3>
       </Col>
       </Row>
         <Row>
@@ -115,17 +114,17 @@ const  deleteHandler = async (shop) => {
           <thead>
             <tr>
             <th>Id</th>
-            <th>Shop Name</th>
-            <th>Business Category</th>
-            <th>Town/City</th>
-            <th>Shop Location</th>
+            <th>Name</th>
+            <th>Photo</th>
+            <th>Category</th>
+            <th>Brand</th>
+            <th>CountInStock</th>
+            <th>Price</th>
 
-            <th>Shop Email</th>
-            <th>Shop Phone</th>
-            <th>Till Number</th>
-            <th>Mpesa Name</th>
-            <th>Mpesa Number</th>
-            <th>Visits</th>
+            <th>Location</th>
+            <th>Rating</th>
+            <th>Shop Name</th>
+            
             <th>Actions</th>
             <th></th>
             
@@ -133,25 +132,20 @@ const  deleteHandler = async (shop) => {
             </tr>
           </thead>
           <tbody>
-            {shops.map((shop) => (
-              <tr key={shop._id}>
-                <td>{shop._id.slice(0, 10)}</td>
-                <td>{shop.shop_name}</td>
-                <td>{shop.bussinessCategory}</td>
-                <td>{shop.town}</td>
-                <td>{shop.shopLocation}</td>
-                <td>{shop.shop_email}</td>
-                <td>{shop.shop_phone_number}</td>
-                <td>{shop.tillNumber}</td>
-                <td>{shop.mpesaName}</td>
-                <td>{shop.mpesaNumber}</td>
-                <td>{shop.visits}</td>
-                <td className="danger1" onClick={() => deleteHandler(shop)}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                    </svg>
-                  </td>
+            {products.map((product) => (
+              <tr key={product._id}>
+                <td>{product._id.slice(0, 10)}</td>
+                <td><img src={product.imagesrc} width="60px"/></td>
+                <td>{product.productname}</td>
+                <td>{product.category}</td>
+                <td>{product.brand}</td>
+                <td>{product.countInStock}</td>
+                <td>{product.price}</td>
+                <td>{product.product_location}</td>
+                <td>{product.ratings}</td>
+                <td>{product.shop_name}</td>
+               
+                
               </tr>
             ))}
           </tbody>
@@ -164,4 +158,4 @@ const  deleteHandler = async (shop) => {
   )
 }
 
-export default Dashboard
+export default AllOrders

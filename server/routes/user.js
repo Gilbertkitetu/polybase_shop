@@ -87,6 +87,14 @@ router.get('/get_users', (req, res) => {
     console.log("This is a users route");
 })
 
+router.get('/getAllUsers', async(req, res) => { 
+    try{
+    const allusers = await userModel.find();
+      return res.json(allusers);  
+     } catch (error){
+         res.json({ message: error})
+ }
+ })
 
 router.post('/add_new_user', async (req, res) => {
 

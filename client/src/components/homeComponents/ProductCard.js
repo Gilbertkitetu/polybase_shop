@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Card, ListGroup } from 'react-bootstrap'
 import Ratings from './Ratings';
+import "./categoryDir.css";
 
 import { Link } from 'react-router-dom';
 
@@ -53,12 +54,13 @@ if (navigator.geolocation) {
   }
 
   return (
-    <Card style={{ width: '15rem' }} key={products.slug}>
+    <Card style={{ width: '15rem', height: '36rem' }} key={products.slug}>
       <Card.Body>
        
 
         <Link to={`/product/${products.slug}`}>
-          <Card.Img variant="top" src={products.imagesrc} alt={products.productname} />
+          <Card.Img variant="top" src={products.imagesrc} alt={products.productname}
+          style={{ width: '10rem' }} />
         </Link>
         <Card.Text>
           {products.productname}
@@ -68,13 +70,15 @@ if (navigator.geolocation) {
         <ListGroup className="list-group-flush">
           
           <ListGroup.Item><strong>KSh {products.price}</strong></ListGroup.Item>
-          <ListGroup.Item><strong>Brand: </strong> {products.brand}</ListGroup.Item>
+          
+          <ListGroup.Item className='cardHide'><strong>Brand: </strong> {products.brand}</ListGroup.Item>
           <ListGroup.Item><strong>Seller: </strong> <Link to={`/shop/${products.seller}`}>{products.shop_name}</Link></ListGroup.Item>
-          <ListGroup.Item><strong>Location: </strong>{products.product_location}</ListGroup.Item>
-          <ListGroup.Item><strong>Distance: </strong>≈ <strong>{distance(products.latitude, products.longitude, latitude, longitude)}</strong> km away</ListGroup.Item>
-          <ListGroup.Item><strong>Units in stock: </strong>{products.countInStock}</ListGroup.Item>
+          <ListGroup.Item className='cardHide'><strong>Location: </strong>{products.product_location}</ListGroup.Item>
+         
+          <ListGroup.Item className='cardHide'><strong>Units in stock: </strong>{products.countInStock}</ListGroup.Item>
           <ListGroup.Item> <Ratings rating={products.ratings} numReviews={products.numberReviews} /></ListGroup.Item>
         </ListGroup>
+        <p> ≈ <strong>{distance(products.latitude, products.longitude, latitude, longitude)}</strong> km away</p>
         <Link to={`/product/${products.slug}`}>
         <button className="button-3">ADD TO CART</button>
         </Link>

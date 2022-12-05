@@ -57,7 +57,7 @@ function Signup( ){
             const { data } = await axios.post(`${GlobalVariables.serverUrl}add_new_user`, user_account);
             ctxDispatch({ type: 'USER_SIGNIN', payload: data })
             localStorage.setItem('userInfo', JSON.stringify(data));
-            navigate(redirect || '/');
+            navigate(redirect || '/login');
         } catch (err) {
             toast.error(getError(err));
         }
@@ -91,7 +91,7 @@ useEffect(() => {
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" required  value={user_password} onChange={(e) => {set_user_password(e.target.value)}}/>
                     </Form.Group>
-                    <Button className="w-100" type="submit">Sign Up</Button>
+                    <Button className="w-100" variant='success' type="submit">Sign Up</Button>
                 </Form>
                 <div className="w-100 text-center mt-2" style={{color: "black"}}>
                 Already have an account? <Link to={`/login?redirect=${redirect}`}>Sign In</Link>

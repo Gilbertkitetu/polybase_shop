@@ -37,6 +37,7 @@ function AllProducts() {
   });
 
   useEffect(() => {
+    console.log("All products modules work")
     const fetchShops = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
@@ -88,13 +89,13 @@ const  deleteHandler = async (shop) => {
      <Row>
             <Col md={6}></Col>
             <Col md={2}>
-                <Button onClick={(e) => {navigate('/productsManager')}} className="button-3" >Products</Button>
+                <Button onClick={(e) => {navigate('/allProducts')}} className="button-3" >All Products</Button>
             </Col>
             <Col md={2}>
-                <Button onClick={(e) => {navigate('/yourcustomerorders')}} className="button-3" >Orders</Button>
+                <Button onClick={(e) => {navigate('/AllOrders')}} className="button-3" >Orders</Button>
             </Col>
             <Col md={2}>
-                <Button onClick={(e) => {navigate('/sell')}} className="button-3" >Users</Button>
+                <Button onClick={(e) => {navigate('/AllUsers')}} className="button-3" >Users</Button>
             </Col>
           
         </Row>

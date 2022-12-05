@@ -39,6 +39,8 @@ function PlaceOrder() {
     const { state, dispatch: ctxDispatch } = useContext(Store);
     const { cart, userInfo } = state;
 
+    console.log("userInfo.token", userInfo.token)
+
     const [shopObjects, setshopObjects] = useState()
 
     const [ shopname, setshopname ] = useState("");
@@ -137,7 +139,7 @@ function PlaceOrder() {
     cart.totalPrice = Math.ceil(cart.itemsPrice + cart.shippingPrice + cart.taxPrice);
     console.log(cart)
 
-     
+    console.log("userInfo.token", userInfo.token)
     return cart;
 
     }
@@ -171,7 +173,7 @@ function PlaceOrder() {
         setshopname(response.data.shop_name)
         console.log(shopname)
         
-       
+       console.log("userInfo.token", userInfo.token)
         
       });
     
@@ -217,18 +219,19 @@ function PlaceOrder() {
           console.log(response.data.order)
           var navigateotoId = response.data.order._id;
           getShopName(cart.shopcartItems[0].seller)
-
+          var shopNameOfOrder = cart.shopcartItems[0].seller;
           const whatsApp = async () => {
              
             var orderToWhatsApp = {
               order : response.data.order,
-              shopname : shopname
+              shopname : shopNameOfOrder,
+              userPhone : userInfo.phone_number,
             }
             console.log(shopname)
             console.log(orderToWhatsApp)
             axios.post(
            
-            `${GlobalVariables.serverUrl}orderNotification`,
+            `${GlobalVariables.serverUrl}sendOrderNotification`,
               orderToWhatsApp,
             {
               headers: {
@@ -283,6 +286,7 @@ function PlaceOrder() {
         if(!cart.paymentMethod){
             navigate('/payment');
         }
+        console.log("dsdsdfghjkldjgasjdh")
 
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position){

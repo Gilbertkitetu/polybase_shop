@@ -37,11 +37,11 @@ function AllUsers() {
   });
 
   useEffect(() => {
-    const fetchShops = async () => {
+    const fetchUsers = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
         await axios.get(
-          `${GlobalVariables.serverUrl}get_products`,
+          `${GlobalVariables.serverUrl}getAllUsers`,
           { headers: { Authorization: `Bearer ${userInfo.token}` } }
         ).then(function (response) {
           console.log(response.data)
@@ -53,7 +53,7 @@ function AllUsers() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
-    fetchShops();
+    fetchUsers();
 
   }, [userInfo]);
 
@@ -88,19 +88,19 @@ const  deleteHandler = async (shop) => {
      <Row>
             <Col md={6}></Col>
             <Col md={2}>
-                <Button onClick={(e) => {navigate('/productsManager')}} className="button-3" >Products</Button>
+                <Button onClick={(e) => {navigate('/allProducts')}} className="button-3" >All Products</Button>
             </Col>
             <Col md={2}>
-                <Button onClick={(e) => {navigate('/yourcustomerorders')}} className="button-3" >Orders</Button>
+                <Button onClick={(e) => {navigate('/AllOrders')}} className="button-3" >Orders</Button>
             </Col>
             <Col md={2}>
-                <Button onClick={(e) => {navigate('/sell')}} className="button-3" >Users</Button>
+                <Button onClick={(e) => {navigate('/AllUsers')}} className="button-3" >Users</Button>
             </Col>
           
         </Row>
         <Row>
       <Col>
-          <h3>All Products</h3>
+          <h3>All Users</h3>
       </Col>
       </Row>
         <Row>
@@ -115,35 +115,27 @@ const  deleteHandler = async (shop) => {
             <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>Photo</th>
-            <th>Category</th>
-            <th>Brand</th>
-            <th>CountInStock</th>
-            <th>Price</th>
-
-            <th>Location</th>
-            <th>Rating</th>
-            <th>Shop Name</th>
-            
-            <th>Actions</th>
+            <th>Email</th>
+            <th>Phone number</th>
+          
+            <th>Date Created</th>
             <th></th>
             
             
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
-              <tr key={product._id}>
-                <td>{product._id.slice(0, 10)}</td>
-                <td><img src={product.imagesrc} width="60px"/></td>
-                <td>{product.productname}</td>
-                <td>{product.category}</td>
-                <td>{product.brand}</td>
-                <td>{product.countInStock}</td>
-                <td>{product.price}</td>
-                <td>{product.product_location}</td>
-                <td>{product.ratings}</td>
-                <td>{product.shop_name}</td>
+            {products.map((user) => (
+              <tr key={user._id}>
+                <td>{user._id.slice(0, 10)}</td>
+      
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.phone_number}</td>
+               
+                <td>{user.date_created}</td>
+                
+        
                
                 
               </tr>

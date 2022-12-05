@@ -60,7 +60,8 @@ import axios from "axios";
 import Reports from "./admin/Reports";
 import Dashboard from "./admin/epsbadmin/Dashboard";
 import AllProducts from "./admin/epsbadmin/AllProducts"
-import AllUsers from "./"
+import AllOrders from "./admin/epsbadmin/AllOrders";
+import AllUsers from "./admin/epsbadmin/AllUsers";
 
 
 function App() {
@@ -220,6 +221,8 @@ function App() {
               <Route path = '/reports' element = { <Reports /> } />
               <Route path = '/admindashboard' element = { <Dashboard /> } />              
               <Route path = '/allProducts' element = { <AllProducts /> } />
+              <Route path = '/AllOrders' element = { <AllOrders /> } />
+              <Route path = '/AllUsers' element = { <AllUsers /> } />
               <Route path = '/MapScreen' element = { <MapScreen /> } />
 
             </Routes>
