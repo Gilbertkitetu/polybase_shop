@@ -35,6 +35,9 @@ const reducer = (state, action) => {
     
   const [checkSeller, setcheckSeller] = useState(false)
   const [seller, setseller] = useState('')
+  const [date, setDate ] = useState('')
+  const [dateto, setDateto] = useState('')
+  const [productname, setproductname ] = useState('')
 
     const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
         loading: true,
@@ -137,6 +140,56 @@ const reducer = (state, action) => {
           }
       }
 
+      const filterByDate = async (isit) => {
+
+        console.log(date)
+       
+        var routeHere = '/filterByDate';
+        if(isit === 'All') {
+          routeHere = ''
+        }
+        dispatch({ type: 'FETCH_REQUEST' });
+          try {
+            const { data } = await axios.post(
+    
+              `${GlobalVariables.serverUrl}orders/shopOrders${routeHere}`,
+              {seller: seller, date: date, dateto: dateto},
+    
+              { headers: { Authorization: `Bearer ${userInfo.token}` } }
+            );
+            dispatch({ type: 'FETCH_SUCCESS', payload: data });
+          } catch (error) {
+            dispatch({
+              type: 'FETCH_FAIL',
+              payload: getError(error),
+            });
+          }
+      }
+
+      const filterByProductname = async (isit) => {
+       
+        var routeHere = '/filterByProductsname';
+        if(isit === 'All') {
+          routeHere = ''
+        }
+        dispatch({ type: 'FETCH_REQUEST' });
+          try {
+            const { data } = await axios.post(
+    
+              `${GlobalVariables.serverUrl}orders/shopOrders${routeHere}`,
+              {seller: seller, productname: productname},
+    
+              { headers: { Authorization: `Bearer ${userInfo.token}` } }
+            );
+            dispatch({ type: 'FETCH_SUCCESS', payload: data });
+          } catch (error) {
+            dispatch({
+              type: 'FETCH_FAIL',
+              payload: getError(error),
+            });
+          }
+      }
+
       const columns = [
         {title: "#", field: '_id', },
         {title: "customer Name", field: 'fullName', },
@@ -179,7 +232,7 @@ const reducer = (state, action) => {
         <title>Shop</title>
         </Helmet>
         <Row>
-            <Col md={2}></Col>
+            
             <Col md={3}>
             <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -204,23 +257,39 @@ const reducer = (state, action) => {
             </select>
             </div>
             </Col>
-            {/* <Col md={3}>
+            {/* <Col md={4}>
             <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Filter by Delivery Address</label>
+                <label class="input-group-text" for="inputGroupSelect01">Filter by Product Name</label>
             </div>
-            <select class="custom-select" id="inputGroupSelect01">
-                <option selected>All</option>
-                <option value="1">Paid</option>
-                <option value="2">Not Paid</option>
-            </select>
+            <input type="text" class="form-control" placeholder="Product Name" aria-label="Product Name" aria-describedby="basic-addon1" 
+              value={productname} onChange={(e) => setproductname(e.target.value)}
+            />
+            <Button onClick={(e) => filterByProductname()} className="button-3" >Filter</Button>
             </div>
             </Col> */}
+            <Col md={8}>
+            <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Filter by From</label>
+            </div>
+            <input type="datetime-local" class="form-control" placeholder="Date" aria-label="Product Name" aria-describedby="basic-addon1" 
+              value={date} onChange={(e) => setDate(e.target.value)}
+            />
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Filter by To</label>
+            </div>
+            <input type="datetime-local" class="form-control" placeholder="Date" aria-label="Product Name" aria-describedby="basic-addon1" 
+              value={dateto} onChange={(e) => setDateto(e.target.value)}
+            />
+            <Button onClick={(e) => filterByDate()} className="button-3" >Filter</Button>
+            </div>
+            </Col>
             <Col md={2}>
                {/* <Button onClick={(e) => {}} className="button-3" >Add Products</Button>  */}
             </Col>
             <Col md={2}>
-                <Button onClick={(e) => downloadPdf()} className="button-3" >Dowload Report</Button>
+                <Button onClick={(e) => downloadPdf()} className="button-3" >Download Report</Button>
             </Col>
         </Row>
         <Row>

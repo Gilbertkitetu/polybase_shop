@@ -125,6 +125,27 @@ orderRouter.post(
     })
 )
 
+orderRouter.post(
+    '/orders/shopOrders/filterByDate',
+
+    expressAsyncHandler(async (req, res) => {
+        const shopOrders = await Order.find({ seller: req.body.seller, createdAt: {"$gte": req.body.date, "$lt": req.body.dateto} })
+        .sort({ createdAt: 'desc' }).exec();
+        res.send(shopOrders)
+    })
+)
+
+orderRouter.post(
+    '/orders/shopOrders/filterByProductsname',
+
+    expressAsyncHandler(async (req, res) => {
+        const shopOrders = await Order.find({ seller: req.body.seller, productname: req.body.productname })
+        .sort({ createdAt: 'desc' }).exec();
+        res.send(shopOrders)
+    })
+)
+
+
 orderRouter.get("/token", (req, res) => {
     generateToken();
 })
