@@ -11,7 +11,7 @@ import GlobalVariables from '../GlobalVariables';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import OrderScreen from '../Screens/OrderScreen';
-import Charts from './Charts';
+
 
 import { Bar } from 'react-chartjs-2'
 import BarChart from './BarChart';

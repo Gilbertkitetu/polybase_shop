@@ -3,7 +3,7 @@ import XYPlot from 'reactochart/XYPlot';
 import XAxis from 'reactochart/XAxis';
 import YAxis from 'reactochart/YAxis';
 import LineChart from 'reactochart/LineChart';
-import 'reactochart/styles.css';
+// import 'reactochart/styles.css';
 
 
 

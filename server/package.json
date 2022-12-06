@@ -5,7 +5,7 @@
   "type": "module",
   "main": "modules",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "author": "Gilbert kitetu",
   "license": "ISC",

@@ -223,7 +223,7 @@ function App() {
               <Route path = '/allProducts' element = { <AllProducts /> } />
               <Route path = '/AllOrders' element = { <AllOrders /> } />
               <Route path = '/AllUsers' element = { <AllUsers /> } />
-              <Route path = '/MapScreen' element = { <MapScreen /> } />
+              {/* <Route path = '/MapScreen' element = { <MapScreen /> } /> */}
 
             </Routes>
             
