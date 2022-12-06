@@ -87,7 +87,7 @@ whatsappRouter.post('/sendOrderNotification', function(req, res, next) {
                 {
                   "type": "image",
                   "image": {
-                    "link": `${process.env.FRONTENDURL}/uploads/products/1663525335495.asus.jpg`
+                    "link": `${process.env.FRONTENDURL}${order.orderItems[0].imagesrc}`
                     // "link": "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/98/991607/1.jpg"
                   }
                 }
