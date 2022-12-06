@@ -155,10 +155,14 @@ let token
 
 const generateToken = async (req, res, next) => {
 
-    const secret = "GKHSSSG2NmiKv5wU";
-    const consumer = "vZbcPEwBRu7ytVaMEAg0HSYKF8E1nbdW";
-
+    const secret = "4oNxmRSYGWqgJiAE";
+    const consumer = "QLKBBBnkVZIG5pVmFkuOh7VFWSI6BXP4";
+    console.log(`${consumer}:${secret}`)
+    
     const auth = new Buffer.from(`${consumer}:${secret}`).toString("base64");
+    console.log("g======================")
+    console.log(auth)
+
     await axios.get(
         "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
         {
@@ -168,10 +172,11 @@ const generateToken = async (req, res, next) => {
         }).then((response) => {
             console.log(response.data.access_token);
             token = response.data.access_token
+            console.log(token)
             next();
         }).catch((err) => {
             console.log(err);
-            //res.status(400).json(err.message)
+            res.status(400).json(err.message)
         })
 }
 
@@ -216,9 +221,9 @@ orderRouter.post(
                     PartyB: 174379,
                     //PartyB: "600000",
                     PhoneNumber: `254${phone_number}`,    
-                    CallBackURL: `${process.env.CALLBACK_URL}/api/v1/callback`,    
-                    AccountReference:"Test",    
-                    TransactionDesc:"Test"  
+                    CallBackURL: `https://polybaseshop-production.up.railway.app/api/v1/callback`,    
+                    AccountReference:"Test",
+                    TransactionDesc:"EPSB Payments"
                 },
                 {
                     headers: {
