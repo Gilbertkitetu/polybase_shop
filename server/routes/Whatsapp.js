@@ -52,7 +52,7 @@ whatsappRouter.post('/orderNotification', function(req, res, next) {
              *Seller:* ${shopname},
              *For more order details visit:
               
-             https://bcab-217-21-116-238.ngrok.io/api/v1/orders/${order._id}
+             https://illustrious-sprinkles-adedda.netlify.app/order/${order._id}
                 `
         }
       });
@@ -87,8 +87,8 @@ whatsappRouter.post('/sendOrderNotification', function(req, res, next) {
                 {
                   "type": "image",
                   "image": {
-                    // "link": `${process.env.FRONTENDURL}/uploads/products/1663525335495.asus.jpg`
-                    "link": "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/98/991607/1.jpg"
+                    "link": `${process.env.FRONTENDURL}/uploads/products/1663525335495.asus.jpg`
+                    // "link": "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/98/991607/1.jpg"
                   }
                 }
               ]
@@ -114,7 +114,7 @@ whatsappRouter.post('/sendOrderNotification', function(req, res, next) {
                 },
                 {
                   "type": "text",
-                  "text": `${process.env.CALLBACK_URL}/api/v1/orders/${order._id}`
+                  "text": `https://illustrious-sprinkles-adedda.netlify.app/order/${order._id}`
                 }
               ]
             }
